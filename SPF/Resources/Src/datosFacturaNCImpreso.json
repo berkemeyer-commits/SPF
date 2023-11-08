@@ -1,0 +1,11 @@
+"gCamDEAsoc": [{
+      "iTipDocAso": 2,
+      "dDesTipDocAso": "Impreso",
+      "dNTimDI": #dNTimDI#,
+      "dEstDocAso": "#dEstDocAso#",
+      "dPExpDocAso": "#dPExpDocAso#",
+      "dNumDocAso": "#dNumDocAso#",
+      "iTipoDocAso": 1,
+      "dDTipoDocAso": "Factura",
+      "dFecEmiDI": "#dFecEmiDI#"
+    }]

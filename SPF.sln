@@ -1,0 +1,82 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2012 for Web
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPF", "SPF\SPF.csproj", "{454F58FD-69C5-44A8-940C-BBA5543D2AC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelEF6", "ModelEF6\ModelEF6\ModelEF6.csproj", "{BE100C07-6BC4-43D8-967E-8817BC560C99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Berke.Libs.Base", "..\..\DEV\Berke.Marcas\Berke.Libs.Base\Berke.Libs.Base.csproj", "{E1E46ECB-C8AA-4157-9DE4-3A677014FA54}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "UploadFile", "http://localhost:49744", "{8F7DBB68-609D-4B8A-9508-5008C2C12033}"
+	ProjectSection(WebsiteProperties) = preProject
+		SccProjectName = "SAK"
+		SccAuxPath = "SAK"
+		SccLocalPath = "SAK"
+		SccProvider = "SAK"
+		UseIISExpress = "true"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.6.1"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_49744"
+		Debug.AspNetCompiler.PhysicalPath = "SPF\UploadFile\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_49744\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_49744"
+		Release.AspNetCompiler.PhysicalPath = "SPF\UploadFile\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_49744\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		SlnRelativePath = "SPF\UploadFile\"
+		DefaultWebSiteLanguage = "Visual Basic"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://gmsoft.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = ModelEF6\\ModelEF6\\ModelEF6.csproj
+		SccProjectName1 = ModelEF6/ModelEF6
+		SccLocalPath1 = ModelEF6\\ModelEF6
+		SccProjectUniqueName2 = SPF\\SPF.csproj
+		SccProjectName2 = SPF
+		SccLocalPath2 = SPF
+		SccProjectUniqueName3 = ..\\..\\DEV\\Berke.Marcas\\Berke.Libs.Base\\Berke.Libs.Base.csproj
+		SccProjectName3 = ../Marcas/Berke.Marcas/Berke.Libs.Base
+		SccLocalPath3 = ..\\..\\DEV\\Berke.Marcas\\Berke.Libs.Base
+		SccWebProject4 = true
+		SccProjectUniqueName4 = http://localhost:49744
+		SccProjectName4 = SPF/UploadFile
+		SccLocalPath4 = SPF\\UploadFile
+		SccProjectEnlistmentChoice4 = 2
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{454F58FD-69C5-44A8-940C-BBA5543D2AC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{454F58FD-69C5-44A8-940C-BBA5543D2AC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{454F58FD-69C5-44A8-940C-BBA5543D2AC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{454F58FD-69C5-44A8-940C-BBA5543D2AC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE100C07-6BC4-43D8-967E-8817BC560C99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE100C07-6BC4-43D8-967E-8817BC560C99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE100C07-6BC4-43D8-967E-8817BC560C99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE100C07-6BC4-43D8-967E-8817BC560C99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1E46ECB-C8AA-4157-9DE4-3A677014FA54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1E46ECB-C8AA-4157-9DE4-3A677014FA54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1E46ECB-C8AA-4157-9DE4-3A677014FA54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1E46ECB-C8AA-4157-9DE4-3A677014FA54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F7DBB68-609D-4B8A-9508-5008C2C12033}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F7DBB68-609D-4B8A-9508-5008C2C12033}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F7DBB68-609D-4B8A-9508-5008C2C12033}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F7DBB68-609D-4B8A-9508-5008C2C12033}.Release|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

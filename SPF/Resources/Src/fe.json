@@ -1,0 +1,375 @@
+﻿{
+    "Id": "#Id#",
+    "dDVId": 4,
+    "dFecFirma": "",
+    "dSisFact": 0,
+    "gOpeDE": {
+        "iTipEmi": 1,
+        "dDesTipEmi": "Normal",
+        "dCodSeg": #dCodSeg#,
+        "dInfoEmi": "",
+        "dInfoFisc": ""
+    },
+  "gTimb": {
+      "iTiDE": 1,
+      "dDesTiDE": "Factura electrónica",
+      "dNumTim": "12560117",
+      "dEst": "001",
+      "dPunExp": "#dPunExp#",
+      "dNumDoc": "#dNumDoc#",
+      "dSerieNum": "",
+      "dFeIniT": "2022-11-14"
+  },
+  "gDatGralOpe": {
+      "dFeEmiDE": "#dFeEmiDE#",
+      "gOpeCom": {
+          "iTipTra": 2,
+          "dDesTipTra": "Prestación de servicios",
+          "iTImp": 5,
+          "dDesTImp": "IVA – Renta",
+          "cMoneOpe": "#cMoneOpe#",
+          "dDesMoneOpe": "#dDesMoneOpe#",
+          "dCondTiCam": "#dCondTiCam#",
+          "dTiCam": "#dTiCam#",
+          "iCondAnt": 1,
+          "dDesCondAnt": "Anticipo Global"
+      },
+    "gEmis": {
+        "dDVEmi": 5,
+        "cDepEmi": "1",
+        "dDenSuc": "",
+        "dNomFanEmi": "",
+        "dDesDisEmi": "ASUNCION (DISTRITO)",
+        "cTipReg": "8",
+        "gRespDE": {
+            "dCarRespDE": "SOCIO GERENTE",
+            "iTipIDRespDE": 1,
+            "dNumIDRespDE": "492417",
+            "dDTipIDRespDE": "Cédula paraguaya",
+            "dNomRespDE": "HUGO BERKEMEYER RODRIGUEZ"
+        },
+      "dDirEmi": "Benjamín Constant",
+      "dDesDepEmi": "CAPITAL",
+      "dTelEmi": "021 446706",
+      "dNomEmi": "BERKEMEYER ATTORNEYS & COUNSELORS",
+      "cCiuEmi": "1",
+      "dCompDir2": "",
+      "dDesCiuEmi": "ASUNCION (DISTRITO)",
+      "gActEco": [
+        {
+            "dDesActEco": "ACTIVIDADES JURÍDICAS (ABOGADO)",
+            "cActEco": "69107"
+        }
+      ],
+      "dEmailE": "rossana.cespedes@berke.com.py",
+      "cDisEmi": "1",
+      "dRucEm": "80016875",
+      "iTipCont": 1,
+      "dNumCas": 835,
+      "dCompDir1": ""
+    },
+    "gDatRec": {
+        "iNatRec": 1,
+        "iTiOpe": 2,
+        "cPaisRec": "#cPaisRec#",
+        "dDesPaisRe": "#dDesPaisRe#",
+        "iTiContRec": 2,
+        "dRucRec": "2022924",
+        "dDVRec": 0,
+        "dDTipIDRec": "Cédula paraguaya",
+        "dNumIDRec": "0",
+        "dNomRec": "Gustavo Galeano",
+        "dNomFanRec": "Gustavo Galeano",
+        "dDirRec": "Corochiré 1741",
+        "dNumCasRec": "",
+        "cDepRec": 1,
+        "dDesDepRec": "CAPITAL",
+        "cDisRec": 1,
+        "dDesDisRec": "ASUNCION (DISTRITO)",
+        "cCiuRec": 1,
+        "dDesCiuRec": "ASUNCION (DISTRITO)",
+        "dTelRec": "0991XXXXXX",
+        "dCelRec": "0991XXXXXX",
+        "dEmailRec": "",
+        "dCodCliente": "2022924-0"
+    }
+  },
+  "gDtipDE": {
+      "gCamFE": {
+          "iIndPres": 1,
+          "dDesIndPres": "Operación presencial",
+          "dFecEmNR": "#dFecEmNR#",
+          "gCompPub": {
+              "dModCont": "",
+              "dEntCont": 0,
+              "dAnoCont": 0,
+              "dSecCont": 0,
+              "dFeCodCont": ""
+          }
+      },
+    "gCamAE": {
+        "iNatVen": 0,
+        "dDesNatVen": "",
+        "iTipIDVen": 0,
+        "dDTipIDVen": "",
+        "dNumIDVen": "",
+        "dNomVen": "",
+        "dDirVen": "",
+        "dNumCasVen": 0,
+        "cDepVen": 0,
+        "dDesDepVen": "",
+        "cDisVen": 0,
+        "dDesDisVen": "",
+        "cCiuVen": 0,
+        "dDesCiuVen": "",
+        "dDirProv": "",
+        "cDepProv": 0,
+        "dDesDepProv": "",
+        "cDisProv": 0,
+        "dDesDisProv": "",
+        "cCiuProv": 0,
+        "dDesCiuProv": ""
+    },
+    "gCamNCDE": {
+        "iMotEmi": "",
+        "dDesMotEmi": ""
+    },
+    "gCamNRE": {
+        "iMotEmiNR": 0,
+        "dDesMotEmiNR": "",
+        "iRespEmiNR": 0,
+        "dDesRespEmiNR": "",
+        "dKmR": 0,
+        "dFecEm": ""
+    },
+    "gCamCond": {
+        "iCondOpe": 2,
+        "dDCondOpe": "Credito",
+        "gPaConEIni": [
+          {
+              "iTiPago": 1,
+              "dDesTiPag": "Efectivo",
+              "dMonTiPag": 0,
+              "cMoneTiPag": "PYG",
+              "dDMoneTiPag": "Guarani",
+              "dTiCamTiPag": "",
+              "gPagTarCD": {
+                  "iDenTarj": 0,
+                  "dDesDenTarj": "",
+                  "dRSProTar": "",
+                  "dRUCProTar": "",
+                  "dDVProTar": "",
+                  "iForProPa": 1,
+                  "dCodAuOpe": 0,
+                  "dNomTit": "",
+                  "dNumTarj": 0
+              },
+              "gPagCheq": {
+                  "dNumCheq": "0",
+                  "dBcoEmi": ""
+              }
+          }
+        ],
+        "gPagCred": {
+            "iCondCred": 2,
+            "dDCondCred": "Cuota",
+            "dPlazoCre": "",
+            "dCuotas": 1,
+            "dMonEnt": "0",
+            "gCuotas": [
+              {
+                  "cMoneCuo": "PYG",
+                  "dDMoneCuo": "Guarani",
+                  "dMonCuota": 500000,
+                  "dVencCuo": "2022-11-30"
+              }
+            ]
+        }
+    },
+    "gCamItem": [
+      {
+          "dCodInt": "000001",
+          "dParAranc": "",
+          "dNCM": "",
+          "dDncpG": "",
+          "dDncpE": "",
+          "dGtin": "",
+          "dGtinPq": "",
+          "dDesProSer": "SERVICIO GRAVADO A",
+          "cUniMed": 77,
+          "dDesUniMed": "UNI",
+          "dCantProSer": 1,
+          "cPaisOrig": "PRY",
+          "dDesPaisOrig": "Paraguay",
+          "dInfItem": "",
+          "cRelMerc": "",
+          "dDesRelMerc": "",
+          "dCanQuiMer": 0,
+          "dPorQuiMer": 0,
+          "dCDCAnticipo": "",
+          "gValorItem": {
+              "dPUniProSer": 250000,
+              "dTiCamIt": 0,
+              "dTotBruOpeItem": 250000,
+              "gValorRestaItem": {
+                  "dDescItem": 0,
+                  "dPorcDesIt": 0,
+                  "dDescGloItem": 0,
+                  "dAntPreUniIt": 0,
+                  "dAntGloPreUniIt": 0,
+                  "dTotOpeItem": 250000,
+                  "dTotOpeGs": 0
+              }
+          },
+          "gCamIVA": {
+              "iAfecIVA": 1,
+              "dDesAfecIVA": "Gravado IVA",
+              "dPropIVA": 100,
+              "dTasaIVA": 10,
+              "dBasGravIVA": 227272.72727273,
+              "dLiqIVAItem": 22727.27272727
+          },
+          "gRasMerc": {},
+          "gVehNuevo": {
+              "iTipOpVN": 0,
+              "dDesTipOpVN": "",
+              "dChasis": "",
+              "dColor": "",
+              "dPotencia": 0,
+              "dCapMot": 0,
+              "dPNet": 0,
+              "dPBruto": 0,
+              "iTipCom": 0,
+              "dDesTipCom": "",
+              "dNroMotor": "",
+              "dCapTracc": 0,
+              "dAnoFab": 0,
+              "cTipVeh": "",
+              "dCapac": 0,
+              "dCilin": ""
+          }
+      },
+      {
+          "dCodInt": "000002",
+          "dParAranc": "",
+          "dNCM": "",
+          "dDncpG": "",
+          "dDncpE": "",
+          "dGtin": "",
+          "dGtinPq": "",
+          "dDesProSer": "SERVICIO GRAVADO B",
+          "cUniMed": 77,
+          "dDesUniMed": "UNI",
+          "dCantProSer": 1,
+          "cPaisOrig": "PRY",
+          "dDesPaisOrig": "Paraguay",
+          "dInfItem": "",
+          "cRelMerc": "",
+          "dDesRelMerc": "",
+          "dCanQuiMer": 0,
+          "dPorQuiMer": 0,
+          "dCDCAnticipo": "",
+          "gValorItem": {
+              "dPUniProSer": 250000,
+              "dTiCamIt": 0,
+              "dTotBruOpeItem": 250000,
+              "gValorRestaItem": {
+                  "dDescItem": 0,
+                  "dPorcDesIt": 0,
+                  "dDescGloItem": 0,
+                  "dAntPreUniIt": 0,
+                  "dAntGloPreUniIt": 0,
+                  "dTotOpeItem": 250000,
+                  "dTotOpeGs": 0
+              }
+          },
+          "gCamIVA": {
+              "iAfecIVA": 1,
+              "dDesAfecIVA": "Gravado IVA",
+              "dPropIVA": 100,
+              "dTasaIVA": 10,
+              "dBasGravIVA": 227272.72727273,
+              "dLiqIVAItem": 22727.27272727
+          },
+          "gRasMerc": {},
+          "gVehNuevo": {
+              "iTipOpVN": 0,
+              "dDesTipOpVN": "",
+              "dChasis": "",
+              "dColor": "",
+              "dPotencia": 0,
+              "dCapMot": 0,
+              "dPNet": 0,
+              "dPBruto": 0,
+              "iTipCom": 0,
+              "dDesTipCom": "",
+              "dNroMotor": "",
+              "dCapTracc": 0,
+              "dAnoFab": 0,
+              "cTipVeh": "",
+              "dCapac": 0,
+              "dCilin": ""
+          }
+      }
+    ],
+    "gCamEsp": {
+        "gGrupEner": {
+            "dNroMed": 0,
+            "dActiv": 0,
+            "dCateg": 0,
+            "dLecAnt": 0,
+            "dLecAct": 0,
+            "dConKwh": 0
+        },
+      "gGrupSeg": {}
+    },
+    "gTransp": {}
+  },
+  "gTotSub": {
+      "dSubExe": 0,
+      "dSubExo": 0,
+      "dSub5": 0,
+      "dSub10": 500000,
+      "dTotOpe": 500000,
+      "dTotDesc": 0,
+      "dTotDescGlotem": 0,
+      "dTotAntItem": 0,
+      "dTotAnt": 0,
+      "dPorcDescTotal": 0,
+      "dDescTotal": 0,
+      "dAnticipo": 0,
+      "dRedon": 0,
+      "dComi": 0,
+      "dTotGralOpe": 500000,
+      "dIVA5": 0,
+      "dIVA10": 45454.54545454,
+      "dLiqTotIVA5": 0,
+      "dLiqTotIVA10": 0,
+      "dIVAComi": 0,
+      "dTotIVA": 45454.54545454,
+      "dBaseGrav5": 0,
+      "dBaseGrav10": 454545.45454546,
+      "dTBasGraIVA": 454545.45454546,
+      "dTotalGs": 0
+  },
+  "gCamGen": {
+      "dOrdCompra": "",
+      "dOrdVta": "",
+      "dAsiento": "",
+      "gCamCarg": {
+          "cUniMedTotVol": 0,
+          "dDesUniMedTotVol": "",
+          "dTotVolMerc": 0,
+          "cUniMedTotPes": 0,
+          "dDesUniMedTotPes": "",
+          "dTotPesMerc": 0,
+          "iCarCarga": 0,
+          "dDesCarCarga": ""
+      }
+  },
+  "gCamDEAsoc": {
+      "iTipDocAso": null,
+      "dDesTipDocAso": null,
+      "dCdCDERef": null
+  }
+}

@@ -1,0 +1,242 @@
+[{
+  "Id": "#Id#",
+  "dDVId": #dDVId#,
+  "dFecFirma": "",
+  "dSisFact": 1,
+  "gOpeDE": {
+    "iTipEmi": 1,
+    "dDesTipEmi": "Normal",
+    "dCodSeg": #dCodSeg#,
+    "dInfoEmi": "",
+    "dInfoFisc": ""
+  },
+  "gTimb": {
+    "iTiDE": #iTiDE#,
+    "dDesTiDE": "#dDesTiDE#",
+    "dNumTim": "#dNumTim#",
+    "dEst": "001",
+    "dPunExp": "#dPunExp#",
+    "dNumDoc": "#dNumDoc#",
+    "dSerieNum": "",
+    "dFeIniT": "#dFeIniT#"
+  },
+  "gDatGralOpe": {
+    "dFeEmiDE": "#dFeEmiDE#",
+    "gOpeCom": {
+      "iTipTra": 2,
+      "dDesTipTra": "Prestación de servicios",
+      "iTImp": 5,
+      "dDesTImp": "IVA – Renta",
+      "cMoneOpe": "#cMoneOpe#",
+      "dDesMoneOpe": "#dDesMoneOpe#",
+      "dCondTiCam": "#dCondTiCam#",
+      "dTiCam": "#dTiCam#",
+      "iCondAnt": 1,
+      "dDesCondAnt": "Anticipo Global"
+    },
+    "gEmis": {
+      "dDVEmi": 5,
+      "cDepEmi": "1",
+      "dDenSuc": "",
+      "dDesDisEmi": "ASUNCION (DISTRITO)",
+      "cTipReg": "8",
+      "gRespDE": {
+        "dCarRespDE": "SOCIO GERENTE",
+        "iTipIDRespDE": 1,
+        "dNumIDRespDE": "492417",
+        "dDTipIDRespDE": "Cédula paraguaya",
+        "dNomRespDE": "HUGO BERKEMEYER RODRIGUEZ"
+      },
+      "dDirEmi": "Benjamín Constant",
+      "dDesDepEmi": "CAPITAL",
+      "dTelEmi": "021 446706",
+      "dNomEmi": "BERKEMEYER ATTORNEYS & COUNSELORS",
+      "dNomFanEmi": "BERKEMEYER ATTORNEYS & COUNSELORS",
+      "cCiuEmi": "1",
+      "dCompDir2": "",
+      "dDesCiuEmi": "ASUNCION (DISTRITO)",
+      "gActEco": [
+        {
+          "dDesActEco": "ACTIVIDADES JURÍDICAS (ABOGADO)",
+          "cActEco": "69107"
+        }
+      ],
+      "dEmailE": "factura@berke.com.py",
+      "cDisEmi": "1",
+      "dRucEm": "80016875",
+      "iTipCont": 2,
+      "dNumCas": 835,
+      "dCompDir1": ""
+    },
+    "gDatRec": {
+      "iNatRec": 1,
+      "iTiOpe": 2,
+      "cPaisRec": "#cPaisRec#",
+      "dDesPaisRe": "#dDesPaisRe#",
+      "iTiContRec": #iTiContRec#,
+      "dRucRec": "#dRucRec#",
+      "dDVRec": #dDVRec#,
+      "dDTipIDRec": "Cédula paraguaya",
+      "dNumIDRec": "0",
+      "dNomRec": "#dNomRec#",
+      "dNomFanRec": "",
+      "dDirRec": "#dDirRec#",
+      "dNumCasRec": "",
+      "cDepRec": 1,
+      "dDesDepRec": "CAPITAL",
+      "cDisRec": 1,
+      "dDesDisRec": "ASUNCION (DISTRITO)",
+      "cCiuRec": 1,
+      "dDesCiuRec": "ASUNCION (DISTRITO)",
+      "dTelRec": "",
+      "dCelRec": "",
+      "dEmailRec": "",
+      "dCodCliente": ""
+    }
+  },
+  "gDtipDE": {
+    "gCamFE": {
+      "iIndPres": 1,
+      "dDesIndPres": "Operación presencial",
+      "dFecEmNR": "",
+      "gCompPub": {
+        "dModCont": "",
+        "dEntCont": 0,
+        "dAnoCont": 0,
+        "dSecCont": 0,
+        "dFeCodCont": ""
+      }
+    },
+    "gCamAE": {
+      "iNatVen": 0,
+      "dDesNatVen": "",
+      "iTipIDVen": 0,
+      "dDTipIDVen": "",
+      "dNumIDVen": "",
+      "dNomVen": "",
+      "dDirVen": "",
+      "dNumCasVen": 0,
+      "cDepVen": 0,
+      "dDesDepVen": "",
+      "cDisVen": 0,
+      "dDesDisVen": "",
+      "cCiuVen": 0,
+      "dDesCiuVen": "",
+      "dDirProv": "",
+      "cDepProv": 0,
+      "dDesDepProv": "",
+      "cDisProv": 0,
+      "dDesDisProv": "",
+      "cCiuProv": 0,
+      "dDesCiuProv": ""
+    },
+    "gCamNCDE": {
+      "iMotEmi": "#iMotEmi#",
+      "dDesMotEmi": "#dDesMotEmi#"
+    },
+    "gCamNRE": {
+      "iMotEmiNR": 0,
+      "dDesMotEmiNR": "",
+      "iRespEmiNR": 0,
+      "dDesRespEmiNR": "",
+      "dKmR": 0,
+      "dFecEm": ""
+    },
+    "gCamCond": {
+      "iCondOpe": #iCondOpe#,
+      "dDCondOpe": "#dDCondOpe#",
+      "gPaConEIni": [
+        {
+          "iTiPago": #iTiPago#,
+          "dDesTiPag": "#dDesTiPag#",
+          "dMonTiPag": 0,
+          "cMoneTiPag": "#cMoneTiPag#",
+          "dDMoneTiPag": "#dDMoneTiPag#",
+          "dTiCamTiPag": "#dTiCamTiPag#",
+          "gPagTarCD": {
+            "iDenTarj": 0,
+            "dDesDenTarj": "",
+            "dRSProTar": "",
+            "dRUCProTar": "",
+            "dDVProTar": "",
+            "iForProPa": 9,
+            "dCodAuOpe": 0,
+            "dNomTit": "",
+            "dNumTarj": 0
+          },
+          "gPagCheq": {
+            "dNumCheq": "0",
+            "dBcoEmi": ""
+          }
+        }
+      ],
+      "gPagCred": {
+        "iCondCred": 1,
+        "dDCondCred": "Plazo",
+        "dPlazoCre": "30 días",
+        "dCuotas": 0,
+        "dMonEnt": "0",
+        "gCuotas": [
+        ]
+      }
+    },
+	"gCamItem": [
+		#detalleFactura#
+	],
+    "gCamEsp": {
+      "gGrupEner": {
+        "dNroMed": 0,
+        "dActiv": 0,
+        "dCateg": 0,
+        "dLecAnt": 0,
+        "dLecAct": 0,
+        "dConKwh": 0
+      },
+      "gGrupSeg": {}
+    },
+    "gTransp": {}
+  },
+  "gTotSub": {
+    "dSubExe": #dSubExe#,
+    "dSubExo": 0,
+    "dSub5": #dSub5#,
+    "dSub10": #dSub10#,
+    "dTotOpe": #dTotOpe#,
+    "dTotDesc": 0,
+    "dTotDescGlotem": 0,
+    "dTotAntItem": 0,
+    "dTotAnt": 0,
+    "dPorcDescTotal": 0,
+    "dDescTotal": 0,
+    "dAnticipo": 0,
+    "dRedon": 0,
+    "dComi": 0,
+    "dTotGralOpe": #dTotGralOpe#,
+    "dIVA5": #dIVA5#,
+    "dIVA10": #dIVA10#,
+    "dLiqTotIVA5": 0,
+    "dLiqTotIVA10": 0,
+    "dIVAComi": 0,
+    "dTotIVA": #dTotIVA#,
+    "dBaseGrav5": #dBaseGrav5#,
+    "dBaseGrav10": #dBaseGrav10#,
+    "dTBasGraIVA": #dTBasGraIVA#,
+    "dTotalGs": #dTotalGs#
+  },
+  "gCamGen": {
+    "dOrdCompra": "",
+    "dOrdVta": "",
+    "dAsiento": "",
+    "gCamCarg": {
+      "cUniMedTotVol": 0,
+      "dDesUniMedTotVol": "",
+      "dTotVolMerc": 0,
+      "cUniMedTotPes": 0,
+      "dDesUniMedTotPes": "",
+      "dTotPesMerc": 0,
+      "iCarCarga": 0,
+      "dDesCarCarga": ""
+    }
+  },
+  #datosFacturaNC#
+}]

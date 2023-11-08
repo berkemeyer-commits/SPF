@@ -1,0 +1,63 @@
+{
+        "dCodInt": "#dCodInt#",
+        "dParAranc": "",
+        "dNCM": "",
+        "dDncpG": "",
+        "dDncpE": "",
+        "dGtin": "",
+        "dGtinPq": "",
+        "dDesProSer": "#dDesProSer#",
+        "cUniMed": 77,
+        "dDesUniMed": "UNI",
+        "dCantProSer": #dCantProSer#,
+        "cPaisOrig": "PRY",
+        "dDesPaisOrig": "Paraguay",
+        "dInfItem": "#dInfItem#",
+        "cRelMerc": "",
+        "dDesRelMerc": "",
+        "dCanQuiMer": 0,
+        "dPorQuiMer": 0,
+        "dCDCAnticipo": "",
+        "gValorItem": {
+          "dPUniProSer": #dPUniProSer#,
+          "dTiCamIt": 0,
+          "dTotBruOpeItem": #dTotBruOpeItem#,
+          "gValorRestaItem": {
+            "dDescItem": 0,
+            "dPorcDesIt": 0,
+            "dDescGloItem": 0,
+            "dAntPreUniIt": 0,
+            "dAntGloPreUniIt": 0,
+            "dTotOpeItem": #dTotOpeItem#,
+            "dTotOpeGs": 0
+          }
+        },
+        "gCamIVA": {
+          "iAfecIVA": #iAfecIVA#,
+          "dDesAfecIVA": "#dDesAfecIVA#",
+          "dPropIVA": #dPropIVA#,
+          "dTasaIVA": #dTasaIVA#,
+          "dBasGravIVA": #dBasGravIVA#,
+          "dLiqIVAItem": #dLiqIVAItem#,
+		  "dBasExe": #dBasExe#
+        },
+        "gRasMerc": {},
+        "gVehNuevo": {
+          "iTipOpVN": 0,
+          "dDesTipOpVN": "",
+          "dChasis": "",
+          "dColor": "",
+          "dPotencia": 0,
+          "dCapMot": 0,
+          "dPNet": 0,
+          "dPBruto": 0,
+          "iTipCom": 0,
+          "dDesTipCom": "",
+          "dNroMotor": "",
+          "dCapTracc": 0,
+          "dAnoFab": 0,
+          "cTipVeh": "",
+          "dCapac": 0,
+          "dCilin": ""
+        }
+      }

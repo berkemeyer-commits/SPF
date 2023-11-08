@@ -1,0 +1,667 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BE100C07-6BC4-43D8-967E-8817BC560C99}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ModelEF6</RootNamespace>
+    <AssemblyName>ModelEF6</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\Library\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\..\Library\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Linq.Dynamic">
+      <HintPath>..\..\Library\System.Linq.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ac_areacontabilidad.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ad_autorizaciondocumento.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Area.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Atencion.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AtencionXVia.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Audit_fc_facturacabecera.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Audit_nc_notacreditocabecera.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Audit_op_oposicion.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Audit_pp_pagopresupuesto.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AutorizacionMotivo.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ba_banco.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BerkeDBEF6.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BerkeDBEF6.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BerkeDBEF6.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BerkeDBEF6.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BerkeDBEF6.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="CAgenteLocal.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CArea.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ca_clienteantecedente.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cb_cuentabanco.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CCiudad.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ccm_conclictamoneda.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cct_cierrecuenta.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cc_cotizacioncab.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ch_clientehistorico.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CIdioma.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Clase.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClaseTipo.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Cliente.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClienteXTramite.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cm_cierremovimiento.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cnd_controlnumdoc.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ConfigPresup.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Correspondencia.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="co_continente.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CPais.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cp_cotizacionesxpresup.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="cxm_cobranzasxmov.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DatosFacturaNC.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DetallePagosPorDocumentoParaFactura1_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DetallePagosPorDocumentoParaFactura_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DetallePagosPorDocumento_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DocumentoPlantilla.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Expediente.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ExpedienteCampo.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ExpedienteXPoder.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ExpedienteXPropietario.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fc_facturacabecera.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fd_facturadetalle.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fpc_facturapresupuestocab.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fpd_facturapresupuestodet.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="fp_formadepago.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetComprobanteNro_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCotizacionConfeccionadoPorTable_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCotizacionesParaPresupuestos_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetCotizacionResponsableTable_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetDatosBoletaDepCobro_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetDatosExpediente_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetDisponibilidadEnBanco_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetDocumentoAPagarCorresponsal_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetDocumentoAPagar_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetEstadoCuentaGerencialPG_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetEstadoCuentaGerencial_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetLibroBanco_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListaClientes_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListaCuentasPorCierre_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListadoChequesEmitidos_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListadoCotizacionesConsulta_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListadoCotizaciones_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListadoGeneraldeDeudasPendientes_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListadoGeneraldeDeudas_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListadoGeneralPagos_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListadoParaComision_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListaFacturasConsoPG_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListaFacturasConso_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListaFacturasPG_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListaFacturasProvPendientes_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListaFacturasRegExtConso_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListaFacturasRegExtParaGananciaPrePagoObligado_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListaFacturasRegExtParaGananciaPrePago_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListaFacturasRegExtParaGanancia_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListaFacturasRegExt_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListaFacturas_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListaPagoCorresponsales_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListaPagoProveedores_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListaPagosPendientesConso2_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListaPagosPendientesConsoPG_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListaPagosPendientesConso_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListaPagosPendientesPG_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListaPagosPendientes_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListaParaRepCobrosGcial_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListaPresupuestos_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetListaUrgimientos_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetMenuPorUsuarioSIGO2_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetMenuPorUsuario_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetMergeAviVencEspecialesCab_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetMergeAviVencEspeciales_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetPresupuestoXSolicitudPago_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetRepCobranzasPorUnidNegocioV2_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetRepCobranzasPorUnidNegocio_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetRolRequierePermisosEspeciales_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetSello_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetSolicitudesXCliente_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetTotalPresupFactura_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetTramitesParaCotizaciones_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetUltimoCierreMesAnho_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="gg_gastogeneral.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IRepositorio.cs" />
+    <Compile Include="ListaSolArchivo.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Marca.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MarcaRegRen.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MarcaTipo.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="mc_movimientoscuenta.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Merge.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MergeDoc.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Merge_Expediente.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Mes.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="me_motivoemision.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="mn_menu.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Moneda.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="mu_mergeurgparte.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ncd_notacreditopresupdetalle.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ncp_notacreditopresup.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="nc_notacreditocabecera.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="nd_notacreditodetalle.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="nf_numeracionfactura.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ObservableListSource.cs" />
+    <Compile Include="op_oposicion.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrdenTrabajo.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="pa_parametros.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="pc_presupuestocab.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="pd_presupuestodetalle.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ph_presupuestohistorico.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="pmu_pagomultiple.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="pm_pcabxmergeexpe.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Poder.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="pp_pagopresupuesto.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="pp_partepresupuesto.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Proceso.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Propietario.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PropietarioXPoder.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="pr_proveedor.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ps_pagosolicitud.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ra_reporteasunto.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="rcm_relacotizamone.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="rc_reclamocliente.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="rd_reclamoclientedetalle.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RepEstadoDeCuenta1_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RepEstadoDeCuentaTramitesDesagrupados1_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RepEstadoDeCuentaTramitesDesagrupados_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RepEstadoDeCuenta_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RepHojaCotizacion_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RepOrdenPagoxID_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReporteExportacionStarsoftSerie1.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReporteExportacionStarsoftSerie2.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReporteFEEmitidos.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReporteNCEEmitidos.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repositorio.cs" />
+    <Compile Include="rm_rolmenu.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ro_rol.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ru_rolusuario.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sa_subarea.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sec_solexclusioncab.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sed_solexclusiondet.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Situacion.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="spac_solicitudpagoarchivocab.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="spad_solicitudpagoarchivodet.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="spc_solicitudpagocab.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="spd_solicitudpagodet.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sr_seguimientoreporte.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="su_serieusuario.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sxp_solicitudesxpago.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tarifas.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TarifasxCliente.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ta_tipoantecedente.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tcd_tipocambiode.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tc_tarifascliente.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tc_tipocambio.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="td_tipodocumento.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tf_tipofactura.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ti_timbrado.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tm_tipomovimientocuenta.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TrabajoTipo.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Traduccion.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tramite.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Tramite_Sit.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="trr_tramitetarifa.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tse_tiposistelectronico.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tsp_tiposolicitudpago.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tt_tipotarifa.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="un_unidadnegocio.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Usuario.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="BerkeDBEF6.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>BerkeDBEF6.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="BerkeDBEF6.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BerkeDBEF6.edmx</DependentUpon>
+      <LastGenOutput>BerkeDBEF6.Context.cs</LastGenOutput>
+    </None>
+    <None Include="BerkeDBEF6.edmx.diagram">
+      <DependentUpon>BerkeDBEF6.edmx</DependentUpon>
+    </None>
+    <None Include="BerkeDBEF6.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BerkeDBEF6.edmx</DependentUpon>
+      <LastGenOutput>BerkeDBEF6.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
