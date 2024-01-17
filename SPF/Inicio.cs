@@ -180,6 +180,7 @@ namespace SPF
             try
             {
                 db = new BerkeDBEntities();
+                db.Database.CommandTimeout = 180;
                 Usuario usuario = this.db.Usuario.First(a => a.Usuario1 == username);
                 VWGContext.Current.Session["UsuarioID"] = usuario.ID;
                 VWGContext.Current.Session["NombreUsuario"] = usuario.NombrePila;

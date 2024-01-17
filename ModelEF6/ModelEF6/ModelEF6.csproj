@@ -264,6 +264,9 @@
     <Compile Include="GetListadoCotizaciones_Result.cs">
       <DependentUpon>BerkeDBEF6.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetListadoFacturas_Result.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetListadoGeneraldeDeudasPendientes_Result.cs">
       <DependentUpon>BerkeDBEF6.tt</DependentUpon>
     </Compile>

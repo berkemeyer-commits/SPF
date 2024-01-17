@@ -4279,6 +4279,10 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
         <Function Name="GetListadoCotizacionesConsulta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="WhereString" Type="nvarchar(max)" Mode="In" />
         </Function>
+        <Function Name="GetListadoFacturas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UsuarioID" Type="int" Mode="In" />
+          <Parameter Name="WhereString" Type="nvarchar(max)" Mode="In" />
+        </Function>
         <Function Name="GetListadoGeneraldeDeudas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="FechaDesde" Type="char" Mode="In" />
           <Parameter Name="FechaHasta" Type="char" Mode="In" />
@@ -6950,6 +6954,10 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
           <FunctionImport Name="GetReporteNCE" ReturnType="Collection(BerkeDBModel.ReporteNCEEmitidos)">
             <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
             <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="GetListadoFacturas" ReturnType="Collection(BerkeDBModel.GetListadoFacturas_Result)">
+            <Parameter Name="UsuarioID" Mode="In" Type="Int32" />
+            <Parameter Name="WhereString" Mode="In" Type="String" />
           </FunctionImport>
           <!--<EntitySet Name="ncb_notacreditobancaria1Set" EntityType="BerkeDBModel.ncb_notacreditobancaria1" />
           <AssociationSet Name="FK_ncb_notacreditobancaria_Cliente1" Association="BerkeDBModel.FK_ncb_notacreditobancaria_Cliente1">
@@ -12750,6 +12758,54 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
           <Property Type="Int32" Name="Tipo_NotaCredito" Nullable="true" />
           <Property Type="String" Name="Comentario" Nullable="true" MaxLength="10" />
         </ComplexType>
+        <ComplexType Name="GetListadoFacturas_Result">
+          <Property Type="DateTime" Name="FacturaFecha" Nullable="false" />
+          <Property Type="Int32" Name="FacturaCabeceraID" Nullable="false" />
+          <Property Type="Int32" Name="FacturaTimbradoID" Nullable="true" />
+          <Property Type="Boolean" Name="FacturaTimbradoHojaSuelta" Nullable="false" />
+          <Property Type="String" Name="FacturaNro" Nullable="true" MaxLength="35" />
+          <Property Type="Boolean" Name="Anulado" Nullable="false" />
+          <Property Type="Int32" Name="ClienteID" Nullable="true" />
+          <Property Type="String" Name="ClienteNombre" Nullable="true" MaxLength="150" />
+          <Property Type="Int32" Name="ClienteIdiomaID" Nullable="true" />
+          <Property Type="String" Name="Direccion" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="FacturaTipo" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="RUC" Nullable="true" MaxLength="15" />
+          <Property Type="String" Name="NroRemision" Nullable="true" MaxLength="35" />
+          <Property Type="String" Name="Telefono" Nullable="true" MaxLength="60" />
+          <Property Type="Int32" Name="MonedaID" Nullable="false" />
+          <Property Type="String" Name="MonedaAbrev" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="MonedaDescripcion" Nullable="false" MaxLength="60" />
+          <Property Type="Decimal" Name="TotalExentas" Nullable="false" Precision="14" Scale="2" />
+          <Property Type="Decimal" Name="TotalIVA5" Nullable="false" Precision="14" Scale="2" />
+          <Property Type="Decimal" Name="TotalIVA10" Nullable="false" Precision="14" Scale="2" />
+          <Property Type="Decimal" Name="TotalIVA" Nullable="true" Precision="15" Scale="2" />
+          <Property Type="Decimal" Name="LiqIVA5" Nullable="false" Precision="14" Scale="2" />
+          <Property Type="Decimal" Name="LiqIVA10" Nullable="false" Precision="14" Scale="2" />
+          <Property Type="Decimal" Name="TotalLiqIVA" Nullable="false" Precision="14" Scale="2" />
+          <Property Type="Decimal" Name="TotalFactura" Nullable="false" Precision="14" Scale="2" />
+          <Property Type="String" Name="TotalLetras" Nullable="false" MaxLength="250" />
+          <Property Type="String" Name="DocumentosAsociados" Nullable="true" MaxLength="500" />
+          <Property Type="Int32" Name="UsuarioCargaID" Nullable="false" />
+          <Property Type="String" Name="UsuarioCargaNombre" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="AuditOperacion" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CDC" Nullable="true" MaxLength="100" />
+          <Property Type="Boolean" Name="DE" Nullable="true" />
+          <Property Type="String" Name="Lote" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="EstadoDE" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="TipoCambio" Nullable="true" Precision="14" Scale="2" />
+          <Property Type="Boolean" Name="TieneAutorizacionVigente" Nullable="true" />
+          <Property Type="Decimal" Name="Cantidad" Nullable="false" Precision="14" Scale="2" />
+          <Property Type="String" Name="Descripcion" Nullable="false" MaxLength="2623" />
+          <Property Type="Decimal" Name="PrecioUnitario" Nullable="false" Precision="14" Scale="2" />
+          <Property Type="Decimal" Name="Exentas" Nullable="false" Precision="14" Scale="2" />
+          <Property Type="Decimal" Name="CincoPorCiento" Nullable="false" Precision="14" Scale="2" />
+          <Property Type="Decimal" Name="DiezPorciento" Nullable="false" Precision="14" Scale="2" />
+          <Property Type="Int32" Name="PresupuestoCabID" Nullable="false" />
+          <Property Type="String" Name="BoletaDepositoNro" Nullable="true" MaxLength="350" />
+          <Property Type="Int32" Name="CobroID" Nullable="true" />
+          <Property Type="String" Name="DescripcionFE" Nullable="true" MaxLength="120" />
+        </ComplexType>
         <!--<EntityType Name="ncb_notacreditobancaria1">
           <Key>
             <PropertyRef Name="ncb_notacreditoid" />
@@ -16261,6 +16317,58 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
                 <ScalarProperty Name="nc_motivorechazo" ColumnName="nc_motivorechazo" />
                 <ScalarProperty Name="nc_facturacabid" ColumnName="nc_facturacabid" />
                 <ScalarProperty Name="Total_Guaranies" ColumnName="Total_Guaranies" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetListadoFacturas" FunctionName="BerkeDBModel.Store.GetListadoFacturas">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BerkeDBModel.GetListadoFacturas_Result">
+                <ScalarProperty Name="FacturaFecha" ColumnName="FacturaFecha" />
+                <ScalarProperty Name="FacturaCabeceraID" ColumnName="FacturaCabeceraID" />
+                <ScalarProperty Name="FacturaTimbradoID" ColumnName="FacturaTimbradoID" />
+                <ScalarProperty Name="FacturaTimbradoHojaSuelta" ColumnName="FacturaTimbradoHojaSuelta" />
+                <ScalarProperty Name="FacturaNro" ColumnName="FacturaNro" />
+                <ScalarProperty Name="Anulado" ColumnName="Anulado" />
+                <ScalarProperty Name="ClienteID" ColumnName="ClienteID" />
+                <ScalarProperty Name="ClienteNombre" ColumnName="ClienteNombre" />
+                <ScalarProperty Name="ClienteIdiomaID" ColumnName="ClienteIdiomaID" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="FacturaTipo" ColumnName="FacturaTipo" />
+                <ScalarProperty Name="RUC" ColumnName="RUC" />
+                <ScalarProperty Name="NroRemision" ColumnName="NroRemision" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="MonedaID" ColumnName="MonedaID" />
+                <ScalarProperty Name="MonedaAbrev" ColumnName="MonedaAbrev" />
+                <ScalarProperty Name="MonedaDescripcion" ColumnName="MonedaDescripcion" />
+                <ScalarProperty Name="TotalExentas" ColumnName="TotalExentas" />
+                <ScalarProperty Name="TotalIVA5" ColumnName="TotalIVA5" />
+                <ScalarProperty Name="TotalIVA10" ColumnName="TotalIVA10" />
+                <ScalarProperty Name="TotalIVA" ColumnName="TotalIVA" />
+                <ScalarProperty Name="LiqIVA5" ColumnName="LiqIVA5" />
+                <ScalarProperty Name="LiqIVA10" ColumnName="LiqIVA10" />
+                <ScalarProperty Name="TotalLiqIVA" ColumnName="TotalLiqIVA" />
+                <ScalarProperty Name="TotalFactura" ColumnName="TotalFactura" />
+                <ScalarProperty Name="TotalLetras" ColumnName="TotalLetras" />
+                <ScalarProperty Name="DocumentosAsociados" ColumnName="DocumentosAsociados" />
+                <ScalarProperty Name="UsuarioCargaID" ColumnName="UsuarioCargaID" />
+                <ScalarProperty Name="UsuarioCargaNombre" ColumnName="UsuarioCargaNombre" />
+                <ScalarProperty Name="AuditOperacion" ColumnName="AuditOperacion" />
+                <ScalarProperty Name="CDC" ColumnName="CDC" />
+                <ScalarProperty Name="DE" ColumnName="DE" />
+                <ScalarProperty Name="Lote" ColumnName="Lote" />
+                <ScalarProperty Name="EstadoDE" ColumnName="EstadoDE" />
+                <ScalarProperty Name="TipoCambio" ColumnName="TipoCambio" />
+                <ScalarProperty Name="TieneAutorizacionVigente" ColumnName="TieneAutorizacionVigente" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="PrecioUnitario" ColumnName="PrecioUnitario" />
+                <ScalarProperty Name="Exentas" ColumnName="Exentas" />
+                <ScalarProperty Name="CincoPorCiento" ColumnName="CincoPorCiento" />
+                <ScalarProperty Name="DiezPorciento" ColumnName="DiezPorciento" />
+                <ScalarProperty Name="PresupuestoCabID" ColumnName="PresupuestoCabID" />
+                <ScalarProperty Name="BoletaDepositoNro" ColumnName="BoletaDepositoNro" />
+                <ScalarProperty Name="CobroID" ColumnName="CobroID" />
+                <ScalarProperty Name="DescripcionFE" ColumnName="DescripcionFE" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

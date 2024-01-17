@@ -32,7 +32,8 @@
       "dCondTiCam": "#dCondTiCam#",
       "dTiCam": "#dTiCam#",
       "iCondAnt": 1,
-      "dDesCondAnt": "Anticipo Global"
+      "dDesCondAnt": "Anticipo Global",
+	  "gOblAfe": null
     },
     "gEmis": {
       "dDVEmi": 5,

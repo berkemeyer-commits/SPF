@@ -1472,5 +1472,18 @@ namespace ModelEF6
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ReporteNCEEmitidos>("GetReporteNCE", fechaInicioParameter, fechaFinParameter);
         }
+    
+        public virtual ObjectResult<GetListadoFacturas_Result> GetListadoFacturas(Nullable<int> usuarioID, string whereString)
+        {
+            var usuarioIDParameter = usuarioID.HasValue ?
+                new ObjectParameter("UsuarioID", usuarioID) :
+                new ObjectParameter("UsuarioID", typeof(int));
+    
+            var whereStringParameter = whereString != null ?
+                new ObjectParameter("WhereString", whereString) :
+                new ObjectParameter("WhereString", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetListadoFacturas_Result>("GetListadoFacturas", usuarioIDParameter, whereStringParameter);
+        }
     }
 }
