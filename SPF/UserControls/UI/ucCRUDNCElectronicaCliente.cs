@@ -193,6 +193,7 @@ namespace SPF.UserControls.UI
         private static readonly List<string> ESTADOS_DE = new List<string>() { ESTADO_APROBADO, ESTADO_PENDIENTE_DE, ESTADO_RECHAZADO };
         private const string TOKEN_JWT = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4MDAxNjg3NS01IiwiaWF0IjoxNjgxMTczMTM2LCJzdWIiOiJCRVJLRU1FWUVSIEFUVE9STkVZUyAmIENPVU5TRUxPUlMifQ.dPMhBO_oIvpUG56u8QgWU8waMDYndn7YHHJfuBwJldA";
         private const string ERROR_TC = "No hay tipo de cambio definido para {0} para la fecha {1}.";
+        private const string DEBUG_DE_JSON = "DEBUG_DE_JSON";
         #endregion Constantes
 
         #region Variables Globales
@@ -204,7 +205,16 @@ namespace SPF.UserControls.UI
         FSelecPresupFactura fSelecPresupFactura;
         List<int> timbrados = new List<int>();
         private BindingSource bS_Det;
+        Boolean debug_de_json = false;
         #endregion Variables Globales
+
+        #region Propiedades
+        public Boolean IsDebugDEJSON
+        {
+            set { this.debug_de_json = value; }
+            get { return this.debug_de_json; }
+        }
+        #endregion Propiedades
 
         #region Método de Inicio
         public ucCRUDNCElectronicaCliente()
@@ -227,6 +237,8 @@ namespace SPF.UserControls.UI
             this.Titulo = Titulo;
             this.UsuarioID = Convert.ToInt32(VWGContext.Current.Session["UsuarioID"].ToString());
             this.bS_Det = new BindingSource();
+
+            this.IsDebugDEJSON = Convert.ToBoolean(this.DBContext.pa_parametros.First(a => a.clave == DEBUG_DE_JSON).valor);
 
             timbrados = (from t in
                              ((from su in this.DBContext.su_serieusuario
@@ -3514,6 +3526,16 @@ namespace SPF.UserControls.UI
 
             string requestBody = this.GenerateJSON(NotaCreditoCabId);
 
+            #region Guardar JSON en archivo
+            if (this.IsDebugDEJSON)
+            {
+                string path = VWGContext.Current.Server.MapPath(@"\Resources\UserData\" + VWGContext.Current.Session["WindowsUser"].ToString() + @"\");
+                Berke.Libs.Base.Helpers.Files.CreateDirectory(@path);
+                string fileName = @path + this.txtCDC.Text + ".json";
+                Berke.Libs.Base.Helpers.Files.SaveStringToFile(requestBody, fileName);
+            }
+            #endregion
+
             using (HttpClient client = new HttpClient())
             {
                 StringContent httpContent = new StringContent(requestBody, System.Text.Encoding.UTF8, "application/json");
@@ -4140,6 +4162,30 @@ namespace SPF.UserControls.UI
         public string msgRespuesta { get; set; }
         public string numini { get; set; }
         public string ruc { get; set; }
+
+        public string climail { get; set; }
+        public string correoEnviado { get; set; }
+    }
+
+    public class SifenQueryResponseNew
+    {
+        public string cdc { get; set; }
+        public string climail { get; set; }
+        public string codigoRespuesta { get; set; }
+        public string correoEnviado { get; set; }
+        public string estado { get; set; }
+        //public DateTime fechaproceso { get; set; }
+        //public string lote { get; set; }
+        public string msgRespuesta { get; set; }
+        //public string numini { get; set; }
+        public string ruc { get; set; }
+    }
+
+    public class SifenQueryResponseGlobal
+    {
+        public string cdc { get; set; }
+        public string estado { get; set; }
+        public string msgRespuesta { get; set; }
     }
 
     public class SifenQueryResponse2

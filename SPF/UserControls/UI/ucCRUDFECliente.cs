@@ -915,7 +915,7 @@ namespace SPF.UserControls.UI
         {
             ClienteFacturaType cft = new ClienteFacturaType();
             Cliente cliente = this.DBContext.Cliente.FirstOrDefault(a => a.ID == clienteID);
-            
+
             cft.ClienteID = clienteID;
             cft.ClienteNombre = cliente.Nombre;
             cft.RUC = cliente.RUC;
@@ -2067,6 +2067,7 @@ namespace SPF.UserControls.UI
                 {
                     try
                     {
+                        
                         fc_facturacabecera fc = context.fc_facturacabecera.First(a => a.fc_facturacabeceraid == FacturaID);
                         fc.fc_anulado = true;
                         fc.fc_fechaanulacion = System.DateTime.Now;
@@ -3054,6 +3055,7 @@ namespace SPF.UserControls.UI
                                     ClienteID = c.ID,
                                     RUC = c.RUC,
                                     PaisAlfa3 = p.paisalfa3,
+                                    PaisAlfa = p.paisalfa,
                                     PaisDescripFE = p.descripFE,
                                     TipoPersona = c.Personeria,
                                     RazonSocial = c.Nombre
@@ -3070,6 +3072,16 @@ namespace SPF.UserControls.UI
                 else
                 {
                     path = VWGContext.Current.Server.MapPath(@"~\Resources\Src\fe-no-contribuyente.json");
+
+                    if (this.txtRUC.Text == String.Empty)
+                    {
+                        this.txtRUC.Text = (cli_pais.FirstOrDefault().PaisAlfa != String.Empty ? cli_pais.FirstOrDefault().PaisAlfa : "SP") 
+                                            + cli_pais.FirstOrDefault().ClienteID.ToString();
+
+                        fc.fc_ruc = this.txtRUC.Text;
+                        context.SaveChanges();
+                    }
+
                 }
                 string pathDet = VWGContext.Current.Server.MapPath(@"~\Resources\Src\detalleFactura.json");
                 string pathDatosFacturaNC = VWGContext.Current.Server.MapPath(@"~\Resources\Src\datosFacturaNC.json");
@@ -3172,9 +3184,11 @@ namespace SPF.UserControls.UI
                 }
                 else
                 {
-
                     //#dNumIDRec#
-                    json = json.Replace("#dNumIDRec#", this.txtRUC.Text != string.Empty ? this.txtRUC.Text : "0");
+                    //json = json.Replace("#dNumIDRec#", this.txtRUC.Text != string.Empty ? this.txtRUC.Text : "0");
+                    json = json.Replace("#dNumIDRec#", this.txtRUC.Text);
+                    //#dCodCliente#
+                    json = json.Replace("#dCodCliente#", this.txtRUC.Text);
                 }
 
                 //#iTiPago#
@@ -3922,7 +3936,12 @@ namespace SPF.UserControls.UI
             //if (queryResponse.estado == ESTADO_APROBADO)
             //    MessageBox.Show(ESTADO_CANCELADO);
             //else MessageBox.Show(queryResponse.estado + " - " + queryResponse.msgRespuesta);
-            this.GenerateJSON(Convert.ToInt32(this.txtFacturaID.Text));
+
+            string path = VWGContext.Current.Server.MapPath(@"\Resources\UserData\" + VWGContext.Current.Session["WindowsUser"].ToString() + @"\");
+            Berke.Libs.Base.Helpers.Files.CreateDirectory(@path);
+            string fileName = @path + this.txtCDC.Text + ".json";
+            Berke.Libs.Base.Helpers.Files.SaveStringToFile(this.GenerateJSON(Convert.ToInt32(this.txtFacturaID.Text)), fileName);
+            
         }
 
         private void GeneraDEDialogHandler(object sender, EventArgs e)
@@ -3971,7 +3990,7 @@ namespace SPF.UserControls.UI
                 if (msgForm.DialogResult == Gizmox.WebGUI.Forms.DialogResult.Yes)
                 {
                     string result = this.ActualizarDE(this.txtLote.Text);
-                    //string result = this.ActualizarDE(this.txtCDC.Text);
+                    //string result = this.ActualizarDE(this.txtCDC.Text, true);
                     string[] msg = result.Split('#');
 
                     if (msg.Length > 1)
@@ -3993,11 +4012,14 @@ namespace SPF.UserControls.UI
         {
             string result = String.Empty;
             SifenQueryResponse queryResponse = new SifenQueryResponse();
-
+            //SifenQueryResponseGlobal queryResponse = new SifenQueryResponseGlobal();
+            
             var url = "https://facte.siga.com.py/FacturaE/rest/consultarLote?ruc=80016875-5&codigo=" + valor + "&token=" + TOKEN_JWT;
 
             if (consultarPorCDC)
+            {
                 url = "https://facte.siga.com.py/FacturaE/rest/consultarDE/json?ruc=80016875-5&codigo=" + valor + "&token=" + TOKEN_JWT;
+            }
 
             string responseContent = "";
 
@@ -4015,9 +4037,17 @@ namespace SPF.UserControls.UI
 
                         var rsp = JsonConvert.DeserializeObject<dynamic>(responseContent);
                         //queryResponse = JsonConvert.DeserializeObject<SifenQueryResponse>(rsp[1].ToString());
-                        if (rsp.Count > 1)
-                            queryResponse = JsonConvert.DeserializeObject<SifenQueryResponse>(rsp[1].ToString());
-                        else queryResponse = JsonConvert.DeserializeObject<SifenQueryResponse>(rsp[0].ToString());
+
+                        if (!consultarPorCDC)
+                        {
+                            if (rsp.Count > 1)
+                                queryResponse = JsonConvert.DeserializeObject<SifenQueryResponse>(rsp[1].ToString());
+                            else queryResponse = JsonConvert.DeserializeObject<SifenQueryResponse>(rsp[0].ToString());
+                        }
+                        else
+                        {
+                            queryResponse = JsonConvert.DeserializeObject<SifenQueryResponse>(rsp.ToString());
+                        }
 
                         if ((queryResponse.estado == ESTADO_APROBADO) || (queryResponse.estado == ESTADO_RECHAZADO))
                         {
@@ -4039,7 +4069,7 @@ namespace SPF.UserControls.UI
                                 this.txtCDC.Text = queryResponse.cdc;
                                 this.btnActualizarEstadoDE.Visible = queryResponse.estado == ESTADO_PENDIENTE_DE;
                                 this.btnVerMotivoRechazo.Visible = queryResponse.estado == ESTADO_RECHAZADO;
-                                
+
                                 //if (queryResponse.estado == ESTADO_APROBADO)
                                 //    MessageBox.Show(queryResponse.estado + " - " + queryResponse.msgRespuesta, "Información");
                                 //else
