@@ -93,10 +93,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Windows\assembly\GAC_MSIL\Microsoft.ReportViewer.ProcessingObjectModel\11.0.0.0__89845dcd8080cc91\Microsoft.ReportViewer.ProcessingObjectModel.DLL</HintPath>
     </Reference>
-    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Windows\assembly\GAC_MSIL\Microsoft.ReportViewer.WebForms\11.0.0.0__89845dcd8080cc91\Microsoft.ReportViewer.WebForms.DLL</HintPath>
-    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Library\Newtonsoft.Json.dll</HintPath>
@@ -212,11 +209,11 @@
     <Content Include="Resources\Src\datosFacturaNC.json" />
     <Content Include="Resources\Src\datosFacturaNCDE.json" />
     <Content Include="Resources\Src\datosFacturaNCImpreso.json" />
+    <None Include="Properties\PublishProfiles\publicar_spf.pubxml" />
     <None Include="Resources\Src\fe.json" />
     <Content Include="Resources\UserData\cotizaciones.html" />
     <Content Include="Resources\UserData\xe-currency-converter.htm" />
     <Content Include="Scripts\custom_code.js" />
-    <Content Include="Readme.txt" />
     <Content Include="UploadFile\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
     <Content Include="UploadFile\bin\roslyn\csc.exe" />
     <Content Include="UploadFile\bin\roslyn\csc.exe.config" />
