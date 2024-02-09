@@ -883,7 +883,7 @@ namespace SPF.UserControls.UI
                                  BoletaDepositoNro = fd.fd_nroboletadeposito //this.DBContext.GetDatosBoletaDepCobro(fd.fd_presupuestocabid).FirstOrDefault().NroBoletaDep //pp.pp_nroboletadeposito,
                                  //CobroAnulado = pp.pp_anulado
                              })
-                             .Where(b => b.AuditOperacion == AUDIT_OPERACION_INSERT);
+                             .Where(b => b.AuditOperacion == AUDIT_OPERACION_INSERT && b.DE != true);
                              //.Where(b => b.AuditOperacion == AUDIT_OPERACION_INSERT && (b.CobroAnulado == null || (b.CobroAnulado.HasValue && !b.CobroAnulado.Value)));
                              //.Where(b => b.AuditOperacion == AUDIT_OPERACION_INSERT && !(b.CobroAnulado.HasValue && !b.CobroAnulado.Value));
                              //.OrderByDescending(a => a.FacturaCabeceraID)

@@ -1964,7 +1964,7 @@ namespace SPF.UserControls.UI
                         FacturaPatrixType dF = new FacturaPatrixType();
                         dF.CaseID = caseID;
                         dF.CaseNumber = caseNumber;
-                        dF.InvoiceID = (int)reader["INVOICE_ID"];
+                        dF.InvoiceID = (int)reader["ID"];
                         dF.Monto = (decimal)reader["FOREIGN_CURR_VALUE"];
                         dF.MonedaAbrev = reader["FOREIGN_CURR_ID"].ToString();
                         dF.FechaFactura = (DateTime)reader["INVOCIE_DATE"];
@@ -1974,7 +1974,7 @@ namespace SPF.UserControls.UI
 
                     if (lFacturasPatrix.Count == 0)
                         throw new Exception("No se encontraron facturas para el N° de Caso ingresado.");
-                    else if (lFacturasPatrix.Count > 1)
+                    else if (lFacturasPatrix.Count >= 1)
                     {
                         fSF = new FSeleccionarFacturaPatrix(lFacturasPatrix);
                         fSF.AceptarFiltrarClick += delegate { this.CargarMasDatos(fSF.GetInvoiceID(), connectionString); };

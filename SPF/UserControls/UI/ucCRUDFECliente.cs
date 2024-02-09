@@ -181,6 +181,7 @@ namespace SPF.UserControls.UI
         private const string ESTADO_RECHAZADO = "Rechazado";
         private const string ESTADO_CANCELADO = "Cancelado";
         private const string EN_PROCESAMIENTO = "en procesamiento";
+        private const string DEBUG_DE_JSON = "DEBUG_DE_JSON";
         private static readonly List<string> ESTADOS_DE = new List<string>() { ESTADO_APROBADO, ESTADO_PENDIENTE_DE, ESTADO_RECHAZADO };
         private const string TOKEN_JWT = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4MDAxNjg3NS01IiwiaWF0IjoxNjgxMTczMTM2LCJzdWIiOiJCRVJLRU1FWUVSIEFUVE9STkVZUyAmIENPVU5TRUxPUlMifQ.dPMhBO_oIvpUG56u8QgWU8waMDYndn7YHHJfuBwJldA";
         private const string ERROR_TC = "No hay tipo de cambio definido para {0} para la fecha {1}.";
@@ -192,8 +193,17 @@ namespace SPF.UserControls.UI
         private int UsuarioID = -1;
         private List<FacturaAllType> lFacturas;
         FSelecPresupFactura fSelecPresupFactura;
-        List<int> timbrados = new List<int>();
+        //List<int> timbrados = new List<int>();
+        Boolean debug_de_json = false;
         #endregion Variables Globales
+
+        #region Propiedades
+        public Boolean IsDebugDEJSON
+        {
+            set { this.debug_de_json = value; }
+            get { return this.debug_de_json; }
+        }
+        #endregion Propiedades
 
         #region Método de Inicio
         public ucCRUDFECliente()
@@ -215,116 +225,162 @@ namespace SPF.UserControls.UI
             this.DBContext = dbContext;
             this.Titulo = Titulo;
             this.UsuarioID = Convert.ToInt32(VWGContext.Current.Session["UsuarioID"].ToString());
+            this.UseSQLSyntax = true;
 
+            this.IsDebugDEJSON = Convert.ToBoolean(this.DBContext.pa_parametros.First(a => a.clave == DEBUG_DE_JSON).valor);
+            
             //timbrados = (from t in
             //                 ((from su in this.DBContext.su_serieusuario
             //                   join usu in this.DBContext.Usuario
             //                      on su.su_usuarioid equals usu.ID
+            //                   join ti in this.DBContext.ti_timbrado
+            //                    on su.su_timbradoid equals ti.ti_timbradoid
             //                   select new PermisoTimbrado
             //                   {
             //                       PermisoTimbradoID = su.su_serieusuarioid,
             //                       TimbradoID = su.su_timbradoid,
             //                       UsuarioID = su.su_usuarioid,
-            //                       UsuarioNombre = usu.NombrePila
+            //                       UsuarioNombre = usu.NombrePila,
+            //                       TipoDocumentoID = ti.ti_tipodocumentoid
             //                   })
-            //                     .Where(a => a.UsuarioID == UsuarioID).ToList())
+            //                     .Where(a => a.UsuarioID == UsuarioID && a.TipoDocumentoID == TIPODOCUMENTO_FACTURA_CLIENTE).ToList())
             //             select t.TimbradoID).ToList();
-
-            timbrados = (from t in
-                             ((from su in this.DBContext.su_serieusuario
-                               join usu in this.DBContext.Usuario
-                                  on su.su_usuarioid equals usu.ID
-                               join ti in this.DBContext.ti_timbrado
-                                on su.su_timbradoid equals ti.ti_timbradoid
-                               select new PermisoTimbrado
-                               {
-                                   PermisoTimbradoID = su.su_serieusuarioid,
-                                   TimbradoID = su.su_timbradoid,
-                                   UsuarioID = su.su_usuarioid,
-                                   UsuarioNombre = usu.NombrePila,
-                                   TipoDocumentoID = ti.ti_tipodocumentoid
-                               })
-                                 .Where(a => a.UsuarioID == UsuarioID && a.TipoDocumentoID == TIPODOCUMENTO_FACTURA_CLIENTE).ToList())
-                         select t.TimbradoID).ToList();
 
 
             lFacturas = new List<FacturaAllType>();
 
-            lFacturas = (from fc in this.DBContext.fc_facturacabecera
-                         join fd in this.DBContext.fd_facturadetalle
-                             on fc.fc_facturacabeceraid equals fd.fd_facturacabeceraid
-                         join mon in this.DBContext.Moneda
-                             on fc.fc_monedaid equals mon.ID
-                         join AudFc in this.DBContext.Audit_fc_facturacabecera
-                             on fc.fc_facturacabeceraid equals AudFc.fc_facturacabeceraid
-                         join cli in this.DBContext.Cliente
-                             on fc.fc_clienteid equals cli.ID into fc_cli
-                             from cli in fc_cli.DefaultIfEmpty()
-                         join uAud in this.DBContext.Usuario
-                             on AudFc.Audit_User.Substring(6, AudFc.Audit_User.Length) equals uAud.Usuario1
-                         join ti in this.DBContext.ti_timbrado
-                             on fc.fc_timbradoid equals ti.ti_timbradoid
-                         //join pp in this.DBContext.pp_pagopresupuesto
-                         //    on fd.fd_presupuestocabid equals pp.pp_presupuestocabid into fd_pp
-                         //    from pp in fd_pp.DefaultIfEmpty()
+            #region Deprecated
+            //lFacturas = (from fc in this.DBContext.fc_facturacabecera
+            //             join fd in this.DBContext.fd_facturadetalle
+            //                 on fc.fc_facturacabeceraid equals fd.fd_facturacabeceraid
+            //             join mon in this.DBContext.Moneda
+            //                 on fc.fc_monedaid equals mon.ID
+            //             join AudFc in this.DBContext.Audit_fc_facturacabecera
+            //                 on fc.fc_facturacabeceraid equals AudFc.fc_facturacabeceraid
+            //             join cli in this.DBContext.Cliente
+            //                 on fc.fc_clienteid equals cli.ID into fc_cli
+            //                 from cli in fc_cli.DefaultIfEmpty()
+            //             join uAud in this.DBContext.Usuario
+            //                 on AudFc.Audit_User.Substring(6, AudFc.Audit_User.Length) equals uAud.Usuario1
+            //             join ti in this.DBContext.ti_timbrado
+            //                 on fc.fc_timbradoid equals ti.ti_timbradoid
+            //             //join pp in this.DBContext.pp_pagopresupuesto
+            //             //    on fd.fd_presupuestocabid equals pp.pp_presupuestocabid into fd_pp
+            //             //    from pp in fd_pp.DefaultIfEmpty()
+            //             select new FacturaAllType
+            //             {
+            //                 //Cabecera
+            //                 FacturaFecha = fc.fc_fechafactura,
+            //                 FacturaCabeceraID = fc.fc_facturacabeceraid,
+            //                 FacturaTimbradoID = fc.fc_timbradoid,
+            //                 FacturaTimbradoHojaSuelta = ti.ti_facthojasuelta,
+            //                 FacturaNro = fc.fc_nrofactura,
+            //                 Anulado = fc.fc_anulado,
+            //                 ClienteID = fc.fc_clienteid,
+            //                 ClienteNombre = fc.fc_clientenombre,
+            //                 ClienteIdiomaID = cli.IdiomaID,
+            //                 Direccion = fc.fc_direccion,
+            //                 FacturaTipo = fc.fc_tipofactura,
+            //                 RUC = fc.fc_ruc,
+            //                 NroRemision = fc.fc_nroremision,
+            //                 Telefono = fc.fc_telefono,
+            //                 MonedaID = fc.fc_monedaid,
+            //                 MonedaAbrev = mon.AbrevMoneda,
+            //                 MonedaDescripcion = mon.Descripcion,
+            //                 TotalExentas = fc.fc_totalexentas,
+            //                 TotalIVA5 = fc.fc_totaliva5,
+            //                 TotalIVA10 = fc.fc_totaliva10,
+            //                 TotalIVA = fc.fc_totaliva5 + fc.fc_totaliva10,  //fc.fc_totaliva,
+            //                 LiqIVA5 = fc.fc_liqiva5,
+            //                 LiqIVA10 = fc.fc_liqiva10,
+            //                 TotalLiqIVA = fc.fc_totaliva,
+            //                 TotalFactura = fc.fc_total,
+            //                 TotalLetras = fc.fc_totalletras,
+            //                 DocumentosAsociados = fc.fc_documentosasoc,
+            //                 UsuarioCargaID = uAud.ID,
+            //                 UsuarioCargaNombre = uAud.NombrePila,
+            //                 AuditOperacion = AudFc.Audit_Operacion,
+            //                 CDC = fc.fc_cdc,
+            //                 DE = fc.fc_documentoelectronico,
+            //                 Lote = fc.fc_lote,
+            //                 EstadoDE = fc.fc_estadode,
+            //                 TipoCambio = fc.fc_tipocambio,
+            //                 TieneAutorizacionVigente = this.DBContext.GetAutorizacionPorDocumentoID(TIPODOCUMENTO_FACTURA_CLIENTE,
+            //                                                                                         fc.fc_facturacabeceraid,
+            //                                                                                         this.UsuarioID).FirstOrDefault().Value,
+            //                 //Detalles
+            //                 Cantidad = fd.fd_cantidad,
+            //                 Descripcion = fd.fd_descripcion,
+            //                 PrecioUnitario = fd.fd_preciounitario,
+            //                 Exentas = fd.fd_exentas,
+            //                 CincoPorciento = fd.fd_cincoporciento,
+            //                 DiezPorciento = fd.fd_diezporciento,
+            //                 PresupuestoCabID = fd.fd_presupuestocabid,
+            //                 BoletaDepositoNro = fd.fd_nroboletadeposito,  //this.DBContext.GetDatosBoletaDepCobro(fd.fd_presupuestocabid).FirstOrDefault().NroBoletaDep
+            //                 //CobroAnulado = pp.pp_anulado
+            //                 CobroID = fd.fd_cobroid,
+            //                 DescripcionFE = fd.fd_descripFE
+            //             })
+            //             .Where(b => b.AuditOperacion == AUDIT_OPERACION_INSERT && b.DE == true && timbrados.Contains(b.FacturaTimbradoID.Value))
+            //             //.Where(b => b.AuditOperacion == AUDIT_OPERACION_INSERT)
+            //             .OrderByDescending( a => a.FacturaCabeceraID )
+            //             .Take(50)
+            //             .ToList();
+            #endregion Deprecated
+
+            lFacturas = (from lista in this.DBContext.GetListadoFacturas(this.UsuarioID, String.Empty)
                          select new FacturaAllType
                          {
                              //Cabecera
-                             FacturaFecha = fc.fc_fechafactura,
-                             FacturaCabeceraID = fc.fc_facturacabeceraid,
-                             FacturaTimbradoID = fc.fc_timbradoid,
-                             FacturaTimbradoHojaSuelta = ti.ti_facthojasuelta,
-                             FacturaNro = fc.fc_nrofactura,
-                             Anulado = fc.fc_anulado,
-                             ClienteID = fc.fc_clienteid,
-                             ClienteNombre = fc.fc_clientenombre,
-                             ClienteIdiomaID = cli.IdiomaID,
-                             Direccion = fc.fc_direccion,
-                             FacturaTipo = fc.fc_tipofactura,
-                             RUC = fc.fc_ruc,
-                             NroRemision = fc.fc_nroremision,
-                             Telefono = fc.fc_telefono,
-                             MonedaID = fc.fc_monedaid,
-                             MonedaAbrev = mon.AbrevMoneda,
-                             MonedaDescripcion = mon.Descripcion,
-                             TotalExentas = fc.fc_totalexentas,
-                             TotalIVA5 = fc.fc_totaliva5,
-                             TotalIVA10 = fc.fc_totaliva10,
-                             TotalIVA = fc.fc_totaliva5 + fc.fc_totaliva10,  //fc.fc_totaliva,
-                             LiqIVA5 = fc.fc_liqiva5,
-                             LiqIVA10 = fc.fc_liqiva10,
-                             TotalLiqIVA = fc.fc_totaliva,
-                             TotalFactura = fc.fc_total,
-                             TotalLetras = fc.fc_totalletras,
-                             DocumentosAsociados = fc.fc_documentosasoc,
-                             UsuarioCargaID = uAud.ID,
-                             UsuarioCargaNombre = uAud.NombrePila,
-                             AuditOperacion = AudFc.Audit_Operacion,
-                             CDC = fc.fc_cdc,
-                             DE = fc.fc_documentoelectronico,
-                             Lote = fc.fc_lote,
-                             EstadoDE = fc.fc_estadode,
-                             TipoCambio = fc.fc_tipocambio,
-                             TieneAutorizacionVigente = this.DBContext.GetAutorizacionPorDocumentoID(TIPODOCUMENTO_FACTURA_CLIENTE,
-                                                                                                     fc.fc_facturacabeceraid,
-                                                                                                     this.UsuarioID).FirstOrDefault().Value,
+                             FacturaFecha = lista.FacturaFecha,
+                             FacturaCabeceraID = lista.FacturaCabeceraID,
+                             FacturaTimbradoID = lista.FacturaTimbradoID,
+                             FacturaTimbradoHojaSuelta = lista.FacturaTimbradoHojaSuelta,
+                             FacturaNro = lista.FacturaNro,
+                             Anulado = lista.Anulado,
+                             ClienteID = lista.ClienteID,
+                             ClienteNombre = lista.ClienteNombre,
+                             ClienteIdiomaID = lista.ClienteIdiomaID,
+                             Direccion = lista.Direccion,
+                             FacturaTipo = lista.FacturaTipo,
+                             RUC = lista.RUC,
+                             NroRemision = lista.NroRemision,
+                             Telefono = lista.Telefono,
+                             MonedaID = lista.MonedaID,
+                             MonedaAbrev = lista.MonedaAbrev,
+                             MonedaDescripcion = lista.MonedaDescripcion,
+                             TotalExentas = lista.TotalExentas,
+                             TotalIVA5 = lista.TotalIVA5,
+                             TotalIVA10 = lista.TotalIVA10,
+                             TotalIVA = lista.TotalIVA.Value,  //fc.fc_totaliva,
+                             LiqIVA5 = lista.LiqIVA5,
+                             LiqIVA10 = lista.LiqIVA10,
+                             TotalLiqIVA = lista.TotalLiqIVA,
+                             TotalFactura = lista.TotalFactura,
+                             TotalLetras = lista.TotalLetras,
+                             DocumentosAsociados = lista.DocumentosAsociados,
+                             UsuarioCargaID = lista.UsuarioCargaID,
+                             UsuarioCargaNombre = lista.UsuarioCargaNombre,
+                             AuditOperacion = lista.AuditOperacion,
+                             CDC = lista.CDC,
+                             DE = lista.DE,
+                             Lote = lista.Lote,
+                             EstadoDE = lista.EstadoDE,
+                             TipoCambio = lista.TipoCambio,
+                             TieneAutorizacionVigente = lista.TieneAutorizacionVigente,
                              //Detalles
-                             Cantidad = fd.fd_cantidad,
-                             Descripcion = fd.fd_descripcion,
-                             PrecioUnitario = fd.fd_preciounitario,
-                             Exentas = fd.fd_exentas,
-                             CincoPorciento = fd.fd_cincoporciento,
-                             DiezPorciento = fd.fd_diezporciento,
-                             PresupuestoCabID = fd.fd_presupuestocabid,
-                             BoletaDepositoNro = fd.fd_nroboletadeposito,  //this.DBContext.GetDatosBoletaDepCobro(fd.fd_presupuestocabid).FirstOrDefault().NroBoletaDep
+                             Cantidad = lista.Cantidad,
+                             Descripcion = lista.Descripcion,
+                             PrecioUnitario = lista.PrecioUnitario,
+                             Exentas = lista.Exentas,
+                             CincoPorciento = lista.CincoPorCiento,
+                             DiezPorciento = lista.DiezPorciento,
+                             PresupuestoCabID = lista.PresupuestoCabID,
+                             BoletaDepositoNro = lista.BoletaDepositoNro,  //this.DBContext.GetDatosBoletaDepCobro(fd.fd_presupuestocabid).FirstOrDefault().NroBoletaDep
                              //CobroAnulado = pp.pp_anulado
-                             CobroID = fd.fd_cobroid,
-                             DescripcionFE = fd.fd_descripFE
+                             CobroID = lista.CobroID,
+                             DescripcionFE = lista.DescripcionFE
                          })
-                         .Where(b => b.AuditOperacion == AUDIT_OPERACION_INSERT && b.DE == true && timbrados.Contains(b.FacturaTimbradoID.Value))
-                         //.Where(b => b.AuditOperacion == AUDIT_OPERACION_INSERT)
-                         .OrderByDescending( a => a.FacturaCabeceraID )
-                         .Take(50)
                          .ToList();
 
             this.BindingSourceBase_ExportExcelGrid = lFacturas;
@@ -371,8 +427,8 @@ namespace SPF.UserControls.UI
                              TipoCambio = item.TipoCambio,
                              TieneAutorizacionVigente = item.TieneAutorizacionVigente
                          })
-                         .GroupBy(x => new { x.FacturaCabeceraID }).Select(g => g.First()).ToList()
-                         .Take(200);
+                         .GroupBy(x => new { x.FacturaCabeceraID }).Select(g => g.First()).ToList();
+                         //.Take(200);
 
             this.BindingSourceBase = query;
 
@@ -973,91 +1029,151 @@ namespace SPF.UserControls.UI
             {
                 this.limpiarDatos();
 
-                var query = (from fc in this.DBContext.fc_facturacabecera
-                             join fd in this.DBContext.fd_facturadetalle
-                                 on fc.fc_facturacabeceraid equals fd.fd_facturacabeceraid
-                             join mon in this.DBContext.Moneda
-                                 on fc.fc_monedaid equals mon.ID
-                             join AudFc in this.DBContext.Audit_fc_facturacabecera
-                                 on fc.fc_facturacabeceraid equals AudFc.fc_facturacabeceraid
-                             join cli in this.DBContext.Cliente
-                                 on fc.fc_clienteid equals cli.ID into fc_cli
-                             from cli in fc_cli.DefaultIfEmpty()
-                             join uAud in this.DBContext.Usuario
-                                 on AudFc.Audit_User.Substring(6, AudFc.Audit_User.Length) equals uAud.Usuario1
-                             join ti in this.DBContext.ti_timbrado
-                                 on fc.fc_timbradoid equals ti.ti_timbradoid
-                             //join pp in this.DBContext.pp_pagopresupuesto
-                             //    on fd.fd_presupuestocabid equals pp.pp_presupuestocabid into fd_pp
-                             //from pp in fd_pp.DefaultIfEmpty()
+                #region Deprecated
+                //var query = (from fc in this.DBContext.fc_facturacabecera
+                //             join fd in this.DBContext.fd_facturadetalle
+                //                 on fc.fc_facturacabeceraid equals fd.fd_facturacabeceraid
+                //             join mon in this.DBContext.Moneda
+                //                 on fc.fc_monedaid equals mon.ID
+                //             join AudFc in this.DBContext.Audit_fc_facturacabecera
+                //                 on fc.fc_facturacabeceraid equals AudFc.fc_facturacabeceraid
+                //             join cli in this.DBContext.Cliente
+                //                 on fc.fc_clienteid equals cli.ID into fc_cli
+                //             from cli in fc_cli.DefaultIfEmpty()
+                //             join uAud in this.DBContext.Usuario
+                //                 on AudFc.Audit_User.Substring(6, AudFc.Audit_User.Length) equals uAud.Usuario1
+                //             join ti in this.DBContext.ti_timbrado
+                //                 on fc.fc_timbradoid equals ti.ti_timbradoid
+                //             //join pp in this.DBContext.pp_pagopresupuesto
+                //             //    on fd.fd_presupuestocabid equals pp.pp_presupuestocabid into fd_pp
+                //             //from pp in fd_pp.DefaultIfEmpty()
+                //             select new FacturaAllType
+                //             {
+                //                 //Cabecera
+                //                 FacturaNro = fc.fc_nrofactura,
+                //                 FacturaCabeceraID = fc.fc_facturacabeceraid,
+                //                 FacturaTimbradoID = fc.fc_timbradoid,
+                //                 FacturaTimbradoHojaSuelta = ti.ti_facthojasuelta,
+                //                 FacturaFecha = fc.fc_fechafactura,
+                //                 Anulado = fc.fc_anulado,
+                //                 ClienteID = fc.fc_clienteid,
+                //                 ClienteNombre = fc.fc_clientenombre,
+                //                 ClienteIdiomaID = cli.IdiomaID,
+                //                 Direccion = fc.fc_direccion,
+                //                 FacturaTipo = fc.fc_tipofactura,
+                //                 RUC = fc.fc_ruc,
+                //                 NroRemision = fc.fc_nroremision,
+                //                 Telefono = fc.fc_telefono,
+                //                 MonedaID = fc.fc_monedaid,
+                //                 MonedaAbrev = mon.AbrevMoneda,
+                //                 MonedaDescripcion = mon.Descripcion,
+                //                 TotalExentas = fc.fc_totalexentas,
+                //                 TotalIVA5 = fc.fc_totaliva5,
+                //                 TotalIVA10 = fc.fc_totaliva10,
+                //                 TotalIVA = fc.fc_totaliva5 + fc.fc_totaliva10, //fc.fc_totaliva,
+                //                 LiqIVA5 = fc.fc_liqiva5,
+                //                 LiqIVA10 = fc.fc_liqiva10,
+                //                 TotalLiqIVA = fc.fc_totaliva,
+                //                 TotalFactura = fc.fc_total,
+                //                 TotalLetras = fc.fc_totalletras,
+                //                 DocumentosAsociados = fc.fc_documentosasoc,
+                //                 UsuarioCargaID = uAud.ID,
+                //                 UsuarioCargaNombre = uAud.NombrePila,
+                //                 AuditOperacion = AudFc.Audit_Operacion,
+                //                 CDC = fc.fc_cdc,
+                //                 DE = fc.fc_documentoelectronico,
+                //                 Lote = fc.fc_lote,
+                //                 EstadoDE = fc.fc_estadode,
+                //                 TipoCambio = fc.fc_tipocambio,
+                //                 TieneAutorizacionVigente = this.DBContext.GetAutorizacionPorDocumentoID(TIPODOCUMENTO_FACTURA_CLIENTE,
+                //                                                                                     fc.fc_facturacabeceraid,
+                //                                                                                     this.UsuarioID).FirstOrDefault().Value,
+                //                 //Detalles
+                //                 Cantidad = fd.fd_cantidad,
+                //                 Descripcion = fd.fd_descripcion,
+                //                 PrecioUnitario = fd.fd_preciounitario,
+                //                 Exentas = fd.fd_exentas,
+                //                 CincoPorciento = fd.fd_cincoporciento,
+                //                 DiezPorciento = fd.fd_diezporciento,
+                //                 PresupuestoCabID = fd.fd_presupuestocabid,
+                //                 BoletaDepositoNro = fd.fd_nroboletadeposito, //this.DBContext.GetDatosBoletaDepCobro(fd.fd_presupuestocabid).FirstOrDefault().NroBoletaDep //pp.pp_nroboletadeposito,
+                //                 //CobroAnulado = pp.pp_anulado
+                //                 DescripcionFE = fd.fd_descripFE
+                //             })
+                //             //.Where(b => b.AuditOperacion == AUDIT_OPERACION_INSERT);
+                //             .Where(b => b.AuditOperacion == AUDIT_OPERACION_INSERT && b.DE == true && timbrados.Contains(b.FacturaTimbradoID.Value));
+                #endregion Deprecated
+
+                string filtro = where;
+                lFacturas.Clear();
+
+                lFacturas = (from lista in this.DBContext.GetListadoFacturas(this.UsuarioID, filtro)
                              select new FacturaAllType
                              {
                                  //Cabecera
-                                 FacturaNro = fc.fc_nrofactura,
-                                 FacturaCabeceraID = fc.fc_facturacabeceraid,
-                                 FacturaTimbradoID = fc.fc_timbradoid,
-                                 FacturaTimbradoHojaSuelta = ti.ti_facthojasuelta,
-                                 FacturaFecha = fc.fc_fechafactura,
-                                 Anulado = fc.fc_anulado,
-                                 ClienteID = fc.fc_clienteid,
-                                 ClienteNombre = fc.fc_clientenombre,
-                                 ClienteIdiomaID = cli.IdiomaID,
-                                 Direccion = fc.fc_direccion,
-                                 FacturaTipo = fc.fc_tipofactura,
-                                 RUC = fc.fc_ruc,
-                                 NroRemision = fc.fc_nroremision,
-                                 Telefono = fc.fc_telefono,
-                                 MonedaID = fc.fc_monedaid,
-                                 MonedaAbrev = mon.AbrevMoneda,
-                                 MonedaDescripcion = mon.Descripcion,
-                                 TotalExentas = fc.fc_totalexentas,
-                                 TotalIVA5 = fc.fc_totaliva5,
-                                 TotalIVA10 = fc.fc_totaliva10,
-                                 TotalIVA = fc.fc_totaliva5 + fc.fc_totaliva10, //fc.fc_totaliva,
-                                 LiqIVA5 = fc.fc_liqiva5,
-                                 LiqIVA10 = fc.fc_liqiva10,
-                                 TotalLiqIVA = fc.fc_totaliva,
-                                 TotalFactura = fc.fc_total,
-                                 TotalLetras = fc.fc_totalletras,
-                                 DocumentosAsociados = fc.fc_documentosasoc,
-                                 UsuarioCargaID = uAud.ID,
-                                 UsuarioCargaNombre = uAud.NombrePila,
-                                 AuditOperacion = AudFc.Audit_Operacion,
-                                 CDC = fc.fc_cdc,
-                                 DE = fc.fc_documentoelectronico,
-                                 Lote = fc.fc_lote,
-                                 EstadoDE = fc.fc_estadode,
-                                 TipoCambio = fc.fc_tipocambio,
-                                 TieneAutorizacionVigente = this.DBContext.GetAutorizacionPorDocumentoID(TIPODOCUMENTO_FACTURA_CLIENTE,
-                                                                                                     fc.fc_facturacabeceraid,
-                                                                                                     this.UsuarioID).FirstOrDefault().Value,
+                                 FacturaFecha = lista.FacturaFecha,
+                                 FacturaCabeceraID = lista.FacturaCabeceraID,
+                                 FacturaTimbradoID = lista.FacturaTimbradoID,
+                                 FacturaTimbradoHojaSuelta = lista.FacturaTimbradoHojaSuelta,
+                                 FacturaNro = lista.FacturaNro,
+                                 Anulado = lista.Anulado,
+                                 ClienteID = lista.ClienteID,
+                                 ClienteNombre = lista.ClienteNombre,
+                                 ClienteIdiomaID = lista.ClienteIdiomaID,
+                                 Direccion = lista.Direccion,
+                                 FacturaTipo = lista.FacturaTipo,
+                                 RUC = lista.RUC,
+                                 NroRemision = lista.NroRemision,
+                                 Telefono = lista.Telefono,
+                                 MonedaID = lista.MonedaID,
+                                 MonedaAbrev = lista.MonedaAbrev,
+                                 MonedaDescripcion = lista.MonedaDescripcion,
+                                 TotalExentas = lista.TotalExentas,
+                                 TotalIVA5 = lista.TotalIVA5,
+                                 TotalIVA10 = lista.TotalIVA10,
+                                 TotalIVA = lista.TotalIVA.Value,  //fc.fc_totaliva,
+                                 LiqIVA5 = lista.LiqIVA5,
+                                 LiqIVA10 = lista.LiqIVA10,
+                                 TotalLiqIVA = lista.TotalLiqIVA,
+                                 TotalFactura = lista.TotalFactura,
+                                 TotalLetras = lista.TotalLetras,
+                                 DocumentosAsociados = lista.DocumentosAsociados,
+                                 UsuarioCargaID = lista.UsuarioCargaID,
+                                 UsuarioCargaNombre = lista.UsuarioCargaNombre,
+                                 AuditOperacion = lista.AuditOperacion,
+                                 CDC = lista.CDC,
+                                 DE = lista.DE,
+                                 Lote = lista.Lote,
+                                 EstadoDE = lista.EstadoDE,
+                                 TipoCambio = lista.TipoCambio,
+                                 TieneAutorizacionVigente = lista.TieneAutorizacionVigente,
                                  //Detalles
-                                 Cantidad = fd.fd_cantidad,
-                                 Descripcion = fd.fd_descripcion,
-                                 PrecioUnitario = fd.fd_preciounitario,
-                                 Exentas = fd.fd_exentas,
-                                 CincoPorciento = fd.fd_cincoporciento,
-                                 DiezPorciento = fd.fd_diezporciento,
-                                 PresupuestoCabID = fd.fd_presupuestocabid,
-                                 BoletaDepositoNro = fd.fd_nroboletadeposito, //this.DBContext.GetDatosBoletaDepCobro(fd.fd_presupuestocabid).FirstOrDefault().NroBoletaDep //pp.pp_nroboletadeposito,
+                                 Cantidad = lista.Cantidad,
+                                 Descripcion = lista.Descripcion,
+                                 PrecioUnitario = lista.PrecioUnitario,
+                                 Exentas = lista.Exentas,
+                                 CincoPorciento = lista.CincoPorCiento,
+                                 DiezPorciento = lista.DiezPorciento,
+                                 PresupuestoCabID = lista.PresupuestoCabID,
+                                 BoletaDepositoNro = lista.BoletaDepositoNro,  //this.DBContext.GetDatosBoletaDepCobro(fd.fd_presupuestocabid).FirstOrDefault().NroBoletaDep
                                  //CobroAnulado = pp.pp_anulado
-                                 DescripcionFE = fd.fd_descripFE
+                                 CobroID = lista.CobroID,
+                                 DescripcionFE = lista.DescripcionFE
                              })
-                             //.Where(b => b.AuditOperacion == AUDIT_OPERACION_INSERT);
-                             .Where(b => b.AuditOperacion == AUDIT_OPERACION_INSERT && b.DE == true && timbrados.Contains(b.FacturaTimbradoID.Value));
+                             .ToList();
 
-                lFacturas.Clear();
+                //lFacturas.Clear();
 
-                if (where != "")
-                {
-                    //this.BindingSourceBase = query.Where(where, filterParams).OrderByDescending(a => a.NotaCreditoID).ToList();
-                    lFacturas = query.Where(where, filterParams).OrderByDescending(a => a.FacturaCabeceraID).ToList();
-                }
-                else
-                {
-                    //this.BindingSourceBase = query.OrderByDescending(a => a.NotaCreditoID).Take(50).ToList();
-                    lFacturas = query.OrderByDescending(a => a.FacturaCabeceraID).Take(200).ToList();
-                }
+                //if (where != "")
+                //{
+                //    //this.BindingSourceBase = query.Where(where, filterParams).OrderByDescending(a => a.NotaCreditoID).ToList();
+                //    lFacturas = query.Where(where, filterParams).OrderByDescending(a => a.FacturaCabeceraID).ToList();
+                //}
+                //else
+                //{
+                //    //this.BindingSourceBase = query.OrderByDescending(a => a.NotaCreditoID).Take(50).ToList();
+                //    lFacturas = query.OrderByDescending(a => a.FacturaCabeceraID).Take(200).ToList();
+                //}
 
                 this.BindingSourceBase_ExportExcelGrid = lFacturas;
 
@@ -3006,7 +3122,7 @@ namespace SPF.UserControls.UI
                 //#dNomRec#
                 json = json.Replace("#dNomRec#", cli_pais.FirstOrDefault().RazonSocial);
                 //#dDirRec#
-                json = json.Replace("#dDirRec#", this.txtDireccion.Text);
+                json = json.Replace("#dDirRec#", this.txtDireccion.Text.Replace("\"", "\\\""));
                 //#cMoneOpe#
                 json = json.Replace("#cMoneOpe#", moneda.MonedaFE);
                 //#cMoneTiPag#
@@ -3138,7 +3254,7 @@ namespace SPF.UserControls.UI
                             gDBasExe += dBasExe;
                             jsonDet = jsonDet.Replace("#dBasExe#", dBasExe.ToString().Replace(",", "."));
                         }
-                        else
+                        else if (fd.fd_cincoporciento > 0)
                         {
                             //#iAfecIVA#
                             jsonDet = jsonDet.Replace("#iAfecIVA#", GRAVADO_PARCIAL_ID);
@@ -3165,6 +3281,26 @@ namespace SPF.UserControls.UI
                             decimal dBasExe = fd.fd_cantidad * fd.fd_exentas;
                             gDBasExe += dBasExe;
                             jsonDet = jsonDet.Replace("#dBasExe#", dBasExe.ToString().Replace(",", "."));
+                        }
+                        else
+                        {
+                            //#iAfecIVA#
+                            jsonDet = jsonDet.Replace("#iAfecIVA#", EXENTO_ID);
+                            //#dDesAfecIVA#
+                            jsonDet = jsonDet.Replace("#dDesAfecIVA#", EXENTO_DESCRIP);
+                            //#dPropIVA#
+                            jsonDet = jsonDet.Replace("#dPropIVA#", "0");
+                            //#dTasaIVA#
+                            jsonDet = jsonDet.Replace("#dTasaIVA#", "0");
+                            //#dBasGravIVA#
+                            jsonDet = jsonDet.Replace("#dBasGravIVA#", "0");
+                            //#dLiqIVAItem#
+                            jsonDet = jsonDet.Replace("#dLiqIVAItem#", "0");
+                            //#dBasExe#
+                            //#dBasExe#
+                            decimal dBasExe = fd.fd_cantidad * fd.fd_exentas;
+                            gDBasExe += dBasExe;
+                            jsonDet = jsonDet.Replace("#dBasExe#", "0");
                         }
                     }
                     else
@@ -3548,8 +3684,19 @@ namespace SPF.UserControls.UI
         {
             SifenQueryResponse2 asyncResponse = new SifenQueryResponse2();
             var url = "https://facte.siga.com.py/FacturaE/rest/enviarLoteDE/json?ruc=80016875-5&token=" + TOKEN_JWT;
+            //var url = "https://facte.siga.com.py/FacturaE/rest/enviarLoteDE/80016875-5";
             
             string requestBody = this.GenerateJSON(FacturaCabId);
+
+            #region Guardar JSON en archivo
+            if (this.IsDebugDEJSON)
+            {
+                string path = VWGContext.Current.Server.MapPath(@"\Resources\UserData\" + VWGContext.Current.Session["WindowsUser"].ToString() + @"\");
+                Berke.Libs.Base.Helpers.Files.CreateDirectory(@path);
+                string fileName = @path + this.txtCDC.Text + ".json";
+                Berke.Libs.Base.Helpers.Files.SaveStringToFile(requestBody, fileName);
+            }
+            #endregion
 
             using (HttpClient client = new HttpClient())
             {

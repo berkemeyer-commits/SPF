@@ -3139,7 +3139,8 @@ namespace SPF.UserControls.UI
                 //#dNomRec#
                 json = json.Replace("#dNomRec#", cli_pais.FirstOrDefault().RazonSocial);
                 //#dDirRec#
-                json = json.Replace("#dDirRec#", this.txtDireccion.Text);
+                //json = json.Replace("#dDirRec#", this.txtDireccion.Text);
+                json = json.Replace("#dDirRec#", this.txtDireccion.Text.Replace("\"", "\\\""));
                 //#cMoneOpe#
                 json = json.Replace("#cMoneOpe#", moneda.MonedaFE);
                 //#cMoneTiPag#
