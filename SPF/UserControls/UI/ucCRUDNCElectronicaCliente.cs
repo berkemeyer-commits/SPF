@@ -2956,7 +2956,8 @@ namespace SPF.UserControls.UI
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    string xmlUrl = "https://ekuatia.set.gov.py/docs/documento-electronico-xml/" + this.txtCDC.Text;
+                    //string xmlUrl = "https://ekuatia.set.gov.py/docs/documento-electronico-xml/" + this.txtCDC.Text;
+                    string xmlUrl = "https://facte.siga.com.py/FacturaE/rest/descargaXML?ruc=80016875-5&codigo=" + this.txtCDC.Text;
                     System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
                     HttpResponseMessage response = client.GetAsync(xmlUrl).Result;
 
@@ -3058,6 +3059,7 @@ namespace SPF.UserControls.UI
                                     ClienteID = c.ID,
                                     RUC = c.RUC,
                                     PaisAlfa3 = p.paisalfa3,
+                                    PaisAlfa = p.paisalfa,
                                     PaisDescripFE = p.descripFE,
                                     TipoPersona = c.Personeria,
                                     RazonSocial = c.Nombre
@@ -3076,6 +3078,17 @@ namespace SPF.UserControls.UI
                 else
                 {
                     path = VWGContext.Current.Server.MapPath(@"~\Resources\Src\fe-no-contribuyente.json");
+
+                    path = VWGContext.Current.Server.MapPath(@"~\Resources\Src\fe-no-contribuyente.json");
+
+                    if (this.txtRUC.Text == String.Empty)
+                    {
+                        this.txtRUC.Text = (cli_pais.FirstOrDefault().PaisAlfa != String.Empty ? cli_pais.FirstOrDefault().PaisAlfa : "SP")
+                                            + cli_pais.FirstOrDefault().ClienteID.ToString();
+
+                        nc.nc_ruc = this.txtRUC.Text;
+                        context.SaveChanges();
+                    }
                     //pathDet = VWGContext.Current.Server.MapPath(@"~\Resources\Src\detalleFactura.json");
                 }
                 string pathDet = VWGContext.Current.Server.MapPath(@"~\Resources\Src\detalleFactura.json");
@@ -3208,9 +3221,11 @@ namespace SPF.UserControls.UI
                 }
                 else
                 {
-
                     //#dNumIDRec#
-                    json = json.Replace("#dNumIDRec#", this.txtRUC.Text != string.Empty ? this.txtRUC.Text : "0");
+                    //json = json.Replace("#dNumIDRec#", this.txtRUC.Text != string.Empty ? this.txtRUC.Text : "0");
+                    json = json.Replace("#dNumIDRec#", this.txtRUC.Text);
+                    //#dCodCliente#
+                    json = json.Replace("#dCodCliente#", this.txtRUC.Text);
                 }
 
                 //#iTiPago#

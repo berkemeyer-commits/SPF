@@ -2954,7 +2954,9 @@ namespace SPF.UserControls.UI
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    string xmlUrl = "https://ekuatia.set.gov.py/docs/documento-electronico-xml/" + this.txtCDC.Text;
+                    //string xmlUrl = "https://ekuatia.set.gov.py/docs/documento-electronico-xml/" + this.txtCDC.Text;
+                    string xmlUrl = "https://facte.siga.com.py/FacturaE/rest/descargaXML?ruc=80016875-5&codigo=" + this.txtCDC.Text;
+                    
                     System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
                     HttpResponseMessage response = client.GetAsync(xmlUrl).Result;
 
