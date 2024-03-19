@@ -452,7 +452,7 @@ namespace SPF.Forms.UI
             this.CantTabs = this.tbCtrlGenReclamos.TabPages.Count;
 
             #region Tab Filtros
-            this.lblFiltros.Text = "Indique los criterios de filtro a tener en cuenta para la selección de cotizaciones con las que se Generarán Presupuestos.";
+            this.lblFiltros.Text = "Indique los criterios de filtro a tener en cuenta para la selección de deudas con las que se Generarán Reclamos.";
             #endregion Tab Filtros
 
             
@@ -1539,8 +1539,8 @@ namespace SPF.Forms.UI
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            string caption = "Cancelación de Generación de Presupuestos";
-            string message = "Se cancelará la operación de Generación de Presupuestos ¿Está seguro?";
+            string caption = "Cancelación de Generación de Reclamos";
+            string message = "Se cancelará la operación de Generación de Reclamos ¿Está seguro?";
 
             MessageBoxButtons buttons = MessageBoxButtons.YesNo;
             MessageBox.Show(message, caption, buttons,
@@ -1725,7 +1725,7 @@ namespace SPF.Forms.UI
                     break;
                 case 1 :
 
-                    this.lblTitulo.Text = "Asistente para la Generación de Presupuestos - Definición de Cotizaciones";
+                    this.lblTitulo.Text = "Asistente para la Generación de Reclamos - Definición de Deudas";
                     this.pbarGeneracion.Visible = false;
                     this.btnMarcarTodo.Text = "Marcar Todo";
                     this.GetCotizacionesCab();
@@ -1770,10 +1770,10 @@ namespace SPF.Forms.UI
                     this.lblTitulo.Text = "";
                     break;
                 case 1:
-                    this.lblTitulo.Text = "Asistente para la Generación de Presupuestos - Especificación de Filtros";
+                    this.lblTitulo.Text = "Asistente para la Generación de Reclamos - Especificación de Filtros";
                     break;
                 case 2:
-                    this.lblTitulo.Text = "Asistente para la Generación de Presupuestos - Selección de Trámites";
+                    this.lblTitulo.Text = "Asistente para la Generación de Reclamos - Selección de Trámites";
                     break;
             }
             this.tbCtrlGenReclamos.SelectedIndex = this.tbCtrlGenReclamos.SelectedIndex - 1;
@@ -2073,12 +2073,19 @@ namespace SPF.Forms.UI
 
             smtpClient.UseDefaultCredentials = false;
 
-            string username = VWGContext.Current.Session["EmailUsuario"].ToString();
-            string password = this.decryptPasswd();
+            //
+            //string username = VWGContext.Current.Session["EmailUsuario"].ToString();
+            //string password = this.decryptPasswd();
+            //
+
+            string username = "notificaciones@berke.com.py";
+            string password = "Sist3ma$d33nvio$";
+
             smtpClient.Credentials = new NetworkCredential(username, password);
 
             try
             {
+                System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
                 smtpClient.Send(message);
             }
             catch (Exception ex)
@@ -3968,6 +3975,11 @@ namespace SPF.Forms.UI
         private void cbReclamarEn_TextChanged(object sender, EventArgs e)
         {
             this.CalcularFechaReclamarEn();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            
         }
    }
 }
