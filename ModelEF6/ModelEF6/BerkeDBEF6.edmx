@@ -12757,6 +12757,13 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
           <Property Type="Int64" Name="Timbrado" Nullable="true" />
           <Property Type="Int32" Name="Tipo_NotaCredito" Nullable="true" />
           <Property Type="String" Name="Comentario" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Contribuyente" Nullable="false" MaxLength="2" />
+          <Property Type="Int32" Name="Total_ME" Nullable="true" />
+          <Property Type="Int32" Name="Precio_ME" Nullable="true" />
+          <Property Type="Int32" Name="Descuento" Nullable="true" />
+          <Property Type="Int32" Name="Descuento_ME" Nullable="true" />
+          <Property Type="String" Name="CantCuota_s" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Vencecad_dias_" Nullable="true" MaxLength="10" />
         </ComplexType>
         <ComplexType Name="GetListadoFacturas_Result">
           <Property Type="DateTime" Name="FacturaFecha" Nullable="false" />
@@ -16241,6 +16248,13 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
                 <ScalarProperty Name="Timbrado" ColumnName="Timbrado" />
                 <ScalarProperty Name="Tipo_NotaCredito" ColumnName="Tipo_NotaCredito" />
                 <ScalarProperty Name="Comentario" ColumnName="Comentario" />
+                <ScalarProperty Name="Contribuyente" ColumnName="Contribuyente" />
+                <ScalarProperty Name="Total_ME" ColumnName="Total_ME" />
+                <ScalarProperty Name="Precio_ME" ColumnName="Precio_ME" />
+                <ScalarProperty Name="Descuento" ColumnName="Descuento" />
+                <ScalarProperty Name="Descuento_ME" ColumnName="Descuento_ME" />
+                <ScalarProperty Name="CantCuota_s" ColumnName="CantCuota_s" />
+                <ScalarProperty Name="Vencecad_dias_" ColumnName="Vencecad_dias_" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

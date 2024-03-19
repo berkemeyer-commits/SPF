@@ -41,5 +41,12 @@ namespace ModelEF6
         public Nullable<long> Timbrado { get; set; }
         public Nullable<int> Tipo_NotaCredito { get; set; }
         public string Comentario { get; set; }
+        public string Contribuyente { get; set; }
+        public Nullable<int> Total_ME { get; set; }
+        public Nullable<int> Precio_ME { get; set; }
+        public Nullable<int> Descuento { get; set; }
+        public Nullable<int> Descuento_ME { get; set; }
+        public string CantCuota_s { get; set; }
+        public string Vencecad_dias_ { get; set; }
     }
 }
