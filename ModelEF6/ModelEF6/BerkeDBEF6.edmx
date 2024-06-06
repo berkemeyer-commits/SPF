@@ -12758,8 +12758,8 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
           <Property Type="Int32" Name="Tipo_NotaCredito" Nullable="true" />
           <Property Type="String" Name="Comentario" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="Contribuyente" Nullable="false" MaxLength="2" />
-          <Property Type="Int32" Name="Total_ME" Nullable="true" />
-          <Property Type="Int32" Name="Precio_ME" Nullable="true" />
+          <Property Type="Decimal" Name="Total_ME" Nullable="true" Precision="14" Scale="2" />
+          <Property Type="Decimal" Name="Precio_ME" Nullable="true" Precision="14" Scale="2" />
           <Property Type="Int32" Name="Descuento" Nullable="true" />
           <Property Type="Int32" Name="Descuento_ME" Nullable="true" />
           <Property Type="String" Name="CantCuota_s" Nullable="true" MaxLength="10" />

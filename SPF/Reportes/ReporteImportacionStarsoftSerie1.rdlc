@@ -16,7 +16,7 @@
     <DataSet Name="DataSet1">
       <Query>
         <DataSourceName>DataSource1</DataSourceName>
-        <CommandText>SELECT 
+        <CommandText>SELECT
 		CONVERT(char(10), fc_fechafactura, 103) AS Fecha,
 		CASE WHEN COALESCE(fc_ruc, '') &lt;&gt; '' THEN fc_ruc
 				WHEN COALESCE(c.RUC, '') &lt;&gt; '' THEN c.RUC
@@ -35,12 +35,14 @@
 		--COALESCE(REPLACE(CAST(fc_tipocambio AS varchar(10)), '.', ','), '') AS T_Cambio,
 		COALESCE(fc_tipocambio, 0) AS T_Cambio,
 		CAST(ROUND(CASE WHEN fc_tipocambio &gt; 0 THEN fc_total * fc_tipocambio  ELSE fc_total END, 0) AS int) AS Total,
-		CASE WHEN fc_tipocambio &gt; 0 THEN CAST(ROUND(CAST(ROUND(CASE WHEN fc_tipocambio &gt; 0 THEN fc_total * fc_tipocambio  ELSE fc_total END, 0) AS int) / COALESCE(fc_tipocambio, 0), 0) AS int) ELSE CAST(0 AS int) END Total_ME,
+		--CAST((CASE WHEN fc_tipocambio &gt; 0 THEN FLOOR(CAST(ROUND(CASE WHEN fc_tipocambio &gt; 0 THEN fc_total * fc_tipocambio * 100  ELSE fc_total END, 0) AS bigint) / COALESCE(fc_tipocambio, 0)) / 100 ELSE 0 END) AS numeric(14,2)) Total_ME,
+		CAST(CASE WHEN fc_tipocambio &gt; 0 THEN FLOOR(ROUND(fc_total * fc_tipocambio, 0) * 100/ fc_tipocambio) / 100.00 ELSE 0 END AS numeric(14,2)) Total_ME,
 		CAST('01' AS varchar(10)) AS Producto,
 		CAST('HONORARIOS PROFESIONALES' AS varchar(30)) AS Nombre,
 		CAST(1 AS int) AS Cant_,
 		CAST(ROUND(CASE WHEN fc_tipocambio &gt; 0 THEN fc_total * fc_tipocambio  ELSE fc_total END, 0) AS int) AS Precio,
-		CASE WHEN fc_tipocambio &gt; 0 THEN CAST(ROUND(CAST(ROUND(CASE WHEN fc_tipocambio &gt; 0 THEN fc_total * fc_tipocambio  ELSE fc_total END, 0) AS int) / COALESCE(fc_tipocambio, 0), 0) AS int) ELSE CAST(0 AS int) END Precio_ME,
+		--CASE WHEN fc_tipocambio &gt; 0 THEN ROUND(CAST(ROUND(CASE WHEN fc_tipocambio &gt; 0 THEN fc_total * fc_tipocambio  ELSE fc_total END, 0) AS int) / COALESCE(fc_tipocambio, 0), 2) ELSE 0 END Precio_ME,
+		CAST(CASE WHEN fc_tipocambio &gt; 0 THEN FLOOR(ROUND(fc_total * fc_tipocambio, 0) * 100/ fc_tipocambio) / 100.00 ELSE 0 END AS numeric(14,2)) Precio_ME,
 		CAST(ROUND(CASE WHEN fc_tipocambio &gt; 0 THEN (fc_totaliva5 * fc_tipocambio) ELSE fc_totaliva5 END, 0) AS int) AS Grav__05,
 		CAST(ROUND(CASE WHEN fc_tipocambio &gt; 0 THEN (fc_totaliva10 * fc_tipocambio) ELSE fc_totaliva10  END, 0) AS int) AS Grav__10,
 		CAST(ROUND(CASE WHEN fc_tipocambio &gt; 0 THEN fc_totalexentas * fc_tipocambio ELSE fc_totalexentas END, 0) AS int) AS Exenta,
@@ -137,7 +139,7 @@
         </Field>
         <Field Name="Total_ME">
           <DataField>Total_ME</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Cant_">
           <DataField>Cant_</DataField>
@@ -161,7 +163,7 @@
         </Field>
         <Field Name="Precio_ME">
           <DataField>Precio_ME</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
+          <rd:TypeName>System.Decimal</rd:TypeName>
         </Field>
         <Field Name="Iva_10">
           <DataField>Iva_10</DataField>

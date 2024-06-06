@@ -42,8 +42,8 @@ namespace ModelEF6
         public Nullable<int> Tipo_NotaCredito { get; set; }
         public string Comentario { get; set; }
         public string Contribuyente { get; set; }
-        public Nullable<int> Total_ME { get; set; }
-        public Nullable<int> Precio_ME { get; set; }
+        public Nullable<decimal> Total_ME { get; set; }
+        public Nullable<decimal> Precio_ME { get; set; }
         public Nullable<int> Descuento { get; set; }
         public Nullable<int> Descuento_ME { get; set; }
         public string CantCuota_s { get; set; }

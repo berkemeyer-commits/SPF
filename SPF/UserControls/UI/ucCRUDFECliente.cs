@@ -1737,8 +1737,8 @@ namespace SPF.UserControls.UI
                 {
                     fd_facturacabeceraid = 0,
                     fd_cantidad = Convert.ToDecimal(row.Cells[CAMPO_CANTIDAD].Value.ToString()),
-                    fd_descripcion = @row.Cells[CAMPO_DESCRIPCION].Value != null ? row.Cells[CAMPO_DESCRIPCION].Value.ToString() : string.Empty,
-                    fd_descripFE = @row.Cells[CAMPO_DESCRIPCION_FE].Value != null ? row.Cells[CAMPO_DESCRIPCION_FE].Value.ToString() : string.Empty,
+                    fd_descripcion = @row.Cells[CAMPO_DESCRIPCION].Value != null ? row.Cells[CAMPO_DESCRIPCION].Value.ToString().Replace("\r\n", " ") : string.Empty,
+                    fd_descripFE = @row.Cells[CAMPO_DESCRIPCION_FE].Value != null ? row.Cells[CAMPO_DESCRIPCION_FE].Value.ToString().Replace("\r\n", " ") : string.Empty,
                     fd_preciounitario = Convert.ToDecimal(row.Cells[CAMPO_PRECIOUNITARIO].Value.ToString()),
                     fd_exentas = Convert.ToDecimal(row.Cells[CAMPO_EXENTAS].Value.ToString()),
                     fd_cincoporciento = Convert.ToDecimal(row.Cells[CAMPO_CINCOPORCIENTO].Value.ToString()),
