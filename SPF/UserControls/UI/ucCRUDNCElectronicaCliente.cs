@@ -3838,7 +3838,8 @@ namespace SPF.UserControls.UI
         {
             string result = String.Empty;
             SifenQueryResponse queryResponse = new SifenQueryResponse();
-            var url = "https://facte.siga.com.py/FacturaE/rest/consultarLote?ruc=80016875-5&codigo=" + valor + "&token=" + TOKEN_JWT;
+            //var url = "https://facte.siga.com.py/FacturaE/rest/consultarLote?ruc=80016875-5&codigo=" + valor + "&token=" + TOKEN_JWT;
+            var url = "https://facte.siga.com.py/FacturaE/rest/consultarLote/json?ruc=80016875-5&codigo=" + valor + "&token=" + TOKEN_JWT;
             
             if (consultarPorCDC)
                 url = "https://facte.siga.com.py/FacturaE/rest/consultarDE/json?ruc=80016875-5&codigo=" + valor + "&token=" + TOKEN_JWT;

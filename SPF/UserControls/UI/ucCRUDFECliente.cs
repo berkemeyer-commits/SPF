@@ -4016,7 +4016,8 @@ namespace SPF.UserControls.UI
             SifenQueryResponse queryResponse = new SifenQueryResponse();
             //SifenQueryResponseGlobal queryResponse = new SifenQueryResponseGlobal();
             
-            var url = "https://facte.siga.com.py/FacturaE/rest/consultarLote?ruc=80016875-5&codigo=" + valor + "&token=" + TOKEN_JWT;
+            //var url = "https://facte.siga.com.py/FacturaE/rest/consultarLote?ruc=80016875-5&codigo=" + valor + "&token=" + TOKEN_JWT;
+            var url = "https://facte.siga.com.py/FacturaE/rest/consultarLote/json?ruc=80016875-5&codigo=" + valor + "&token=" + TOKEN_JWT;
 
             if (consultarPorCDC)
             {
