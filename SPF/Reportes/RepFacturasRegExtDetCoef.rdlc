@@ -17,7 +17,8 @@
       <Query>
         <DataSourceName>DataSource1</DataSourceName>
         <CommandText>SET DATEFORMAT dmy;
- SELECT DISTINCT  spd_proveedorid ProveedorID,  c.Nombre ProveedorNombre,  CASE WHEN spd_nrofactura IS NULL THEN 'No se cargó factura'	ELSE spd_nrofactura END NroFactura,  spd_fechafactura FechaFactura,  spc_monedaid MonedaID,  m.AbrevMoneda MonedaAbrev,  m.Descripcion MonedaDescrip,  SUM(spd_saldo) SaldoFactura,  SUM(spd_total) TotalFactura,  spc_presupcabids PresupuestoCabIDsAsoc,  prx.ListaPresupuestosCobrados,  prx.ListaPresupuestosPendientes,  prx.CoefUtilidad,  prx.MonedaDescrip MonedaDescripPresup,  CAST('Todos'AS nvarchar) Rango  FROM spc_solicitudpagocab  JOIN spd_solicitudpagodet 	ON spc_solicitudpagocabid = spd_solicitudpagocabid  JOIN Cliente c  	ON spd_proveedorid = c.ID  JOIN Moneda m  	ON spc_monedaid = m.ID  AND spc_saldo &gt; 0  OUTER APPLY dbo.GetListaPresupuestosRegExt(spc_solicitudpagocabid) prx  WHERE COALESCE(RTRIM(spd_nrofactura), '') &lt;&gt; '' AND spc_origen = 'X'  AND spc_importe &gt; 0  
+ SELECT DISTINCT  spd_proveedorid ProveedorID,  c.Nombre ProveedorNombre,  CASE WHEN spd_nrofactura IS NULL THEN 'No se cargó factura'	ELSE spd_nrofactura END NroFactura, 
+'Nombre Cliente' ClienteNombre, spd_fechafactura FechaFactura,  spc_monedaid MonedaID,  m.AbrevMoneda MonedaAbrev,  m.Descripcion MonedaDescrip,  SUM(spd_saldo) SaldoFactura,  SUM(spd_total) TotalFactura,  spc_presupcabids PresupuestoCabIDsAsoc,  prx.ListaPresupuestosCobrados,  prx.ListaPresupuestosPendientes,  prx.CoefUtilidad,  prx.MonedaDescrip MonedaDescripPresup,  CAST('Todos'AS nvarchar) Rango  FROM spc_solicitudpagocab  JOIN spd_solicitudpagodet 	ON spc_solicitudpagocabid = spd_solicitudpagocabid  JOIN Cliente c  	ON spd_proveedorid = c.ID  JOIN Moneda m  	ON spc_monedaid = m.ID  AND spc_saldo &gt; 0  OUTER APPLY dbo.GetListaPresupuestosRegExt(spc_solicitudpagocabid) prx  WHERE COALESCE(RTRIM(spd_nrofactura), '') &lt;&gt; '' AND spc_origen = 'X'  AND spc_importe &gt; 0  
 GROUP BY spd_proveedorid, c.Nombre, spd_nrofactura, spd_fechafactura,  spc_monedaid, m.AbrevMoneda, m.Descripcion, spc_presupcabids,  prx.ListaPresupuestosCobrados, prx.ListaPresupuestosPendientes,  prx.CoefUtilidad, prx.MonedaDescrip
 ORDER BY  spd_fechafactura ASC,spd_proveedorid, spc_monedaid</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
@@ -38,6 +39,10 @@ ORDER BY  spd_fechafactura ASC,spd_proveedorid, spc_monedaid</CommandText>
         <Field Name="MonedaID">
           <DataField>MonedaID</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="ClienteNombre">
+          <DataField>ClienteNombre</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="FechaFactura">
           <DataField>FechaFactura</DataField>
@@ -94,16 +99,19 @@ ORDER BY  spd_fechafactura ASC,spd_proveedorid, spc_monedaid</CommandText>
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>24.21564mm</Width>
+                  <Width>23.73604mm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>28.30313mm</Width>
+                  <Width>21.42396mm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>29.16719mm</Width>
+                  <Width>25mm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>30.75469mm</Width>
+                  <Width>24.66927mm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>25.46302mm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>23.47217mm</Width>
@@ -169,9 +177,10 @@ ORDER BY  spd_fechafactura ASC,spd_proveedorid, spc_monedaid</CommandText>
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <ColSpan>7</ColSpan>
+                        <ColSpan>8</ColSpan>
                       </CellContents>
                     </TablixCell>
+                    <TablixCell />
                     <TablixCell />
                     <TablixCell />
                     <TablixCell />
@@ -221,9 +230,10 @@ ORDER BY  spd_fechafactura ASC,spd_proveedorid, spc_monedaid</CommandText>
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <ColSpan>7</ColSpan>
+                        <ColSpan>8</ColSpan>
                       </CellContents>
                     </TablixCell>
+                    <TablixCell />
                     <TablixCell />
                     <TablixCell />
                     <TablixCell />
@@ -278,9 +288,10 @@ ORDER BY  spd_fechafactura ASC,spd_proveedorid, spc_monedaid</CommandText>
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <ColSpan>4</ColSpan>
+                        <ColSpan>5</ColSpan>
                       </CellContents>
                     </TablixCell>
+                    <TablixCell />
                     <TablixCell />
                     <TablixCell />
                     <TablixCell />
@@ -463,6 +474,41 @@ ORDER BY  spd_fechafactura ASC,spd_proveedorid, spc_monedaid</CommandText>
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
+                        <Textbox Name="Textbox2">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Cliente</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox2</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>LightBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
                         <Textbox Name="Textbox10">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
@@ -470,7 +516,7 @@ ORDER BY  spd_fechafactura ASC,spd_proveedorid, spc_monedaid</CommandText>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Presup. Cobrados</Value>
+                                  <Value>Presup. Cobr.</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -505,7 +551,7 @@ ORDER BY  spd_fechafactura ASC,spd_proveedorid, spc_monedaid</CommandText>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Presup. Pendientes</Value>
+                                  <Value>Presup. Pend.</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -685,6 +731,7 @@ ORDER BY  spd_fechafactura ASC,spd_proveedorid, spc_monedaid</CommandText>
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!NroFactura.Value</Value>
+                                  <MarkupType>HTML</MarkupType>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -694,6 +741,38 @@ ORDER BY  spd_fechafactura ASC,spd_proveedorid, spc_monedaid</CommandText>
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Transaccion</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox5">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!ClienteNombre.Value</Value>
+                                  <MarkupType>HTML</MarkupType>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox5</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -950,6 +1029,49 @@ ORDER BY  spd_fechafactura ASC,spd_proveedorid, spc_monedaid</CommandText>
                             <LeftBorder>
                               <Style>None</Style>
                             </LeftBorder>
+                            <RightBorder>
+                              <Style>None</Style>
+                            </RightBorder>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox7">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox7</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Style>None</Style>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Style>None</Style>
+                            </LeftBorder>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -1154,6 +1276,40 @@ ORDER BY  spd_fechafactura ASC,spd_proveedorid, spc_monedaid</CommandText>
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
+                        <Textbox Name="Textbox8">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox8</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
                         <Textbox Name="Textbox62">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
@@ -1273,6 +1429,7 @@ ORDER BY  spd_fechafactura ASC,spd_proveedorid, spc_monedaid</CommandText>
             </TablixBody>
             <TablixColumnHierarchy>
               <TablixMembers>
+                <TablixMember />
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
@@ -1608,9 +1765,9 @@ ORDER BY  spd_fechafactura ASC,spd_proveedorid, spc_monedaid</CommandText>
             <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
             <DataSetName>DataSet1</DataSetName>
             <Top>0.50744mm</Top>
-            <Left>8.11852mm</Left>
+            <Left>2.72102mm</Left>
             <Height>39.76689mm</Height>
-            <Width>181.07848mm</Width>
+            <Width>188.93013mm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1626,7 +1783,7 @@ ORDER BY  spd_fechafactura ASC,spd_proveedorid, spc_monedaid</CommandText>
           </Border>
         </Style>
       </Body>
-      <Width>193.02698mm</Width>
+      <Width>194.61783mm</Width>
       <Page>
         <PageHeader>
           <Height>4.03641cm</Height>
@@ -1658,9 +1815,9 @@ ORDER BY  spd_fechafactura ASC,spd_proveedorid, spc_monedaid</CommandText>
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
               <Top>2.28526cm</Top>
-              <Left>0.95473cm</Left>
+              <Left>0.31973cm</Left>
               <Height>0.62999cm</Height>
-              <Width>17.96497cm</Width>
+              <Width>18.84538cm</Width>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1673,7 +1830,7 @@ ORDER BY  spd_fechafactura ASC,spd_proveedorid, spc_monedaid</CommandText>
             </Textbox>
             <Line Name="Line1">
               <Top>2.16531cm</Top>
-              <Left>7.48524cm</Left>
+              <Left>6.85024cm</Left>
               <Height>0cm</Height>
               <Width>5.01354cm</Width>
               <ZIndex>1</ZIndex>
@@ -1708,9 +1865,9 @@ ORDER BY  spd_fechafactura ASC,spd_proveedorid, spc_monedaid</CommandText>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
               <Top>1.14198cm</Top>
-              <Left>0.95473cm</Left>
+              <Left>0.31973cm</Left>
               <Height>0.94396cm</Height>
-              <Width>17.96497cm</Width>
+              <Width>18.84538cm</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <Border>
@@ -1744,9 +1901,9 @@ ORDER BY  spd_fechafactura ASC,spd_proveedorid, spc_monedaid</CommandText>
               </Paragraphs>
               <rd:DefaultName>Textbox31</rd:DefaultName>
               <Top>3.0861cm</Top>
-              <Left>0.95473cm</Left>
+              <Left>0.31973cm</Left>
               <Height>0.6cm</Height>
-              <Width>17.96497cm</Width>
+              <Width>18.84538cm</Width>
               <ZIndex>3</ZIndex>
               <Style>
                 <Border>
@@ -1808,7 +1965,7 @@ ORDER BY  spd_fechafactura ASC,spd_proveedorid, spc_monedaid</CommandText>
               </Paragraphs>
               <rd:DefaultName>Textbox13</rd:DefaultName>
               <Top>0.42955cm</Top>
-              <Left>15.11787cm</Left>
+              <Left>15.14962cm</Left>
               <Height>0.6cm</Height>
               <Width>3.96787cm</Width>
               <Style>
@@ -1841,7 +1998,7 @@ ORDER BY  spd_fechafactura ASC,spd_proveedorid, spc_monedaid</CommandText>
               </Paragraphs>
               <rd:DefaultName>Textbox13</rd:DefaultName>
               <Top>0.3978cm</Top>
-              <Left>0.92298cm</Left>
+              <Left>0.35148cm</Left>
               <Height>0.6cm</Height>
               <Width>3.96787cm</Width>
               <ZIndex>1</ZIndex>

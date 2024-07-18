@@ -5,10 +5,10 @@
     <DataSource Name="DataSource1">
       <ConnectionProperties>
         <DataProvider>SQL</DataProvider>
-        <ConnectString>Data Source=BER-BD-01;Initial Catalog=BerkeDB</ConnectString>
-        <IntegratedSecurity>true</IntegratedSecurity>
+        <ConnectString>Data Source=ber-sql-prod.berke.com.py;Initial Catalog=BerkeDB</ConnectString>
+        <Prompt>Specify a user name and password for data source DataSource1:</Prompt>
       </ConnectionProperties>
-      <rd:SecurityType>Integrated</rd:SecurityType>
+      <rd:SecurityType>DataBase</rd:SecurityType>
       <rd:DataSourceID>1d7edbd9-768e-49ca-8c2e-9afd3db38af4</rd:DataSourceID>
     </DataSource>
   </DataSources>
@@ -17,7 +17,9 @@
       <Query>
         <DataSourceName>DataSource1</DataSourceName>
         <CommandText>SET DATEFORMAT dmy;
-SELECT DISTINCT  spd_proveedorid ProveedorID,  c.Nombre ProveedorNombre,  CASE WHEN spd_nrofactura IS NULL THEN 'No se cargó factura'	ELSE spd_nrofactura END NroFactura,  spd_fechafactura FechaFactura,  spc_monedaid MonedaID,  m.AbrevMoneda MonedaAbrev,  m.Descripcion MonedaDescrip,  SUM(spd_saldo) SaldoFactura,  SUM(spd_total) TotalFactura,  spc_presupcabids PresupuestoCabIDsAsoc,  prx.ListaPresupuestosCobrados,  prx.ListaPresupuestosPendientes,  prx.CoefUtilidad,  prx.MonedaDescrip MonedaDescripPresup,  CAST(CASE WHEN (SELECT COUNT(*) FROM spc_solicitudpagocab spc1				  JOIN sxp_solicitudesxpago 					ON sxp_solicitudpagocabid = spc1.spc_solicitudpagocabid 				  JOIN ps_pagosolicitud 					ON ps_pagosolicitudid = sxp_pagosolicitudid 				  WHERE ps_anulado = 0 				  AND ps_formapagoid = 5 				  AND spc1.spc_solicitudpagocabid = spc_solicitudpagocabid) &gt; 0 THEN 1 				  ELSE 0 END AS bit) ConAvisoPago, CAST('Todos'AS nvarchar) Rango  FROM spc_solicitudpagocab  JOIN spd_solicitudpagodet 	ON spc_solicitudpagocabid = spd_solicitudpagocabid  JOIN Cliente c  	ON spd_proveedorid = c.ID  JOIN Moneda m  	ON spc_monedaid = m.ID  AND spc_saldo &gt; 0  OUTER APPLY dbo.GetListaPresupuestosRegExt(spc_solicitudpagocabid) prx  WHERE COALESCE(RTRIM(spd_nrofactura), '') &lt;&gt; '' AND spc_origen = 'X'  AND spc_importe &gt; 0  GROUP BY spd_proveedorid, c.Nombre, spd_nrofactura, spd_fechafactura,  spc_monedaid, m.AbrevMoneda, m.Descripcion, spc_presupcabids,  prx.ListaPresupuestosCobrados, prx.ListaPresupuestosPendientes,  prx.CoefUtilidad, prx.MonedaDescrip ORDER BY  spd_fechafactura ASC,spd_proveedorid, spc_monedaid</CommandText>
+SELECT DISTINCT  spd_proveedorid ProveedorID,  c.Nombre ProveedorNombre,  CASE WHEN spd_nrofactura IS NULL THEN 'No se cargó factura'	ELSE spd_nrofactura END NroFactura,  spd_fechafactura FechaFactura,  spc_monedaid MonedaID,  m.AbrevMoneda MonedaAbrev,  m.Descripcion MonedaDescrip,  SUM(spd_saldo) SaldoFactura,  SUM(spd_total) TotalFactura,  spc_presupcabids PresupuestoCabIDsAsoc,  prx.ListaPresupuestosCobrados,  prx.ListaPresupuestosPendientes,  prx.CoefUtilidad,  prx.MonedaDescrip MonedaDescripPresup,  CAST(CASE WHEN (SELECT COUNT(*) FROM spc_solicitudpagocab spc1				  JOIN sxp_solicitudesxpago 					ON sxp_solicitudpagocabid = spc1.spc_solicitudpagocabid 				  JOIN ps_pagosolicitud 					ON ps_pagosolicitudid = sxp_pagosolicitudid 				  WHERE ps_anulado = 0 				  AND ps_formapagoid = 5 				  AND spc1.spc_solicitudpagocabid = spc_solicitudpagocabid) &gt; 0 THEN 1 				  ELSE 0 END AS bit) ConAvisoPago, CAST('Todos'AS nvarchar) Rango,  
+CAST('Cliente Nombre' AS nvarchar) ClienteNombre
+FROM spc_solicitudpagocab  JOIN spd_solicitudpagodet 	ON spc_solicitudpagocabid = spd_solicitudpagocabid  JOIN Cliente c  	ON spd_proveedorid = c.ID  JOIN Moneda m  	ON spc_monedaid = m.ID  AND spc_saldo &gt; 0  OUTER APPLY dbo.GetListaPresupuestosRegExt(spc_solicitudpagocabid) prx  WHERE COALESCE(RTRIM(spd_nrofactura), '') &lt;&gt; '' AND spc_origen = 'X'  AND spc_importe &gt; 0  GROUP BY spd_proveedorid, c.Nombre, spd_nrofactura, spd_fechafactura,  spc_monedaid, m.AbrevMoneda, m.Descripcion, spc_presupcabids,  prx.ListaPresupuestosCobrados, prx.ListaPresupuestosPendientes,  prx.CoefUtilidad, prx.MonedaDescrip ORDER BY  spd_fechafactura ASC,spd_proveedorid, spc_monedaid</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
@@ -85,6 +87,10 @@ SELECT DISTINCT  spd_proveedorid ProveedorID,  c.Nombre ProveedorNombre,  CASE W
           <DataField>ConAvisoPago</DataField>
           <rd:TypeName>System.Boolean</rd:TypeName>
         </Field>
+        <Field Name="ClienteNombre">
+          <DataField>ClienteNombre</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
     </DataSet>
   </DataSets>
@@ -95,6 +101,9 @@ SELECT DISTINCT  spd_proveedorid ProveedorID,  c.Nombre ProveedorNombre,  CASE W
           <Tablix Name="Tablix1">
             <TablixBody>
               <TablixColumns>
+                <TablixColumn>
+                  <Width>25mm</Width>
+                </TablixColumn>
                 <TablixColumn>
                   <Width>22.68781mm</Width>
                 </TablixColumn>
@@ -121,6 +130,39 @@ SELECT DISTINCT  spd_proveedorid ProveedorID,  c.Nombre ProveedorNombre,  CASE W
                 <TablixRow>
                   <Height>6mm</Height>
                   <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox1">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Left</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox1</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox28">
@@ -320,6 +362,41 @@ SELECT DISTINCT  spd_proveedorid ProveedorID,  c.Nombre ProveedorNombre,  CASE W
                 <TablixRow>
                   <Height>6mm</Height>
                   <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox54">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Cliente</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox2</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>LightBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox17">
@@ -572,6 +649,38 @@ SELECT DISTINCT  spd_proveedorid ProveedorID,  c.Nombre ProveedorNombre,  CASE W
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
+                        <Textbox Name="Textbox62">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!ClienteNombre.Value</Value>
+                                  <MarkupType>HTML</MarkupType>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox5</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
                         <Textbox Name="TarifaDescripcion">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
@@ -616,6 +725,7 @@ SELECT DISTINCT  spd_proveedorid ProveedorID,  c.Nombre ProveedorNombre,  CASE W
                                   <Value>=Fields!NroFactura.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -808,6 +918,44 @@ SELECT DISTINCT  spd_proveedorid ProveedorID,  c.Nombre ProveedorNombre,  CASE W
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
+                        <Textbox Name="Textbox8">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox8</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <LeftBorder>
+                              <Style>None</Style>
+                            </LeftBorder>
+                            <BackgroundColor>LightBlue</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
                         <Textbox Name="Textbox6">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
@@ -936,6 +1084,40 @@ SELECT DISTINCT  spd_proveedorid ProveedorID,  c.Nombre ProveedorNombre,  CASE W
                 <TablixRow>
                   <Height>6mm</Height>
                   <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox9">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Left</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox9</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox38">
@@ -1179,6 +1361,46 @@ SELECT DISTINCT  spd_proveedorid ProveedorID,  c.Nombre ProveedorNombre,  CASE W
                 <TablixRow>
                   <Height>6mm</Height>
                   <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox12">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value />
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Right</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox12</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <BottomBorder>
+                              <Style>None</Style>
+                            </BottomBorder>
+                            <LeftBorder>
+                              <Style>None</Style>
+                            </LeftBorder>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox29">
@@ -1458,6 +1680,7 @@ SELECT DISTINCT  spd_proveedorid ProveedorID,  c.Nombre ProveedorNombre,  CASE W
             </TablixBody>
             <TablixColumnHierarchy>
               <TablixMembers>
+                <TablixMember />
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
@@ -1812,9 +2035,9 @@ SELECT DISTINCT  spd_proveedorid ProveedorID,  c.Nombre ProveedorNombre,  CASE W
             <OmitBorderOnPageBreak>true</OmitBorderOnPageBreak>
             <DataSetName>DataSet1</DataSetName>
             <Top>0.50744mm</Top>
-            <Left>8.11852mm</Left>
+            <Left>3.35602mm</Left>
             <Height>35.29561mm</Height>
-            <Width>181.07847mm</Width>
+            <Width>206.07847mm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1830,7 +2053,7 @@ SELECT DISTINCT  spd_proveedorid ProveedorID,  c.Nombre ProveedorNombre,  CASE W
           </Border>
         </Style>
       </Body>
-      <Width>194.35971mm</Width>
+      <Width>214.19699mm</Width>
       <Page>
         <PageHeader>
           <Height>4.03641cm</Height>
@@ -1862,9 +2085,9 @@ SELECT DISTINCT  spd_proveedorid ProveedorID,  c.Nombre ProveedorNombre,  CASE W
               </Paragraphs>
               <rd:DefaultName>Textbox4</rd:DefaultName>
               <Top>2.28526cm</Top>
-              <Left>0.95473cm</Left>
+              <Left>0.31973cm</Left>
               <Height>0.62999cm</Height>
-              <Width>17.96497cm</Width>
+              <Width>20.60751cm</Width>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1912,9 +2135,9 @@ SELECT DISTINCT  spd_proveedorid ProveedorID,  c.Nombre ProveedorNombre,  CASE W
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
               <Top>1.14198cm</Top>
-              <Left>0.95473cm</Left>
+              <Left>0.31973cm</Left>
               <Height>0.94396cm</Height>
-              <Width>17.96497cm</Width>
+              <Width>20.62372cm</Width>
               <ZIndex>2</ZIndex>
               <Style>
                 <Border>
@@ -1948,9 +2171,9 @@ SELECT DISTINCT  spd_proveedorid ProveedorID,  c.Nombre ProveedorNombre,  CASE W
               </Paragraphs>
               <rd:DefaultName>Textbox31</rd:DefaultName>
               <Top>3.0861cm</Top>
-              <Left>0.95473cm</Left>
+              <Left>0.31973cm</Left>
               <Height>0.6cm</Height>
-              <Width>17.96497cm</Width>
+              <Width>20.60751cm</Width>
               <ZIndex>3</ZIndex>
               <Style>
                 <Border>
@@ -2012,7 +2235,7 @@ SELECT DISTINCT  spd_proveedorid ProveedorID,  c.Nombre ProveedorNombre,  CASE W
               </Paragraphs>
               <rd:DefaultName>Textbox13</rd:DefaultName>
               <Top>0.42955cm</Top>
-              <Left>15.11787cm</Left>
+              <Left>16.95937cm</Left>
               <Height>0.6cm</Height>
               <Width>3.96787cm</Width>
               <Style>
@@ -2045,7 +2268,7 @@ SELECT DISTINCT  spd_proveedorid ProveedorID,  c.Nombre ProveedorNombre,  CASE W
               </Paragraphs>
               <rd:DefaultName>Textbox13</rd:DefaultName>
               <Top>0.3978cm</Top>
-              <Left>0.92298cm</Left>
+              <Left>0.38323cm</Left>
               <Height>0.6cm</Height>
               <Width>3.96787cm</Width>
               <ZIndex>1</ZIndex>
