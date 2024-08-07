@@ -16,7 +16,13 @@
     <DataSet Name="DataSet1">
       <Query>
         <DataSourceName>DataSource1</DataSourceName>
-        <CommandText>select distinct CASE 	WHEN pc.pc_fechadocreemplazado IS NOT NULL THEN CONVERT(char(10), pc.pc_fechadocreemplazado, 103) 	ELSE CONVERT(char(10), pc.pc_fechageneracion, 103) END AS FechaDocumento, CONVERT(char(10),pc.pc_fechageneracion, 103) AS FechaGeneracion, dbo.GetDocumentoNroEscalar(pc.pc_presupuestocabid) AS DocumentoNro, pc.pc_saldo AS Saldo, pc.pc_total AS Monto, m.AbrevMoneda AS Moneda, pc.pc_estado AS Estado, pc.pc_presupuestocabid AS PresupuestoID, c.ID AS ClienteID, c.Nombre AS NombreCliente, t.ID AS TramiteID, t.EtiquetaEsp + ' ' + COALESCE(pc.pc_concepto, '') AS Tramite, CASE 	WHEN COALESCE(RTRIM(t.EtiquetaEsp), '') = '' THEN t.Descrip 	ELSE t.EtiquetaEsp END AS NombreTramite, ac_areacontabilidadid AS IDArea, ac_descripcionarea AS DescripArea, ac_unidadnegocioid AS UnidadNegocioID, un_descripcion AS DescripUnindadNegocio,pc.pc_string2 AS CodigoRESI, cp.descrip AS Pais, u.NombrePila AS Usuario, resp.NombrePila Responsable, CASE 	WHEN pc.pc_fechadocreemplazado IS NOT NULL THEN pc.pc_fechadocreemplazado 	ELSE pc.pc_fechageneracion END AS FechaDocumentoAsDate, pc.pc_fechageneracion AS FechaGeneracionAsDate , CAST(NULL AS Date) AS FechaPago , CAST(NULL AS varchar(max)) AS TelefonosCliente, CAST(NULL AS varchar(max)) AS RUCCliente, CAST(NULL AS varchar(max)) AS RazonSocialFactura, CAST(NULL AS varchar(max)) AS DireccionCliente from pc_presupuestocab pc join Cliente c 	on c.ID = pc.pc_clienteid join Moneda m 	on m.ID = pc.pc_monedaid join Tramite t 	on t.ID = pc.pc_tramiteid left join ac_areacontabilidad 	on pc_areaid = ac_areacontabilidadid join CPais cp 	on c.PaisID = cp.idpais join Audit_pc_presupuestocab apc 	on pc.pc_presupuestocabid = apc.pc_presupuestocabid join Usuario u 	on SUBSTRING(apc.Audit_User, 7, LEN(apc.Audit_User)) = u.Usuario left join un_unidadnegocio 	on ac_unidadnegocioid = un_unidadnegocioid left join Usuario resp 	on pc.pc_enviadopor = resp.ID where apc.Audit_Operacion = 'INSERT' order by FechaDocumentoAsDate, c.ID, DocumentoNro</CommandText>
+        <CommandText>select distinct CASE 	WHEN pc.pc_fechadocreemplazado IS NOT NULL THEN CONVERT(char(10), pc.pc_fechadocreemplazado, 103) 	ELSE CONVERT(char(10), pc.pc_fechageneracion, 103) END AS FechaDocumento, CONVERT(char(10),pc.pc_fechageneracion, 103) AS FechaGeneracion, dbo.GetDocumentoNroEscalar(pc.pc_presupuestocabid) AS DocumentoNro, pc.pc_saldo AS Saldo, pc.pc_total AS Monto, m.AbrevMoneda AS Moneda, pc.pc_estado AS Estado, pc.pc_presupuestocabid AS PresupuestoID, c.ID AS ClienteID, c.Nombre AS NombreCliente, t.ID AS TramiteID, t.EtiquetaEsp + ' ' + COALESCE(pc.pc_concepto, '') AS Tramite, CASE 	WHEN COALESCE(RTRIM(t.EtiquetaEsp), '') = '' THEN t.Descrip 	ELSE t.EtiquetaEsp END AS NombreTramite, ac_areacontabilidadid AS IDArea, ac_descripcionarea AS DescripArea, ac_unidadnegocioid AS UnidadNegocioID, un_descripcion AS DescripUnindadNegocio,pc.pc_string2 AS CodigoRESI, cp.descrip AS Pais, u.NombrePila AS Usuario, resp.NombrePila Responsable, CASE 	WHEN pc.pc_fechadocreemplazado IS NOT NULL THEN pc.pc_fechadocreemplazado 	ELSE pc.pc_fechageneracion END AS FechaDocumentoAsDate, pc.pc_fechageneracion AS FechaGeneracionAsDate , CAST(NULL AS Date) AS FechaPago , CAST(NULL AS varchar(max)) AS TelefonosCliente, CAST(NULL AS varchar(max)) AS RUCCliente, CAST(NULL AS varchar(max)) AS RazonSocialFactura, CAST(NULL AS varchar(max)) AS DireccionCliente, 
+COALESCE(c.TipoSistElectronicoID, -1) TipoSistElectronicoID,
+COALESCE(tse_descripcion, 'Ninguno') TipoSistElectronicoDescrip
+from pc_presupuestocab pc join Cliente c 	on c.ID = pc.pc_clienteid join Moneda m 	on m.ID = pc.pc_monedaid join Tramite t 	on t.ID = pc.pc_tramiteid 
+left join tse_tiposistelectronico
+	on c.TipoSistElectronicoID = tse_tiposistelectronicoid
+left join ac_areacontabilidad 	on pc_areaid = ac_areacontabilidadid join CPais cp 	on c.PaisID = cp.idpais join Audit_pc_presupuestocab apc 	on pc.pc_presupuestocabid = apc.pc_presupuestocabid join Usuario u 	on SUBSTRING(apc.Audit_User, 7, LEN(apc.Audit_User)) = u.Usuario left join un_unidadnegocio 	on ac_unidadnegocioid = un_unidadnegocioid left join Usuario resp 	on pc.pc_enviadopor = resp.ID where apc.Audit_Operacion = 'INSERT' order by FechaDocumentoAsDate, c.ID, DocumentoNro</CommandText>
         <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
       </Query>
       <Fields>
@@ -132,6 +138,14 @@
           <DataField>DireccionCliente</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="TipoSistElectronicoID">
+          <DataField>TipoSistElectronicoID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="TipoSistElectronicoDescrip">
+          <DataField>TipoSistElectronicoDescrip</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
     </DataSet>
   </DataSets>
@@ -216,6 +230,12 @@
                 </TablixColumn>
                 <TablixColumn>
                   <Width>275.56042mm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>84.79583mm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>149.35417mm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -1022,6 +1042,70 @@
                         </Textbox>
                       </CellContents>
                     </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox10">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>TipoSistElectronicoID</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox10</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox16">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>TipoSistElectronicoDescrip</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox16</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
@@ -1777,12 +1861,74 @@
                         </Textbox>
                       </CellContents>
                     </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TipoSistElectronicoID">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!TipoSistElectronicoID.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>TipoSistElectronicoID</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="TipoSistElectronicoDescrip">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!TipoSistElectronicoDescrip.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>TipoSistElectronicoDescrip</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                   </TablixCells>
                 </TablixRow>
               </TablixRows>
             </TablixBody>
             <TablixColumnHierarchy>
               <TablixMembers>
+                <TablixMember />
+                <TablixMember />
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
@@ -1824,7 +1970,7 @@
             <Top>0.3175mm</Top>
             <Left>0.3175mm</Left>
             <Height>12mm</Height>
-            <Width>2876.33331mm</Width>
+            <Width>3110.48331mm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1839,7 +1985,7 @@
           </Border>
         </Style>
       </Body>
-      <Width>2876.65081mm</Width>
+      <Width>3148.10706mm</Width>
       <Page>
         <PageFooter>
           <Height>11.43mm</Height>
