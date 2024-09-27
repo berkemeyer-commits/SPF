@@ -692,12 +692,6 @@
     <Compile Include="UserControls\Base\ucBaseForm2015.designer.cs">
       <DependentUpon>ucBaseForm2015.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\UI\ucConsultaRecibos.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControls\UI\ucConsultaRecibos.Designer.cs">
-      <DependentUpon>ucConsultaRecibos.cs</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\UI\ucCRUDNCElectronicaCliente.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -1245,10 +1239,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\Base\ucBaseForm2015.resx">
       <DependentUpon>ucBaseForm2015.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControls\UI\ucConsultaRecibos.resx">
-      <DependentUpon>ucConsultaRecibos.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\UI\ucCRUDNCElectronicaCliente.resx">
       <DependentUpon>ucCRUDNCElectronicaCliente.cs</DependentUpon>
