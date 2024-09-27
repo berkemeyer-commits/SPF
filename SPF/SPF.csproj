@@ -93,7 +93,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Windows\assembly\GAC_MSIL\Microsoft.ReportViewer.ProcessingObjectModel\11.0.0.0__89845dcd8080cc91\Microsoft.ReportViewer.ProcessingObjectModel.DLL</HintPath>
     </Reference>
-    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Windows\assembly\GAC_MSIL\Microsoft.ReportViewer.WebForms\11.0.0.0__89845dcd8080cc91\Microsoft.ReportViewer.WebForms.DLL</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Library\Newtonsoft.Json.dll</HintPath>
@@ -209,11 +212,11 @@
     <Content Include="Resources\Src\datosFacturaNC.json" />
     <Content Include="Resources\Src\datosFacturaNCDE.json" />
     <Content Include="Resources\Src\datosFacturaNCImpreso.json" />
-    <None Include="Properties\PublishProfiles\publicar_spf.pubxml" />
     <None Include="Resources\Src\fe.json" />
     <Content Include="Resources\UserData\cotizaciones.html" />
     <Content Include="Resources\UserData\xe-currency-converter.htm" />
     <Content Include="Scripts\custom_code.js" />
+    <Content Include="Readme.txt" />
     <Content Include="UploadFile\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
     <Content Include="UploadFile\bin\roslyn\csc.exe" />
     <Content Include="UploadFile\bin\roslyn\csc.exe.config" />
@@ -301,6 +304,42 @@
     </Compile>
     <Compile Include="Forms\Base\FVisorRichText.Designer.cs">
       <DependentUpon>FVisorRichText.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\UI\FCargarDatosRetencion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UI\FCargarDatosRetencion.Designer.cs">
+      <DependentUpon>FCargarDatosRetencion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\UI\FCargarRetencionesRecibo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UI\FCargarRetencionesRecibo.Designer.cs">
+      <DependentUpon>FCargarRetencionesRecibo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\UI\FCargarChequeRecibo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UI\FCargarChequeRecibo.Designer.cs">
+      <DependentUpon>FCargarChequeRecibo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\UI\FCargarTransferenciaRecibo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UI\FCargarTransferenciaRecibo.Designer.cs">
+      <DependentUpon>FCargarTransferenciaRecibo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\UI\FRealizarCobroRecibo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UI\FRealizarCobroRecibo.Designer.cs">
+      <DependentUpon>FRealizarCobroRecibo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\UI\FSeleccionarFacturaRecibos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UI\FSeleccionarFacturaRecibos.Designer.cs">
+      <DependentUpon>FSeleccionarFacturaRecibos.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\UI\FDetalleSolArchivo.cs">
       <SubType>Form</SubType>
@@ -645,12 +684,19 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Types\ExpePresupType.cs" />
+    <Compile Include="Types\ReciboType.cs" />
     <Compile Include="Types\Sifen.cs" />
     <Compile Include="UserControls\Base\ucBaseForm2015.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UserControls\Base\ucBaseForm2015.designer.cs">
       <DependentUpon>ucBaseForm2015.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UI\ucConsultaRecibos.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\UI\ucConsultaRecibos.Designer.cs">
+      <DependentUpon>ucConsultaRecibos.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControls\UI\ucCRUDNCElectronicaCliente.cs">
       <SubType>UserControl</SubType>
@@ -952,6 +998,30 @@
       <DependentUpon>FVisorRichText.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UI\FCargarDatosRetencion.resx">
+      <DependentUpon>FCargarDatosRetencion.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UI\FCargarRetencionesRecibo.resx">
+      <DependentUpon>FCargarRetencionesRecibo.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UI\FCargarChequeRecibo.resx">
+      <DependentUpon>FCargarChequeRecibo.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UI\FCargarTransferenciaRecibo.resx">
+      <DependentUpon>FCargarTransferenciaRecibo.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UI\FRealizarCobroRecibo.resx">
+      <DependentUpon>FRealizarCobroRecibo.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UI\FSeleccionarFacturaRecibos.resx">
+      <DependentUpon>FSeleccionarFacturaRecibos.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\UI\FDetalleSolArchivo.resx">
       <DependentUpon>FDetalleSolArchivo.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -1175,6 +1245,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\Base\ucBaseForm2015.resx">
       <DependentUpon>ucBaseForm2015.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\UI\ucConsultaRecibos.resx">
+      <DependentUpon>ucConsultaRecibos.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\UI\ucCRUDNCElectronicaCliente.resx">
       <DependentUpon>ucCRUDNCElectronicaCliente.cs</DependentUpon>
