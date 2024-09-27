@@ -19,9 +19,10 @@ namespace ModelEF6
             this.ccm_conclictamoneda = new ObservableListSource<ccm_conclictamoneda>();
             this.cct_cierrecuenta = new ObservableListSource<cct_cierrecuenta>();
             this.mc_movimientoscuenta = new ObservableListSource<mc_movimientoscuenta>();
-            this.pp_pagopresupuesto = new ObservableListSource<pp_pagopresupuesto>();
             this.ps_pagosolicitud = new ObservableListSource<ps_pagosolicitud>();
             this.ps_pagosolicitud1 = new ObservableListSource<ps_pagosolicitud>();
+            this.pp_pagopresupuesto = new ObservableListSource<pp_pagopresupuesto>();
+            this.rt_recibotransf = new ObservableListSource<rt_recibotransf>();
         }
     
         public int cb_cuentabancoid { get; set; }
@@ -33,14 +34,16 @@ namespace ModelEF6
         public bool cb_escuentapago { get; set; }
         public string cb_sello { get; set; }
         public string cb_color { get; set; }
+        public Nullable<bool> cb_mostrar { get; set; }
     
         public virtual ba_banco ba_banco { get; set; }
         public virtual ObservableListSource<ccm_conclictamoneda> ccm_conclictamoneda { get; set; }
         public virtual ObservableListSource<cct_cierrecuenta> cct_cierrecuenta { get; set; }
         public virtual ObservableListSource<mc_movimientoscuenta> mc_movimientoscuenta { get; set; }
-        public virtual ObservableListSource<pp_pagopresupuesto> pp_pagopresupuesto { get; set; }
         public virtual ObservableListSource<ps_pagosolicitud> ps_pagosolicitud { get; set; }
         public virtual ObservableListSource<ps_pagosolicitud> ps_pagosolicitud1 { get; set; }
         public virtual Moneda Moneda { get; set; }
+        public virtual ObservableListSource<pp_pagopresupuesto> pp_pagopresupuesto { get; set; }
+        public virtual ObservableListSource<rt_recibotransf> rt_recibotransf { get; set; }
     }
 }

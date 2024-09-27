@@ -43,6 +43,7 @@ namespace SPF.UserControls.UI
         private const string CAMPO_CUENTAMONEDA = "CuentaMoneda";
         private const string CAMPO_CUENTAMONEDAABREV = "CuentaMonedaAbrev";
         private const string CAMPO_ESCUENTAPAGO = "EsCuentaPago";
+        private const string CAMPO_CUENTAMOSTRAR = "CuentaMostrar";
         private const string CAMPO_SELLO = "Sello";
         private const string CAMPO_COLORDEFONDO = "ColorDeFondo";
         #endregion Constantes
@@ -83,6 +84,7 @@ namespace SPF.UserControls.UI
                               CuentaMoneda = mon.Descripcion,
                               CuentaMonedaAbrev = mon.AbrevMoneda,
                               EsCuentaPago = ctaB.cb_escuentapago,
+                              CuentaMostrar = ctaB.cb_mostrar,
                               Sello = ctaB.cb_sello,
                               ColorDeFondo = ctaB.cb_color
                           })
@@ -100,6 +102,7 @@ namespace SPF.UserControls.UI
             this.SetFilter(CAMPO_CUENTAMONEDAID, "ID Moneda", false);
             this.SetFilter(CAMPO_CUENTAMONEDA, "Moneda Cuenta");
             this.SetFilter(CAMPO_ESCUENTAPAGO, "Es Cuenta Pago (S/N)", false);
+            this.SetFilter(CAMPO_CUENTAMOSTRAR, "Seleccionable (S/N)", false);
             this.TituloBuscador = "Buscar Cuentas";
             #endregion Especificar campos para filtro
 
@@ -219,6 +222,7 @@ namespace SPF.UserControls.UI
                                  CuentaMoneda = mon.Descripcion,
                                  CuentaMonedaAbrev = mon.AbrevMoneda,
                                  EsCuentaPago = ctaB.cb_escuentapago,
+                                 CuentaMostrar = ctaB.cb_mostrar,
                                  Sello = ctaB.cb_sello,
                                  ColorDeFondo = ctaB.cb_color
                              });
@@ -276,7 +280,7 @@ namespace SPF.UserControls.UI
             this.dgvListadoABM.Columns[CAMPO_BANCONOMBRE].HeaderText = "Banco Nombre";
             this.dgvListadoABM.Columns[CAMPO_BANCONOMBRE].Width = 250;
             this.dgvListadoABM.Columns[CAMPO_BANCONOMBRE].DisplayIndex = displayIndex;
-            this.dgvListadoABM.Columns[CAMPO_BANCONOMBRE].Visible = true;
+            this.dgvListadoABM.Columns[CAMPO_BANCONOMBRE].Visible = false;
             displayIndex++;
 
             this.dgvListadoABM.Columns[CAMPO_CUENTANRO].HeaderText = "N° Cuenta";
@@ -299,6 +303,16 @@ namespace SPF.UserControls.UI
             colEsCuentaPago.TrueValue = true;
             colEsCuentaPago.ReadOnly = true;
             this.dgvListadoABM.Columns.Insert(displayIndex, colEsCuentaPago);
+            displayIndex++;
+
+            DataGridViewCheckBoxColumn colMostrarCuenta = new DataGridViewCheckBoxColumn();
+            colMostrarCuenta.DataPropertyName = CAMPO_CUENTAMOSTRAR;
+            colMostrarCuenta.Name = CAMPO_CUENTAMOSTRAR;
+            colMostrarCuenta.HeaderText = "Seleccionable";
+            colMostrarCuenta.FalseValue = false;
+            colMostrarCuenta.TrueValue = true;
+            colMostrarCuenta.ReadOnly = true;
+            this.dgvListadoABM.Columns.Insert(displayIndex, colMostrarCuenta);
         }
 
         protected override void tbbNuevo_Click(object sender, EventArgs e)
@@ -341,6 +355,7 @@ namespace SPF.UserControls.UI
             this.cbEsCuentaPago.Checked = false;
             this.txtSello.BackColor = Color.White;
             this.txtSello.Text = string.Empty;
+            this.chkMostrar.Checked = false;
         }
         #endregion Limpiar Datos
 
@@ -355,6 +370,7 @@ namespace SPF.UserControls.UI
             this.cbEsCuentaPago.Enabled = !editar;
             this.txtSello.ReadOnly = editar;
             this.btnColorDeFondo.Enabled = !editar;
+            this.chkMostrar.Enabled = !editar;
         }
         #endregion ReadOnly condicional
 
@@ -367,6 +383,7 @@ namespace SPF.UserControls.UI
             this.txtCuentaBancoDescrip.Text = row.Cells[CAMPO_CUENTABANCODESCRIP].Value.ToString();
             this.txtNroCuenta.Text = row.Cells[CAMPO_CUENTANRO].Value.ToString();
             this.cbEsCuentaPago.Checked = (bool)row.Cells[CAMPO_ESCUENTAPAGO].Value;
+            this.chkMostrar.Checked = (bool)row.Cells[CAMPO_CUENTAMOSTRAR].Value;
 
             if (row.Cells[CAMPO_CUENTAMONEDAID].Value != null)
             {
@@ -664,6 +681,7 @@ namespace SPF.UserControls.UI
                 cbanco.cb_monedaid = Convert.ToInt32(this.tSBMoneda.KeyMember);
                 cbanco.cb_nrocuenta = this.txtNroCuenta.Text;
                 cbanco.cb_escuentapago = this.cbEsCuentaPago.Checked;
+                cbanco.cb_mostrar = this.chkMostrar.Checked;
 
                 if (this.txtSello.Text.Trim() != string.Empty)
                 {
@@ -683,6 +701,7 @@ namespace SPF.UserControls.UI
                 cbanco.cb_monedaid = Convert.ToInt32(this.tSBMoneda.KeyMember);
                 cbanco.cb_nrocuenta = this.txtNroCuenta.Text;
                 cbanco.cb_escuentapago = this.cbEsCuentaPago.Checked;
+                cbanco.cb_mostrar = this.chkMostrar.Checked;
 
                 if (this.txtSello.Text.Trim() != string.Empty)
                 {

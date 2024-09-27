@@ -22,8 +22,6 @@ namespace ModelEF6
             this.pc_presupuestocab = new ObservableListSource<pc_presupuestocab>();
             this.pc_presupuestocab1 = new ObservableListSource<pc_presupuestocab>();
             this.pmu_pagomultiple = new ObservableListSource<pmu_pagomultiple>();
-            this.pp_pagopresupuesto = new ObservableListSource<pp_pagopresupuesto>();
-            this.pp_pagopresupuesto1 = new ObservableListSource<pp_pagopresupuesto>();
             this.ps_pagosolicitud = new ObservableListSource<ps_pagosolicitud>();
             this.rc_reclamocliente = new ObservableListSource<rc_reclamocliente>();
             this.rcm_relacotizamone = new ObservableListSource<rcm_relacotizamone>();
@@ -33,6 +31,9 @@ namespace ModelEF6
             this.tc_tarifascliente = new ObservableListSource<tc_tarifascliente>();
             this.tcd_tipocambiode = new ObservableListSource<tcd_tipocambiode>();
             this.nc_notacreditocabecera = new ObservableListSource<nc_notacreditocabecera>();
+            this.pp_pagopresupuesto = new ObservableListSource<pp_pagopresupuesto>();
+            this.pp_pagopresupuesto1 = new ObservableListSource<pp_pagopresupuesto>();
+            this.re_recibo = new ObservableListSource<re_recibo>();
         }
     
         public int ID { get; set; }
@@ -51,8 +52,6 @@ namespace ModelEF6
         public virtual ObservableListSource<pc_presupuestocab> pc_presupuestocab { get; set; }
         public virtual ObservableListSource<pc_presupuestocab> pc_presupuestocab1 { get; set; }
         public virtual ObservableListSource<pmu_pagomultiple> pmu_pagomultiple { get; set; }
-        public virtual ObservableListSource<pp_pagopresupuesto> pp_pagopresupuesto { get; set; }
-        public virtual ObservableListSource<pp_pagopresupuesto> pp_pagopresupuesto1 { get; set; }
         public virtual ObservableListSource<ps_pagosolicitud> ps_pagosolicitud { get; set; }
         public virtual ObservableListSource<rc_reclamocliente> rc_reclamocliente { get; set; }
         public virtual ObservableListSource<rcm_relacotizamone> rcm_relacotizamone { get; set; }
@@ -62,5 +61,8 @@ namespace ModelEF6
         public virtual ObservableListSource<tc_tarifascliente> tc_tarifascliente { get; set; }
         public virtual ObservableListSource<tcd_tipocambiode> tcd_tipocambiode { get; set; }
         public virtual ObservableListSource<nc_notacreditocabecera> nc_notacreditocabecera { get; set; }
+        public virtual ObservableListSource<pp_pagopresupuesto> pp_pagopresupuesto { get; set; }
+        public virtual ObservableListSource<pp_pagopresupuesto> pp_pagopresupuesto1 { get; set; }
+        public virtual ObservableListSource<re_recibo> re_recibo { get; set; }
     }
 }

@@ -36,8 +36,8 @@ namespace ModelEF6
         public virtual ObservableListSource<ncd_notacreditopresupdetalle> ncd_notacreditopresupdetalle { get; set; }
         public virtual ncp_notacreditopresup ncp_notacreditopresup1 { get; set; }
         public virtual ncp_notacreditopresup ncp_notacreditopresup2 { get; set; }
-        public virtual ObservableListSource<pp_pagopresupuesto> pp_pagopresupuesto { get; set; }
         public virtual Cliente Cliente { get; set; }
         public virtual Moneda Moneda { get; set; }
+        public virtual ObservableListSource<pp_pagopresupuesto> pp_pagopresupuesto { get; set; }
     }
 }

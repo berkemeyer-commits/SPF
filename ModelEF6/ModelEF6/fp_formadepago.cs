@@ -17,15 +17,15 @@ namespace ModelEF6
         public fp_formadepago()
         {
             this.pmu_pagomultiple = new ObservableListSource<pmu_pagomultiple>();
-            this.pp_pagopresupuesto = new ObservableListSource<pp_pagopresupuesto>();
             this.ps_pagosolicitud = new ObservableListSource<ps_pagosolicitud>();
+            this.pp_pagopresupuesto = new ObservableListSource<pp_pagopresupuesto>();
         }
     
         public int fp_formadepagoid { get; set; }
         public string fp_descripcion { get; set; }
     
         public virtual ObservableListSource<pmu_pagomultiple> pmu_pagomultiple { get; set; }
-        public virtual ObservableListSource<pp_pagopresupuesto> pp_pagopresupuesto { get; set; }
         public virtual ObservableListSource<ps_pagosolicitud> ps_pagosolicitud { get; set; }
+        public virtual ObservableListSource<pp_pagopresupuesto> pp_pagopresupuesto { get; set; }
     }
 }

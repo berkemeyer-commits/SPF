@@ -31,6 +31,7 @@ namespace ModelEF6
             this.pc_presupuestocab = new ObservableListSource<pc_presupuestocab>();
             this.spc_solicitudpagocab = new ObservableListSource<spc_solicitudpagocab>();
             this.ps_pagosolicitud = new ObservableListSource<ps_pagosolicitud>();
+            this.re_recibo = new ObservableListSource<re_recibo>();
         }
     
         public int ID { get; set; }
@@ -76,5 +77,7 @@ namespace ModelEF6
         public virtual ObservableListSource<pc_presupuestocab> pc_presupuestocab { get; set; }
         public virtual ObservableListSource<spc_solicitudpagocab> spc_solicitudpagocab { get; set; }
         public virtual ObservableListSource<ps_pagosolicitud> ps_pagosolicitud { get; set; }
+        public virtual cr_clienteretencion cr_clienteretencion { get; set; }
+        public virtual ObservableListSource<re_recibo> re_recibo { get; set; }
     }
 }

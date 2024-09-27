@@ -168,6 +168,9 @@
     <Compile Include="cp_cotizacionesxpresup.cs">
       <DependentUpon>BerkeDBEF6.tt</DependentUpon>
     </Compile>
+    <Compile Include="cr_clienteretencion.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
     <Compile Include="cxm_cobranzasxmov.cs">
       <DependentUpon>BerkeDBEF6.tt</DependentUpon>
     </Compile>
@@ -196,6 +199,9 @@
       <DependentUpon>BerkeDBEF6.tt</DependentUpon>
     </Compile>
     <Compile Include="ExpedienteXPropietario.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FacturasParaRecibos.cs">
       <DependentUpon>BerkeDBEF6.tt</DependentUpon>
     </Compile>
     <Compile Include="fc_facturacabecera.cs">
@@ -489,6 +495,9 @@
     <Compile Include="ra_reporteasunto.cs">
       <DependentUpon>BerkeDBEF6.tt</DependentUpon>
     </Compile>
+    <Compile Include="rch_recibocheque.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
     <Compile Include="rcm_relacotizamone.cs">
       <DependentUpon>BerkeDBEF6.tt</DependentUpon>
     </Compile>
@@ -529,10 +538,22 @@
       <DependentUpon>BerkeDBEF6.tt</DependentUpon>
     </Compile>
     <Compile Include="Repositorio.cs" />
+    <Compile Include="re_recibo.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="rf_recibofactura.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
     <Compile Include="rm_rolmenu.cs">
       <DependentUpon>BerkeDBEF6.tt</DependentUpon>
     </Compile>
     <Compile Include="ro_rol.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="rr_reciboretencion.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="rt_recibotransf.cs">
       <DependentUpon>BerkeDBEF6.tt</DependentUpon>
     </Compile>
     <Compile Include="ru_rolusuario.cs">

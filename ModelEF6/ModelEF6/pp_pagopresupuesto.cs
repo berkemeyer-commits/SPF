@@ -25,7 +25,7 @@ namespace ModelEF6
         public int pp_monedaid { get; set; }
         public Nullable<int> pp_bancoid { get; set; }
         public Nullable<int> pp_cuentaid { get; set; }
-        public int pp_formapagoid { get; set; }
+        public Nullable<int> pp_formapagoid { get; set; }
         public System.DateTime pp_fechapago { get; set; }
         public string pp_nrocheque { get; set; }
         public Nullable<int> pp_bancochequeid { get; set; }
@@ -43,18 +43,20 @@ namespace ModelEF6
         public Nullable<int> pp_notacreditopresupid { get; set; }
         public string pp_nroboletadeposito { get; set; }
         public Nullable<int> pp_respcobroextid { get; set; }
+        public Nullable<int> pp_reciboid { get; set; }
     
         public virtual ba_banco ba_banco { get; set; }
         public virtual ba_banco ba_banco1 { get; set; }
+        public virtual cb_cuentabanco cb_cuentabanco { get; set; }
         public virtual ObservableListSource<cxm_cobranzasxmov> cxm_cobranzasxmov { get; set; }
         public virtual fp_formadepago fp_formadepago { get; set; }
-        public virtual ObservableListSource<ncd_notacreditopresupdetalle> ncd_notacreditopresupdetalle { get; set; }
-        public virtual ncp_notacreditopresup ncp_notacreditopresup { get; set; }
-        public virtual pmu_pagomultiple pmu_pagomultiple { get; set; }
-        public virtual Usuario Usuario { get; set; }
-        public virtual cb_cuentabanco cb_cuentabanco { get; set; }
-        public virtual pc_presupuestocab pc_presupuestocab { get; set; }
         public virtual Moneda Moneda { get; set; }
         public virtual Moneda Moneda1 { get; set; }
+        public virtual ObservableListSource<ncd_notacreditopresupdetalle> ncd_notacreditopresupdetalle { get; set; }
+        public virtual ncp_notacreditopresup ncp_notacreditopresup { get; set; }
+        public virtual pc_presupuestocab pc_presupuestocab { get; set; }
+        public virtual pmu_pagomultiple pmu_pagomultiple { get; set; }
+        public virtual Usuario Usuario { get; set; }
+        public virtual re_recibo re_recibo { get; set; }
     }
 }

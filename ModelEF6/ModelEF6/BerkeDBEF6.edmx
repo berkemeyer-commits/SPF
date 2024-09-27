@@ -194,6 +194,7 @@
           <Property Name="pp_notacreditopresupid" Type="int" />
           <Property Name="pp_nroboletadeposito" Type="varchar" MaxLength="25" />
           <Property Name="pp_respcobroextid" Type="int" />
+          <Property Name="pp_reciboid" Type="int" />
           <Property Name="Audit_User" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Audit_Fecha" Type="datetime" Nullable="false" />
           <Property Name="Audit_Operacion" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -206,6 +207,7 @@
           <Property Name="ba_descripcion" Type="nvarchar" MaxLength="60" Nullable="false" />
           <Property Name="ba_paisid" Type="int" />
           <Property Name="ba_ciudadid" Type="int" />
+          <Property Name="ba_mostrar" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ca_clienteantecedente">
           <Key>
@@ -267,6 +269,7 @@
           <Property Name="cb_escuentapago" Type="bit" Nullable="false" />
           <Property Name="cb_sello" Type="nvarchar" MaxLength="1500" />
           <Property Name="cb_color" Type="varchar" MaxLength="10" />
+          <Property Name="cb_mostrar" Type="bit" />
         </EntityType>
         <EntityType Name="cc_cotizacioncab">
           <Key>
@@ -476,6 +479,16 @@
           <Property Name="continenteid" Type="int" />
           <Property Name="paisalfa3" Type="char" MaxLength="3" />
           <Property Name="descripFE" Type="nvarchar" MaxLength="60" />
+        </EntityType>
+        <EntityType Name="cr_clienteretencion">
+          <Key>
+            <PropertyRef Name="cr_clienteid" />
+          </Key>
+          <Property Name="cr_clienteretencionid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cr_clienteid" Type="int" Nullable="false" />
+          <Property Name="cr_porcentajeiva10" Type="int" Nullable="false" />
+          <Property Name="cr_porcentajerenta" Type="int" Nullable="false" />
+          <Property Name="cr_nrotimbrado" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="cxm_cobranzasxmov">
           <Key>
@@ -1097,7 +1110,7 @@
           <Property Name="pp_monedaid" Type="int" Nullable="false" />
           <Property Name="pp_bancoid" Type="int" />
           <Property Name="pp_cuentaid" Type="int" />
-          <Property Name="pp_formapagoid" Type="int" Nullable="false" />
+          <Property Name="pp_formapagoid" Type="int" />
           <Property Name="pp_fechapago" Type="date" Nullable="false" />
           <Property Name="pp_nrocheque" Type="varchar" MaxLength="50" />
           <Property Name="pp_bancochequeid" Type="int" />
@@ -1115,6 +1128,7 @@
           <Property Name="pp_notacreditopresupid" Type="int" />
           <Property Name="pp_nroboletadeposito" Type="varchar" MaxLength="25" />
           <Property Name="pp_respcobroextid" Type="int" />
+          <Property Name="pp_reciboid" Type="int" />
         </EntityType>
         <EntityType Name="pp_partepresupuesto">
           <Key>
@@ -1241,6 +1255,17 @@
           <Property Name="rc_subject" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="rc_referencia" Type="varchar" MaxLength="100" Nullable="false" />
         </EntityType>
+        <EntityType Name="rch_recibocheque">
+          <Key>
+            <PropertyRef Name="rch_recibochequeid" />
+          </Key>
+          <Property Name="rch_recibochequeid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rch_reciboid" Type="int" Nullable="false" />
+          <Property Name="rch_fechacheque" Type="date" Nullable="false" />
+          <Property Name="rch_bancoid" Type="int" Nullable="false" />
+          <Property Name="rch_numero" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="rch_monto" Type="decimal" Precision="14" Scale="2" Nullable="false" />
+        </EntityType>
         <EntityType Name="rcm_relacotizamone">
           <Key>
             <PropertyRef Name="ID" />
@@ -1259,6 +1284,38 @@
           <Property Name="rd_saldo" Type="decimal" Precision="14" Scale="2" Nullable="false" />
           <Property Name="rd_fecharereclamo" Type="date" />
         </EntityType>
+        <EntityType Name="re_recibo">
+          <Key>
+            <PropertyRef Name="re_reciboid" />
+          </Key>
+          <Property Name="re_reciboid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="re_fecha" Type="date" Nullable="false" />
+          <Property Name="re_numero" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="re_clienteid" Type="int" Nullable="false" />
+          <Property Name="re_monedaid" Type="int" Nullable="false" />
+          <Property Name="re_totalrecibo" Type="decimal" Precision="14" Scale="2" Nullable="false" />
+          <Property Name="re_totalnc" Type="decimal" Precision="14" Scale="2" Nullable="false" />
+          <Property Name="re_montoret10" Type="decimal" Precision="14" Scale="2" Nullable="false" />
+          <Property Name="re_montoretrenta" Type="decimal" Precision="14" Scale="2" Nullable="false" />
+          <Property Name="re_totaltransf" Type="decimal" Precision="14" Scale="2" Nullable="false" />
+          <Property Name="re_totalgastos" Type="decimal" Precision="14" Scale="2" Nullable="false" />
+          <Property Name="re_totalcheques" Type="decimal" Precision="14" Scale="2" Nullable="false" />
+          <Property Name="re_totalefectivo" Type="decimal" Precision="14" Scale="2" Nullable="false" />
+          <Property Name="re_concepto" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="re_usuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="re_anulado" Type="bit" Nullable="false" />
+          <Property Name="re_fechaanulacion" Type="date" />
+          <Property Name="re_usuarioanulacion" Type="varchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="rf_recibofactura">
+          <Key>
+            <PropertyRef Name="rf_recibofacturaid" />
+          </Key>
+          <Property Name="rf_recibofacturaid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rf_facturacabid" Type="int" Nullable="false" />
+          <Property Name="rf_reciboid" Type="int" Nullable="false" />
+          <Property Name="rf_montopagado" Type="decimal" Precision="14" Scale="2" Nullable="false" />
+        </EntityType>
         <EntityType Name="rm_rolmenu">
           <Key>
             <PropertyRef Name="rm_rolmenuid" />
@@ -1275,6 +1332,30 @@
           <Property Name="ro_sistemaid" Type="int" />
           <Property Name="ro_descripcion" Type="nvarchar" MaxLength="60" />
           <Property Name="ro_administrador" Type="bit" />
+        </EntityType>
+        <EntityType Name="rr_reciboretencion">
+          <Key>
+            <PropertyRef Name="rr_reciboretencionid" />
+          </Key>
+          <Property Name="rr_reciboretencionid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rr_reciboid" Type="int" Nullable="false" />
+          <Property Name="rr_facturaid" Type="int" Nullable="false" />
+          <Property Name="rr_numero" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="rr_fecharetencion" Type="date" Nullable="false" />
+          <Property Name="rr_montoretencioniva10" Type="decimal" Precision="14" Scale="2" Nullable="false" />
+          <Property Name="rr_montoretencionrenta" Type="decimal" Precision="14" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="rt_recibotransf">
+          <Key>
+            <PropertyRef Name="rt_recibotransfid" />
+          </Key>
+          <Property Name="rt_recibotransfid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rt_reciboid" Type="int" Nullable="false" />
+          <Property Name="rt_fechatransf" Type="date" Nullable="false" />
+          <Property Name="rt_cuentabancoid" Type="int" Nullable="false" />
+          <Property Name="rt_numero" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="rt_montogasto" Type="decimal" Precision="14" Scale="2" Nullable="false" />
+          <Property Name="rt_montotransf" Type="decimal" Precision="14" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="ru_rolusuario">
           <Key>
@@ -2067,6 +2148,18 @@
             </Principal>
             <Dependent Role="CPais">
               <PropertyRef Name="continenteid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cr_clienteretencion_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="cr_clienteretencion" Type="Self.cr_clienteretencion" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="cr_clienteretencion">
+              <PropertyRef Name="cr_clienteid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3067,7 +3160,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_pp_pagopresupuesto_fp_formadepago">
-          <End Role="fp_formadepago" Type="Self.fp_formadepago" Multiplicity="1" />
+          <End Role="fp_formadepago" Type="Self.fp_formadepago" Multiplicity="0..1" />
           <End Role="pp_pagopresupuesto" Type="Self.pp_pagopresupuesto" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="fp_formadepago">
@@ -3135,6 +3228,18 @@
             </Principal>
             <Dependent Role="pp_pagopresupuesto">
               <PropertyRef Name="pp_pagomultipleid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pp_pagopresupuesto_re_recibo">
+          <End Role="re_recibo" Type="Self.re_recibo" Multiplicity="0..1" />
+          <End Role="pp_pagopresupuesto" Type="Self.pp_pagopresupuesto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="re_recibo">
+              <PropertyRef Name="re_reciboid" />
+            </Principal>
+            <Dependent Role="pp_pagopresupuesto">
+              <PropertyRef Name="pp_reciboid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3390,6 +3495,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_rch_recibocheque_ba_banco">
+          <End Role="re_recibo" Type="Self.re_recibo" Multiplicity="1" />
+          <End Role="rch_recibocheque" Type="Self.rch_recibocheque" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="re_recibo">
+              <PropertyRef Name="re_reciboid" />
+            </Principal>
+            <Dependent Role="rch_recibocheque">
+              <PropertyRef Name="rch_reciboid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rch_recibocheque_re_recibo">
+          <End Role="re_recibo" Type="Self.re_recibo" Multiplicity="1" />
+          <End Role="rch_recibocheque" Type="Self.rch_recibocheque" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="re_recibo">
+              <PropertyRef Name="re_reciboid" />
+            </Principal>
+            <Dependent Role="rch_recibocheque">
+              <PropertyRef Name="rch_reciboid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_rcm_relacotizamone_Moneda">
           <End Role="Moneda" Type="Self.Moneda" Multiplicity="1" />
           <End Role="rcm_relacotizamone" Type="Self.rcm_relacotizamone" Multiplicity="*" />
@@ -3402,8 +3531,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errores durante la generación:
-advertencia 6037: La restricción de clave externa 'FK_rcm_relacotizamone1_Moneda' se ha omitido en el modelo de almacenamiento. La columna 'MonedaID' de la tabla 'BerkeDBModel.Store.rcm_relacotizamone' es una clave externa que participa en varias relaciones. No se validará un modelo de entidad de uno a uno, ya que puede existir incoherencia en los datos.
         <Association Name="FK_rcm_relacotizamone1_Moneda">
           <End Role="Moneda" Type="Self.Moneda" Multiplicity="1" />
           <End Role="rcm_relacotizamone" Type="Self.rcm_relacotizamone" Multiplicity="*" />
@@ -3415,7 +3542,7 @@ advertencia 6037: La restricción de clave externa 'FK_rcm_relacotizamone1_Moned
               <PropertyRef Name="MonedaID" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>-->
+        </Association>
         <Association Name="FK_rd_reclamoclientedetalle_rd_reclamoclientedetalle">
           <End Role="rc_reclamocliente" Type="Self.rc_reclamocliente" Multiplicity="1" />
           <End Role="rd_reclamoclientedetalle" Type="Self.rd_reclamoclientedetalle" Multiplicity="*" />
@@ -3425,6 +3552,54 @@ advertencia 6037: La restricción de clave externa 'FK_rcm_relacotizamone1_Moned
             </Principal>
             <Dependent Role="rd_reclamoclientedetalle">
               <PropertyRef Name="rd_reclamoclientecabid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_re_recibo_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="re_recibo" Type="Self.re_recibo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="re_recibo">
+              <PropertyRef Name="re_clienteid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_re_recibo_Moneda">
+          <End Role="Moneda" Type="Self.Moneda" Multiplicity="1" />
+          <End Role="re_recibo" Type="Self.re_recibo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Moneda">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="re_recibo">
+              <PropertyRef Name="re_monedaid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rf_recibofactura_fc_facturacabecera">
+          <End Role="fc_facturacabecera" Type="Self.fc_facturacabecera" Multiplicity="1" />
+          <End Role="rf_recibofactura" Type="Self.rf_recibofactura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fc_facturacabecera">
+              <PropertyRef Name="fc_facturacabeceraid" />
+            </Principal>
+            <Dependent Role="rf_recibofactura">
+              <PropertyRef Name="rf_facturacabid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rf_recibofactura_re_recibo">
+          <End Role="re_recibo" Type="Self.re_recibo" Multiplicity="1" />
+          <End Role="rf_recibofactura" Type="Self.rf_recibofactura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="re_recibo">
+              <PropertyRef Name="re_reciboid" />
+            </Principal>
+            <Dependent Role="rf_recibofactura">
+              <PropertyRef Name="rf_reciboid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3449,6 +3624,54 @@ advertencia 6037: La restricción de clave externa 'FK_rcm_relacotizamone1_Moned
             </Principal>
             <Dependent Role="rm_rolmenu">
               <PropertyRef Name="rm_rolid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rr_reciboretencion_fc_facturacabecera">
+          <End Role="fc_facturacabecera" Type="Self.fc_facturacabecera" Multiplicity="1" />
+          <End Role="rr_reciboretencion" Type="Self.rr_reciboretencion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fc_facturacabecera">
+              <PropertyRef Name="fc_facturacabeceraid" />
+            </Principal>
+            <Dependent Role="rr_reciboretencion">
+              <PropertyRef Name="rr_facturaid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rr_reciboretencion_re_recibo">
+          <End Role="re_recibo" Type="Self.re_recibo" Multiplicity="1" />
+          <End Role="rr_reciboretencion" Type="Self.rr_reciboretencion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="re_recibo">
+              <PropertyRef Name="re_reciboid" />
+            </Principal>
+            <Dependent Role="rr_reciboretencion">
+              <PropertyRef Name="rr_reciboid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_recibotransf_cb_cuentabanco">
+          <End Role="cb_cuentabanco" Type="Self.cb_cuentabanco" Multiplicity="1" />
+          <End Role="rt_recibotransf" Type="Self.rt_recibotransf" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cb_cuentabanco">
+              <PropertyRef Name="cb_cuentabancoid" />
+            </Principal>
+            <Dependent Role="rt_recibotransf">
+              <PropertyRef Name="rt_cuentabancoid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_recibotransf_re_recibo">
+          <End Role="re_recibo" Type="Self.re_recibo" Multiplicity="1" />
+          <End Role="rt_recibotransf" Type="Self.rt_recibotransf" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="re_recibo">
+              <PropertyRef Name="re_reciboid" />
+            </Principal>
+            <Dependent Role="rt_recibotransf">
+              <PropertyRef Name="rt_reciboid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3716,8 +3939,6 @@ advertencia 6037: La restricción de clave externa 'FK_rcm_relacotizamone1_Moned
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errores durante la generación:
-advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_solicitudpagodet1' se ha omitido en el modelo de almacenamiento. La columna 'spd_solicitudpagodetid' de la tabla 'BerkeDBModel.Store.spd_solicitudpagodet' es una clave externa que participa en varias relaciones. No se validará un modelo de entidad de uno a uno, ya que puede existir incoherencia en los datos.
         <Association Name="FK_spd_solicitudpagodet_spd_solicitudpagodet1">
           <End Role="spd_solicitudpagodet" Type="Self.spd_solicitudpagodet" Multiplicity="1" />
           <End Role="spd_solicitudpagodet1" Type="Self.spd_solicitudpagodet" Multiplicity="0..1" />
@@ -3729,9 +3950,7 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
               <PropertyRef Name="spd_solicitudpagodetid" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>-->
-        <!--Errores durante la generación:
-advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_solicitudpagodet2' se ha omitido en el modelo de almacenamiento. La columna 'spd_solicitudpagodetid' de la tabla 'BerkeDBModel.Store.spd_solicitudpagodet' es una clave externa que participa en varias relaciones. No se validará un modelo de entidad de uno a uno, ya que puede existir incoherencia en los datos.
+        </Association>
         <Association Name="FK_spd_solicitudpagodet_spd_solicitudpagodet2">
           <End Role="spd_solicitudpagodet" Type="Self.spd_solicitudpagodet" Multiplicity="1" />
           <End Role="spd_solicitudpagodet1" Type="Self.spd_solicitudpagodet" Multiplicity="0..1" />
@@ -3743,7 +3962,7 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
               <PropertyRef Name="spd_solicitudpagodetid" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>-->
+        </Association>
         <Association Name="FK_spd_solicitudpagodet_Tarifas">
           <End Role="Tarifas" Type="Self.Tarifas" Multiplicity="1" />
           <End Role="spd_solicitudpagodet" Type="Self.spd_solicitudpagodet" Multiplicity="*" />
@@ -4283,6 +4502,12 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
           <Parameter Name="UsuarioID" Type="int" Mode="In" />
           <Parameter Name="WhereString" Type="nvarchar(max)" Mode="In" />
         </Function>
+        <Function Name="GetListadoFacturasParaRecibos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ClienteId" Type="int" Mode="In" />
+          <Parameter Name="MonedaId" Type="int" Mode="In" />
+          <Parameter Name="FechaInicio" Type="date" Mode="In" />
+          <Parameter Name="FechaFin" Type="date" Mode="In" />
+        </Function>
         <Function Name="GetListadoGeneraldeDeudas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="FechaDesde" Type="char" Mode="In" />
           <Parameter Name="FechaHasta" Type="char" Mode="In" />
@@ -4566,6 +4791,7 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
           <EntitySet Name="Correspondencia" EntityType="Self.Correspondencia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cp_cotizacionesxpresup" EntityType="Self.cp_cotizacionesxpresup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CPais" EntityType="Self.CPais" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cr_clienteretencion" EntityType="Self.cr_clienteretencion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cxm_cobranzasxmov" EntityType="Self.cxm_cobranzasxmov" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DocumentoPlantilla" EntityType="Self.DocumentoPlantilla" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Expediente" EntityType="Self.Expediente" Schema="dbo" store:Type="Tables" />
@@ -4613,10 +4839,15 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
           <EntitySet Name="ps_pagosolicitud" EntityType="Self.ps_pagosolicitud" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ra_reporteasunto" EntityType="Self.ra_reporteasunto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="rc_reclamocliente" EntityType="Self.rc_reclamocliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="rch_recibocheque" EntityType="Self.rch_recibocheque" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="rcm_relacotizamone" EntityType="Self.rcm_relacotizamone" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="rd_reclamoclientedetalle" EntityType="Self.rd_reclamoclientedetalle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="re_recibo" EntityType="Self.re_recibo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="rf_recibofactura" EntityType="Self.rf_recibofactura" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="rm_rolmenu" EntityType="Self.rm_rolmenu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ro_rol" EntityType="Self.ro_rol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="rr_reciboretencion" EntityType="Self.rr_reciboretencion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="rt_recibotransf" EntityType="Self.rt_recibotransf" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ru_rolusuario" EntityType="Self.ru_rolusuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sa_subarea" EntityType="Self.sa_subarea" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sec_solexclusioncab" EntityType="Self.sec_solexclusioncab" Schema="dbo" store:Type="Tables" />
@@ -4780,6 +5011,10 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
           <AssociationSet Name="FK_CPais_co_continente" Association="Self.FK_CPais_co_continente">
             <End Role="co_continente" EntitySet="co_continente" />
             <End Role="CPais" EntitySet="CPais" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cr_clienteretencion_Cliente" Association="Self.FK_cr_clienteretencion_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="cr_clienteretencion" EntitySet="cr_clienteretencion" />
           </AssociationSet>
           <AssociationSet Name="FK_cxm_cobranzasxmov_mc_movimientoscuenta" Association="Self.FK_cxm_cobranzasxmov_mc_movimientoscuenta">
             <End Role="mc_movimientoscuenta" EntitySet="mc_movimientoscuenta" />
@@ -5137,6 +5372,10 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
             <End Role="pmu_pagomultiple" EntitySet="pmu_pagomultiple" />
             <End Role="pp_pagopresupuesto" EntitySet="pp_pagopresupuesto" />
           </AssociationSet>
+          <AssociationSet Name="FK_pp_pagopresupuesto_re_recibo" Association="Self.FK_pp_pagopresupuesto_re_recibo">
+            <End Role="re_recibo" EntitySet="re_recibo" />
+            <End Role="pp_pagopresupuesto" EntitySet="pp_pagopresupuesto" />
+          </AssociationSet>
           <AssociationSet Name="FK_pp_pagopresupuesto_Usuario" Association="Self.FK_pp_pagopresupuesto_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="pp_pagopresupuesto" EntitySet="pp_pagopresupuesto" />
@@ -5221,13 +5460,41 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="rc_reclamocliente" EntitySet="rc_reclamocliente" />
           </AssociationSet>
+          <AssociationSet Name="FK_rch_recibocheque_ba_banco" Association="Self.FK_rch_recibocheque_ba_banco">
+            <End Role="re_recibo" EntitySet="re_recibo" />
+            <End Role="rch_recibocheque" EntitySet="rch_recibocheque" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rch_recibocheque_re_recibo" Association="Self.FK_rch_recibocheque_re_recibo">
+            <End Role="re_recibo" EntitySet="re_recibo" />
+            <End Role="rch_recibocheque" EntitySet="rch_recibocheque" />
+          </AssociationSet>
           <AssociationSet Name="FK_rcm_relacotizamone_Moneda" Association="Self.FK_rcm_relacotizamone_Moneda">
+            <End Role="Moneda" EntitySet="Moneda" />
+            <End Role="rcm_relacotizamone" EntitySet="rcm_relacotizamone" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rcm_relacotizamone1_Moneda" Association="Self.FK_rcm_relacotizamone1_Moneda">
             <End Role="Moneda" EntitySet="Moneda" />
             <End Role="rcm_relacotizamone" EntitySet="rcm_relacotizamone" />
           </AssociationSet>
           <AssociationSet Name="FK_rd_reclamoclientedetalle_rd_reclamoclientedetalle" Association="Self.FK_rd_reclamoclientedetalle_rd_reclamoclientedetalle">
             <End Role="rc_reclamocliente" EntitySet="rc_reclamocliente" />
             <End Role="rd_reclamoclientedetalle" EntitySet="rd_reclamoclientedetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_re_recibo_Cliente" Association="Self.FK_re_recibo_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="re_recibo" EntitySet="re_recibo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_re_recibo_Moneda" Association="Self.FK_re_recibo_Moneda">
+            <End Role="Moneda" EntitySet="Moneda" />
+            <End Role="re_recibo" EntitySet="re_recibo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rf_recibofactura_fc_facturacabecera" Association="Self.FK_rf_recibofactura_fc_facturacabecera">
+            <End Role="fc_facturacabecera" EntitySet="fc_facturacabecera" />
+            <End Role="rf_recibofactura" EntitySet="rf_recibofactura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rf_recibofactura_re_recibo" Association="Self.FK_rf_recibofactura_re_recibo">
+            <End Role="re_recibo" EntitySet="re_recibo" />
+            <End Role="rf_recibofactura" EntitySet="rf_recibofactura" />
           </AssociationSet>
           <AssociationSet Name="FK_rm_rolmenu_mn_menu" Association="Self.FK_rm_rolmenu_mn_menu">
             <End Role="mn_menu" EntitySet="mn_menu" />
@@ -5236,6 +5503,22 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
           <AssociationSet Name="FK_rm_rolmenu_ro_rol" Association="Self.FK_rm_rolmenu_ro_rol">
             <End Role="ro_rol" EntitySet="ro_rol" />
             <End Role="rm_rolmenu" EntitySet="rm_rolmenu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rr_reciboretencion_fc_facturacabecera" Association="Self.FK_rr_reciboretencion_fc_facturacabecera">
+            <End Role="fc_facturacabecera" EntitySet="fc_facturacabecera" />
+            <End Role="rr_reciboretencion" EntitySet="rr_reciboretencion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rr_reciboretencion_re_recibo" Association="Self.FK_rr_reciboretencion_re_recibo">
+            <End Role="re_recibo" EntitySet="re_recibo" />
+            <End Role="rr_reciboretencion" EntitySet="rr_reciboretencion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_recibotransf_cb_cuentabanco" Association="Self.FK_rt_recibotransf_cb_cuentabanco">
+            <End Role="cb_cuentabanco" EntitySet="cb_cuentabanco" />
+            <End Role="rt_recibotransf" EntitySet="rt_recibotransf" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_recibotransf_re_recibo" Association="Self.FK_rt_recibotransf_re_recibo">
+            <End Role="re_recibo" EntitySet="re_recibo" />
+            <End Role="rt_recibotransf" EntitySet="rt_recibotransf" />
           </AssociationSet>
           <AssociationSet Name="FK_ru_rolusuario_ro_rol" Association="Self.FK_ru_rolusuario_ro_rol">
             <End Role="ro_rol" EntitySet="ro_rol" />
@@ -5322,6 +5605,14 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
             <End Role="spd_solicitudpagodet" EntitySet="spd_solicitudpagodet" />
           </AssociationSet>
           <AssociationSet Name="FK_spd_solicitudpagodet_spd_solicitudpagodet" Association="Self.FK_spd_solicitudpagodet_spd_solicitudpagodet">
+            <End Role="spd_solicitudpagodet" EntitySet="spd_solicitudpagodet" />
+            <End Role="spd_solicitudpagodet1" EntitySet="spd_solicitudpagodet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_spd_solicitudpagodet_spd_solicitudpagodet1" Association="Self.FK_spd_solicitudpagodet_spd_solicitudpagodet1">
+            <End Role="spd_solicitudpagodet" EntitySet="spd_solicitudpagodet" />
+            <End Role="spd_solicitudpagodet1" EntitySet="spd_solicitudpagodet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_spd_solicitudpagodet_spd_solicitudpagodet2" Association="Self.FK_spd_solicitudpagodet_spd_solicitudpagodet2">
             <End Role="spd_solicitudpagodet" EntitySet="spd_solicitudpagodet" />
             <End Role="spd_solicitudpagodet1" EntitySet="spd_solicitudpagodet" />
           </AssociationSet>
@@ -6097,35 +6388,6 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
             <Parameter Name="DatosClienteLocales" Mode="In" Type="Boolean" />
             <Parameter Name="IncluiFechaPago" Mode="In" Type="Boolean" />
           </FunctionImport>
-          <EntitySet Name="pp_pagopresupuesto" EntityType="BerkeDBModel.pp_pagopresupuesto" />
-          <AssociationSet Name="FK_pp_pagopresupuesto_ba_banco" Association="BerkeDBModel.FK_pp_pagopresupuesto_ba_banco">
-            <End Role="ba_banco" EntitySet="ba_banco" />
-            <End Role="pp_pagopresupuesto" EntitySet="pp_pagopresupuesto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_pp_pagopresupuesto_ba_banco1" Association="BerkeDBModel.FK_pp_pagopresupuesto_ba_banco1">
-            <End Role="ba_banco" EntitySet="ba_banco" />
-            <End Role="pp_pagopresupuesto" EntitySet="pp_pagopresupuesto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_cxm_cobranzasxmov_pp_pagopresupuesto" Association="BerkeDBModel.FK_cxm_cobranzasxmov_pp_pagopresupuesto">
-            <End Role="pp_pagopresupuesto" EntitySet="pp_pagopresupuesto" />
-            <End Role="cxm_cobranzasxmov" EntitySet="cxm_cobranzasxmov" />
-          </AssociationSet>
-          <AssociationSet Name="FK_pp_pagopresupuesto_fp_formadepago" Association="BerkeDBModel.FK_pp_pagopresupuesto_fp_formadepago">
-            <End Role="fp_formadepago" EntitySet="fp_formadepago" />
-            <End Role="pp_pagopresupuesto" EntitySet="pp_pagopresupuesto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ncd_notacreditopresupdetalle_pp_pagopresupuesto" Association="BerkeDBModel.FK_ncd_notacreditopresupdetalle_pp_pagopresupuesto">
-            <End Role="pp_pagopresupuesto" EntitySet="pp_pagopresupuesto" />
-            <End Role="ncd_notacreditopresupdetalle" EntitySet="ncd_notacreditopresupdetalle" />
-          </AssociationSet>
-          <AssociationSet Name="FK_pp_pagopresupuesto_ncp_notacreditopresup" Association="BerkeDBModel.FK_pp_pagopresupuesto_ncp_notacreditopresup">
-            <End Role="ncp_notacreditopresup" EntitySet="ncp_notacreditopresup" />
-            <End Role="pp_pagopresupuesto" EntitySet="pp_pagopresupuesto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_pp_pagopresupuesto_pmu_pagomultiple" Association="BerkeDBModel.FK_pp_pagopresupuesto_pmu_pagomultiple">
-            <End Role="pmu_pagomultiple" EntitySet="pmu_pagomultiple" />
-            <End Role="pp_pagopresupuesto" EntitySet="pp_pagopresupuesto" />
-          </AssociationSet>
           <EntitySet Name="rm_rolmenu" EntityType="BerkeDBModel.rm_rolmenu" />
           <EntitySet Name="ro_rol" EntityType="BerkeDBModel.ro_rol" />
           <EntitySet Name="td_tipodocumento" EntityType="BerkeDBModel.td_tipodocumento" />
@@ -6264,10 +6526,6 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="op_oposicion" EntitySet="op_oposicion" />
           </AssociationSet>
-          <AssociationSet Name="FK_pp_pagopresupuesto_Usuario" Association="BerkeDBModel.FK_pp_pagopresupuesto_Usuario">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="pp_pagopresupuesto" EntitySet="pp_pagopresupuesto" />
-          </AssociationSet>
           <EntitySet Name="ra_reporteasunto" EntityType="BerkeDBModel.ra_reporteasunto" />
           <FunctionImport Name="GetListadoCotizaciones" ReturnType="Collection(BerkeDBModel.GetListadoCotizaciones_Result)">
           <Parameter Name="WhereString" Mode="In" Type="String" />
@@ -6281,7 +6539,6 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
             <Parameter Name="FechaHasta" Mode="In" Type="String" />
             <Parameter Name="IncluirNCP" Mode="In" Type="Boolean" />
           </FunctionImport>
-          <EntitySet Name="Audit_pp_pagopresupuesto" EntityType="BerkeDBModel.Audit_pp_pagopresupuesto" />
           <EntitySet Name="nf_numeracionfactura" EntityType="BerkeDBModel.nf_numeracionfactura" />
           <AssociationSet Name="FK_nf_numeracionfactura_nf_numeracionfactura" Association="BerkeDBModel.FK_nf_numeracionfactura_nf_numeracionfactura">
             <End Role="nf_numeracionfactura" EntitySet="nf_numeracionfactura" />
@@ -6434,10 +6691,6 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
             <End Role="cb_cuentabanco" EntitySet="cb_cuentabanco" />
             <End Role="mc_movimientoscuenta" EntitySet="mc_movimientoscuenta" />
           </AssociationSet>
-          <AssociationSet Name="FK_pp_pagopresupuesto_cb_cuentabanco" Association="BerkeDBModel.FK_pp_pagopresupuesto_cb_cuentabanco">
-            <End Role="cb_cuentabanco" EntitySet="cb_cuentabanco" />
-            <End Role="pp_pagopresupuesto" EntitySet="pp_pagopresupuesto" />
-          </AssociationSet>
           <FunctionImport Name="GetMergeAviVencEspeciales" ReturnType="Collection(BerkeDBModel.GetMergeAviVencEspeciales_Result)">
             <Parameter Name="FechaBase" Mode="In" Type="DateTime" />
             <Parameter Name="ClienteID" Mode="In" Type="Int32" />
@@ -6520,10 +6773,6 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
           <AssociationSet Name="FK_pm_pcabxmergeexpe_pc_presupuestocab" Association="BerkeDBModel.FK_pm_pcabxmergeexpe_pc_presupuestocab">
             <End Role="pc_presupuestocab" EntitySet="pc_presupuestocab" />
             <End Role="pm_pcabxmergeexpe" EntitySet="pm_pcabxmergeexpe" />
-          </AssociationSet>
-          <AssociationSet Name="FK_pp_pagopresupuesto_pc_presupuestocab" Association="BerkeDBModel.FK_pp_pagopresupuesto_pc_presupuestocab">
-            <End Role="pc_presupuestocab" EntitySet="pc_presupuestocab" />
-            <End Role="pp_pagopresupuesto" EntitySet="pp_pagopresupuesto" />
           </AssociationSet>
           <EntitySet Name="sed_solexclusiondet" EntityType="BerkeDBModel.sed_solexclusiondet" />
           <EntitySet Name="spc_solicitudpagocab" EntityType="BerkeDBModel.spc_solicitudpagocab" />
@@ -6821,14 +7070,6 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
             <End Role="Moneda" EntitySet="Moneda" />
             <End Role="pmu_pagomultiple" EntitySet="pmu_pagomultiple" />
           </AssociationSet>
-          <AssociationSet Name="FK_pp_pagopresupuesto_Moneda" Association="BerkeDBModel.FK_pp_pagopresupuesto_Moneda">
-            <End Role="Moneda" EntitySet="Moneda" />
-            <End Role="pp_pagopresupuesto" EntitySet="pp_pagopresupuesto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_pp_pagopresupuesto_Moneda1" Association="BerkeDBModel.FK_pp_pagopresupuesto_Moneda1">
-            <End Role="Moneda" EntitySet="Moneda" />
-            <End Role="pp_pagopresupuesto" EntitySet="pp_pagopresupuesto" />
-          </AssociationSet>
           <AssociationSet Name="FK_ps_pagosolicitud_Moneda" Association="BerkeDBModel.FK_ps_pagosolicitud_Moneda">
             <End Role="Moneda" EntitySet="Moneda" />
             <End Role="ps_pagosolicitud" EntitySet="ps_pagosolicitud" />
@@ -6959,6 +7200,116 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
             <Parameter Name="UsuarioID" Mode="In" Type="Int32" />
             <Parameter Name="WhereString" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="GetListadoFacturasParaRecibos" ReturnType="Collection(BerkeDBModel.FacturasParaRecibos)">
+            <Parameter Name="ClienteId" Mode="In" Type="Int32" />
+            <Parameter Name="MonedaId" Mode="In" Type="Int32" />
+            <Parameter Name="FechaInicio" Mode="In" Type="DateTime" />
+            <Parameter Name="FechaFin" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <EntitySet Name="cr_clienteretencion" EntityType="BerkeDBModel.cr_clienteretencion" />
+          <AssociationSet Name="FK_cr_clienteretencion_Cliente" Association="BerkeDBModel.FK_cr_clienteretencion_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="cr_clienteretencion" EntitySet="cr_clienteretencion" />
+          </AssociationSet>
+          <EntitySet Name="pp_pagopresupuesto" EntityType="BerkeDBModel.pp_pagopresupuesto" />
+          <EntitySet Name="rf_recibofactura" EntityType="BerkeDBModel.rf_recibofactura" />
+          <EntitySet Name="rr_reciboretencion" EntityType="BerkeDBModel.rr_reciboretencion" />
+          <EntitySet Name="rt_recibotransf" EntityType="BerkeDBModel.rt_recibotransf" />
+          <AssociationSet Name="FK_pp_pagopresupuesto_ba_banco" Association="BerkeDBModel.FK_pp_pagopresupuesto_ba_banco">
+            <End Role="ba_banco" EntitySet="ba_banco" />
+            <End Role="pp_pagopresupuesto" EntitySet="pp_pagopresupuesto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pp_pagopresupuesto_ba_banco1" Association="BerkeDBModel.FK_pp_pagopresupuesto_ba_banco1">
+            <End Role="ba_banco" EntitySet="ba_banco" />
+            <End Role="pp_pagopresupuesto" EntitySet="pp_pagopresupuesto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pp_pagopresupuesto_cb_cuentabanco" Association="BerkeDBModel.FK_pp_pagopresupuesto_cb_cuentabanco">
+            <End Role="cb_cuentabanco" EntitySet="cb_cuentabanco" />
+            <End Role="pp_pagopresupuesto" EntitySet="pp_pagopresupuesto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_recibotransf_cb_cuentabanco" Association="BerkeDBModel.FK_rt_recibotransf_cb_cuentabanco">
+            <End Role="cb_cuentabanco" EntitySet="cb_cuentabanco" />
+            <End Role="rt_recibotransf" EntitySet="rt_recibotransf" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cxm_cobranzasxmov_pp_pagopresupuesto" Association="BerkeDBModel.FK_cxm_cobranzasxmov_pp_pagopresupuesto">
+            <End Role="pp_pagopresupuesto" EntitySet="pp_pagopresupuesto" />
+            <End Role="cxm_cobranzasxmov" EntitySet="cxm_cobranzasxmov" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rf_recibofactura_fc_facturacabecera" Association="BerkeDBModel.FK_rf_recibofactura_fc_facturacabecera">
+            <End Role="fc_facturacabecera" EntitySet="fc_facturacabecera" />
+            <End Role="rf_recibofactura" EntitySet="rf_recibofactura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rr_reciboretencion_fc_facturacabecera" Association="BerkeDBModel.FK_rr_reciboretencion_fc_facturacabecera">
+            <End Role="fc_facturacabecera" EntitySet="fc_facturacabecera" />
+            <End Role="rr_reciboretencion" EntitySet="rr_reciboretencion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pp_pagopresupuesto_fp_formadepago" Association="BerkeDBModel.FK_pp_pagopresupuesto_fp_formadepago">
+            <End Role="fp_formadepago" EntitySet="fp_formadepago" />
+            <End Role="pp_pagopresupuesto" EntitySet="pp_pagopresupuesto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pp_pagopresupuesto_Moneda" Association="BerkeDBModel.FK_pp_pagopresupuesto_Moneda">
+            <End Role="Moneda" EntitySet="Moneda" />
+            <End Role="pp_pagopresupuesto" EntitySet="pp_pagopresupuesto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pp_pagopresupuesto_Moneda1" Association="BerkeDBModel.FK_pp_pagopresupuesto_Moneda1">
+            <End Role="Moneda" EntitySet="Moneda" />
+            <End Role="pp_pagopresupuesto" EntitySet="pp_pagopresupuesto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ncd_notacreditopresupdetalle_pp_pagopresupuesto" Association="BerkeDBModel.FK_ncd_notacreditopresupdetalle_pp_pagopresupuesto">
+            <End Role="pp_pagopresupuesto" EntitySet="pp_pagopresupuesto" />
+            <End Role="ncd_notacreditopresupdetalle" EntitySet="ncd_notacreditopresupdetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pp_pagopresupuesto_ncp_notacreditopresup" Association="BerkeDBModel.FK_pp_pagopresupuesto_ncp_notacreditopresup">
+            <End Role="ncp_notacreditopresup" EntitySet="ncp_notacreditopresup" />
+            <End Role="pp_pagopresupuesto" EntitySet="pp_pagopresupuesto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pp_pagopresupuesto_pc_presupuestocab" Association="BerkeDBModel.FK_pp_pagopresupuesto_pc_presupuestocab">
+            <End Role="pc_presupuestocab" EntitySet="pc_presupuestocab" />
+            <End Role="pp_pagopresupuesto" EntitySet="pp_pagopresupuesto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pp_pagopresupuesto_pmu_pagomultiple" Association="BerkeDBModel.FK_pp_pagopresupuesto_pmu_pagomultiple">
+            <End Role="pmu_pagomultiple" EntitySet="pmu_pagomultiple" />
+            <End Role="pp_pagopresupuesto" EntitySet="pp_pagopresupuesto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pp_pagopresupuesto_Usuario" Association="BerkeDBModel.FK_pp_pagopresupuesto_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="pp_pagopresupuesto" EntitySet="pp_pagopresupuesto" />
+          </AssociationSet>
+          <EntitySet Name="rch_recibocheque" EntityType="BerkeDBModel.rch_recibocheque" />
+          <EntitySet Name="Audit_pp_pagopresupuesto" EntityType="BerkeDBModel.Audit_pp_pagopresupuesto" />
+          <EntitySet Name="re_recibo" EntityType="BerkeDBModel.re_recibo" />
+          <AssociationSet Name="FK_re_recibo_Cliente" Association="BerkeDBModel.FK_re_recibo_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="re_recibo" EntitySet="re_recibo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_re_recibo_Moneda" Association="BerkeDBModel.FK_re_recibo_Moneda">
+            <End Role="Moneda" EntitySet="Moneda" />
+            <End Role="re_recibo" EntitySet="re_recibo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_pp_pagopresupuesto_re_recibo" Association="BerkeDBModel.FK_pp_pagopresupuesto_re_recibo">
+            <End Role="re_recibo" EntitySet="re_recibo" />
+            <End Role="pp_pagopresupuesto" EntitySet="pp_pagopresupuesto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rch_recibocheque_ba_banco" Association="BerkeDBModel.FK_rch_recibocheque_ba_banco">
+            <End Role="re_recibo" EntitySet="re_recibo" />
+            <End Role="rch_recibocheque" EntitySet="rch_recibocheque" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rch_recibocheque_re_recibo" Association="BerkeDBModel.FK_rch_recibocheque_re_recibo">
+            <End Role="re_recibo" EntitySet="re_recibo" />
+            <End Role="rch_recibocheque" EntitySet="rch_recibocheque" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rf_recibofactura_re_recibo" Association="BerkeDBModel.FK_rf_recibofactura_re_recibo">
+            <End Role="re_recibo" EntitySet="re_recibo" />
+            <End Role="rf_recibofactura" EntitySet="rf_recibofactura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rr_reciboretencion_re_recibo" Association="BerkeDBModel.FK_rr_reciboretencion_re_recibo">
+            <End Role="re_recibo" EntitySet="re_recibo" />
+            <End Role="rr_reciboretencion" EntitySet="rr_reciboretencion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_rt_recibotransf_re_recibo" Association="BerkeDBModel.FK_rt_recibotransf_re_recibo">
+            <End Role="re_recibo" EntitySet="re_recibo" />
+            <End Role="rt_recibotransf" EntitySet="rt_recibotransf" />
+          </AssociationSet>
           <!--<EntitySet Name="ncb_notacreditobancaria1Set" EntityType="BerkeDBModel.ncb_notacreditobancaria1" />
           <AssociationSet Name="FK_ncb_notacreditobancaria_Cliente1" Association="BerkeDBModel.FK_ncb_notacreditobancaria_Cliente1">
             <End Role="Cliente" EntitySet="Cliente" />
@@ -7739,14 +8090,15 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
           <Property Name="ba_paisid" Type="Int32" />
           <Property Name="ba_ciudadid" Type="Int32" />
           <NavigationProperty Name="CCiudad" Relationship="BerkeDBModel.FK_ba_banco_CCiudad" FromRole="ba_banco" ToRole="CCiudad" />
-          <NavigationProperty Name="pp_pagopresupuesto" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_ba_banco" FromRole="ba_banco" ToRole="pp_pagopresupuesto" />
-          <NavigationProperty Name="pp_pagopresupuesto1" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_ba_banco1" FromRole="ba_banco" ToRole="pp_pagopresupuesto" />
           <NavigationProperty Name="co_continente" Relationship="BerkeDBModel.FK_co_continente_ba_banco" FromRole="ba_banco" ToRole="co_continente" />
           <NavigationProperty Name="Cliente" Relationship="BerkeDBModel.FK_Cliente_ba_banco" FromRole="ba_banco" ToRole="Cliente" />
           <NavigationProperty Name="cb_cuentabanco" Relationship="BerkeDBModel.FK_cb_cuentabanco_ba_banco" FromRole="ba_banco" ToRole="cb_cuentabanco" />
           <NavigationProperty Name="ps_pagosolicitud" Relationship="BerkeDBModel.FK_ps_pagosolicitud_ba_banco" FromRole="ba_banco" ToRole="ps_pagosolicitud" />
           <NavigationProperty Name="ps_pagosolicitud1" Relationship="BerkeDBModel.FK_ps_pagosolicitud_ba_banco1" FromRole="ba_banco" ToRole="ps_pagosolicitud" />
           <NavigationProperty Name="CPais" Relationship="BerkeDBModel.FK_ba_banco_CPais" FromRole="ba_banco" ToRole="CPais" />
+          <Property Name="ba_mostrar" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="pp_pagopresupuesto" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_ba_banco" FromRole="ba_banco" ToRole="pp_pagopresupuesto" />
+          <NavigationProperty Name="pp_pagopresupuesto1" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_ba_banco1" FromRole="ba_banco" ToRole="pp_pagopresupuesto" />
         </EntityType>
         <EntityType Name="fp_formadepago">
           <Key>
@@ -7755,8 +8107,8 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
           <Property Name="fp_formadepagoid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="fp_descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="pmu_pagomultiple" Relationship="BerkeDBModel.FK_pmu_pagomultiple_fp_formadepago" FromRole="fp_formadepago" ToRole="pmu_pagomultiple" />
-          <NavigationProperty Name="pp_pagopresupuesto" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_fp_formadepago" FromRole="fp_formadepago" ToRole="pp_pagopresupuesto" />
           <NavigationProperty Name="ps_pagosolicitud" Relationship="BerkeDBModel.FK_ps_pagosolicitud_fp_formadepago" FromRole="fp_formadepago" ToRole="ps_pagosolicitud" />
+          <NavigationProperty Name="pp_pagopresupuesto" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_fp_formadepago" FromRole="fp_formadepago" ToRole="pp_pagopresupuesto" />
         </EntityType>
         <EntityType Name="sa_subarea">
           <Key>
@@ -7923,9 +8275,9 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
           <Property Name="pmu_montopago" Type="Decimal" Nullable="false" Precision="14" Scale="2" />
           <Property Name="pmu_referencia" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="fp_formadepago" Relationship="BerkeDBModel.FK_pmu_pagomultiple_fp_formadepago" FromRole="pmu_pagomultiple" ToRole="fp_formadepago" />
-          <NavigationProperty Name="pp_pagopresupuesto" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_pmu_pagomultiple" FromRole="pmu_pagomultiple" ToRole="pp_pagopresupuesto" />
           <NavigationProperty Name="Cliente" Relationship="BerkeDBModel.FK_pmu_pagomultiple_Cliente" FromRole="pmu_pagomultiple" ToRole="Cliente" />
           <NavigationProperty Name="Moneda" Relationship="BerkeDBModel.FK_pmu_pagomultiple_Moneda" FromRole="pmu_pagomultiple" ToRole="Moneda" />
+          <NavigationProperty Name="pp_pagopresupuesto" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_pmu_pagomultiple" FromRole="pmu_pagomultiple" ToRole="pp_pagopresupuesto" />
         </EntityType>
         <Association Name="FK_pmu_pagomultiple_fp_formadepago">
           <End Type="BerkeDBModel.fp_formadepago" Role="fp_formadepago" Multiplicity="1" />
@@ -8057,9 +8409,9 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
           <NavigationProperty Name="ncd_notacreditopresupdetalle" Relationship="BerkeDBModel.FK_ncd_notacreditopresupdetalle_ncp_notacreditopresup" FromRole="ncp_notacreditopresup" ToRole="ncd_notacreditopresupdetalle" />
           <NavigationProperty Name="ncp_notacreditopresup1" Relationship="BerkeDBModel.FK_ncp_notacreditopresup_ncp_notacreditopresup" FromRole="ncp_notacreditopresup" ToRole="ncp_notacreditopresup1" />
           <NavigationProperty Name="ncp_notacreditopresup2" Relationship="BerkeDBModel.FK_ncp_notacreditopresup_ncp_notacreditopresup" FromRole="ncp_notacreditopresup1" ToRole="ncp_notacreditopresup" />
-          <NavigationProperty Name="pp_pagopresupuesto" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_ncp_notacreditopresup" FromRole="ncp_notacreditopresup" ToRole="pp_pagopresupuesto" />
           <NavigationProperty Name="Cliente" Relationship="BerkeDBModel.FK_ncp_notacreditopresup_Cliente" FromRole="ncp_notacreditopresup" ToRole="Cliente" />
           <NavigationProperty Name="Moneda" Relationship="BerkeDBModel.FK_ncp_notacreditopresup_Moneda" FromRole="ncp_notacreditopresup" ToRole="Moneda" />
+          <NavigationProperty Name="pp_pagopresupuesto" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_ncp_notacreditopresup" FromRole="ncp_notacreditopresup" ToRole="pp_pagopresupuesto" />
         </EntityType>
         <Association Name="FK_ncd_notacreditopresupdetalle_ncp_notacreditopresup">
           <End Type="BerkeDBModel.ncp_notacreditopresup" Role="ncp_notacreditopresup" Multiplicity="1" />
@@ -9142,130 +9494,6 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
           <Property Type="String" Name="RazonSocialFactura" Nullable="true" />
           <Property Type="String" Name="DireccionCliente" Nullable="true" />
         </ComplexType>
-        <EntityType Name="pp_pagopresupuesto">
-          <Key>
-            <PropertyRef Name="pp_pagopresupuestoid" />
-          </Key>
-          <Property Name="pp_pagopresupuestoid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="pp_presupuestocabid" Type="Int32" Nullable="false" />
-          <Property Name="pp_monedaid" Type="Int32" Nullable="false" />
-          <Property Name="pp_bancoid" Type="Int32" />
-          <Property Name="pp_cuentaid" Type="Int32" />
-          <Property Name="pp_formapagoid" Type="Int32" Nullable="false" />
-          <Property Name="pp_fechapago" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="pp_nrocheque" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="pp_bancochequeid" Type="Int32" />
-          <Property Name="pp_monedagastoid" Type="Int32" />
-          <Property Name="pp_gastocambiario" Type="Decimal" Precision="14" Scale="2" />
-          <Property Name="pp_montopago" Type="Decimal" Nullable="false" Precision="14" Scale="2" />
-          <Property Name="pp_referencia" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="pp_fechaboletadeposito" Type="DateTime" Precision="0" />
-          <Property Name="pp_nrorecibo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="pp_fecharecibo" Type="DateTime" Precision="0" />
-          <Property Name="pp_anulado" Type="Boolean" Nullable="false" />
-          <Property Name="pp_fechanotacredito" Type="DateTime" Precision="0" />
-          <Property Name="pp_notacreditonro" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="pp_pagomultipleid" Type="Int32" />
-          <Property Name="pp_notacreditopresupid" Type="Int32" />
-          <Property Name="pp_nroboletadeposito" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="pp_respcobroextid" Type="Int32" />
-          <NavigationProperty Name="ba_banco" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_ba_banco" FromRole="pp_pagopresupuesto" ToRole="ba_banco" />
-          <NavigationProperty Name="ba_banco1" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_ba_banco1" FromRole="pp_pagopresupuesto" ToRole="ba_banco" />
-          <NavigationProperty Name="cxm_cobranzasxmov" Relationship="BerkeDBModel.FK_cxm_cobranzasxmov_pp_pagopresupuesto" FromRole="pp_pagopresupuesto" ToRole="cxm_cobranzasxmov" />
-          <NavigationProperty Name="fp_formadepago" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_fp_formadepago" FromRole="pp_pagopresupuesto" ToRole="fp_formadepago" />
-          <NavigationProperty Name="ncd_notacreditopresupdetalle" Relationship="BerkeDBModel.FK_ncd_notacreditopresupdetalle_pp_pagopresupuesto" FromRole="pp_pagopresupuesto" ToRole="ncd_notacreditopresupdetalle" />
-          <NavigationProperty Name="ncp_notacreditopresup" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_ncp_notacreditopresup" FromRole="pp_pagopresupuesto" ToRole="ncp_notacreditopresup" />
-          <NavigationProperty Name="pmu_pagomultiple" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_pmu_pagomultiple" FromRole="pp_pagopresupuesto" ToRole="pmu_pagomultiple" />
-          <NavigationProperty Name="Usuario" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_Usuario" FromRole="pp_pagopresupuesto" ToRole="Usuario" />
-          <NavigationProperty Name="cb_cuentabanco" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_cb_cuentabanco" FromRole="pp_pagopresupuesto" ToRole="cb_cuentabanco" />
-          <NavigationProperty Name="pc_presupuestocab" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_pc_presupuestocab" FromRole="pp_pagopresupuesto" ToRole="pc_presupuestocab" />
-          <NavigationProperty Name="Moneda" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_Moneda" FromRole="pp_pagopresupuesto" ToRole="Moneda" />
-          <NavigationProperty Name="Moneda1" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_Moneda1" FromRole="pp_pagopresupuesto" ToRole="Moneda" />
-          </EntityType>
-        <Association Name="FK_pp_pagopresupuesto_ba_banco">
-          <End Type="BerkeDBModel.ba_banco" Role="ba_banco" Multiplicity="0..1" />
-          <End Type="BerkeDBModel.pp_pagopresupuesto" Role="pp_pagopresupuesto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ba_banco">
-              <PropertyRef Name="ba_bancoid" />
-            </Principal>
-            <Dependent Role="pp_pagopresupuesto">
-              <PropertyRef Name="pp_bancoid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_pp_pagopresupuesto_ba_banco1">
-          <End Type="BerkeDBModel.ba_banco" Role="ba_banco" Multiplicity="0..1" />
-          <End Type="BerkeDBModel.pp_pagopresupuesto" Role="pp_pagopresupuesto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ba_banco">
-              <PropertyRef Name="ba_bancoid" />
-            </Principal>
-            <Dependent Role="pp_pagopresupuesto">
-              <PropertyRef Name="pp_bancochequeid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_cxm_cobranzasxmov_pp_pagopresupuesto">
-          <End Type="BerkeDBModel.pp_pagopresupuesto" Role="pp_pagopresupuesto" Multiplicity="1" />
-          <End Type="BerkeDBModel.cxm_cobranzasxmov" Role="cxm_cobranzasxmov" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="pp_pagopresupuesto">
-              <PropertyRef Name="pp_pagopresupuestoid" />
-            </Principal>
-            <Dependent Role="cxm_cobranzasxmov">
-              <PropertyRef Name="cxm_cobranzaid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_pp_pagopresupuesto_fp_formadepago">
-          <End Type="BerkeDBModel.fp_formadepago" Role="fp_formadepago" Multiplicity="1" />
-          <End Type="BerkeDBModel.pp_pagopresupuesto" Role="pp_pagopresupuesto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="fp_formadepago">
-              <PropertyRef Name="fp_formadepagoid" />
-            </Principal>
-            <Dependent Role="pp_pagopresupuesto">
-              <PropertyRef Name="pp_formapagoid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ncd_notacreditopresupdetalle_pp_pagopresupuesto">
-          <End Type="BerkeDBModel.pp_pagopresupuesto" Role="pp_pagopresupuesto" Multiplicity="1" />
-          <End Type="BerkeDBModel.ncd_notacreditopresupdetalle" Role="ncd_notacreditopresupdetalle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="pp_pagopresupuesto">
-              <PropertyRef Name="pp_pagopresupuestoid" />
-            </Principal>
-            <Dependent Role="ncd_notacreditopresupdetalle">
-              <PropertyRef Name="ncd_pagoid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_pp_pagopresupuesto_ncp_notacreditopresup">
-          <End Type="BerkeDBModel.ncp_notacreditopresup" Role="ncp_notacreditopresup" Multiplicity="0..1" />
-          <End Type="BerkeDBModel.pp_pagopresupuesto" Role="pp_pagopresupuesto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ncp_notacreditopresup">
-              <PropertyRef Name="ncp_notacreditoid" />
-            </Principal>
-            <Dependent Role="pp_pagopresupuesto">
-              <PropertyRef Name="pp_notacreditopresupid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_pp_pagopresupuesto_pmu_pagomultiple">
-          <End Type="BerkeDBModel.pmu_pagomultiple" Role="pmu_pagomultiple" Multiplicity="0..1" />
-          <End Type="BerkeDBModel.pp_pagopresupuesto" Role="pp_pagopresupuesto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="pmu_pagomultiple">
-              <PropertyRef Name="pmu_pagomultipleid" />
-            </Principal>
-            <Dependent Role="pp_pagopresupuesto">
-              <PropertyRef Name="pp_pagomultipleid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="rm_rolmenu">
           <Key>
             <PropertyRef Name="rm_rolmenuid" />
@@ -9618,7 +9846,6 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
           <NavigationProperty Name="CArea" Relationship="BerkeDBModel.FK_Usuario_CArea" FromRole="Usuario" ToRole="CArea" />
           <NavigationProperty Name="Correspondencia" Relationship="BerkeDBModel.FK_Correspondencia_Usuario" FromRole="Usuario" ToRole="Correspondencia" />
           <NavigationProperty Name="op_oposicion" Relationship="BerkeDBModel.FK_op_oposicion_Usuario" FromRole="Usuario" ToRole="op_oposicion" />
-          <NavigationProperty Name="pp_pagopresupuesto" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_Usuario" FromRole="Usuario" ToRole="pp_pagopresupuesto" />
           <NavigationProperty Name="su_serieusuario" Relationship="BerkeDBModel.FK_su_serieusuario_Usuario" FromRole="Usuario" ToRole="su_serieusuario" />
           <NavigationProperty Name="ru_rolusuario" Relationship="BerkeDBModel.FK_ru_rolusuario_Usuario" FromRole="Usuario" ToRole="ru_rolusuario" />
           <Property Name="UsuarioDominio2" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
@@ -9629,6 +9856,7 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
           <NavigationProperty Name="spd_solicitudpagodet" Relationship="BerkeDBModel.FK_spd_solicitudpagodet_Usuario" FromRole="Usuario" ToRole="spd_solicitudpagodet" />
           <NavigationProperty Name="ad_autorizaciondocumento" Relationship="BerkeDBModel.FK_ad_autorizaciondocumento_UsuarioAutorizado" FromRole="Usuario" ToRole="ad_autorizaciondocumento" />
           <NavigationProperty Name="ad_autorizaciondocumento1" Relationship="BerkeDBModel.FK_ad_autorizaciondocumento_UsuarioAutorizador" FromRole="Usuario" ToRole="ad_autorizaciondocumento" />
+          <NavigationProperty Name="pp_pagopresupuesto" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_Usuario" FromRole="Usuario" ToRole="pp_pagopresupuesto" />
         </EntityType>
         <Association Name="FK_ca_clienteantecedente_Usuario_autorizadopor">
           <End Type="BerkeDBModel.Usuario" Role="Usuario" Multiplicity="0..1" />
@@ -9687,18 +9915,6 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
             </Principal>
             <Dependent Role="op_oposicion">
               <PropertyRef Name="UsuarioID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_pp_pagopresupuesto_Usuario">
-          <End Type="BerkeDBModel.Usuario" Role="Usuario" Multiplicity="0..1" />
-          <End Type="BerkeDBModel.pp_pagopresupuesto" Role="pp_pagopresupuesto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="pp_pagopresupuesto">
-              <PropertyRef Name="pp_respcobroextid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -9806,40 +10022,6 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
           <Property Type="Int32" Name="TramiteID" Nullable="false" />
           <Property Type="String" Name="Origen" Nullable="false" MaxLength="1" />
         </ComplexType>
-        <EntityType Name="Audit_pp_pagopresupuesto">
-          <Key>
-            <PropertyRef Name="pp_pagopresupuestoid" />
-            <PropertyRef Name="Audit_User" />
-            <PropertyRef Name="Audit_Fecha" />
-            <PropertyRef Name="Audit_Operacion" />
-          </Key>
-          <Property Name="pp_pagopresupuestoid" Type="Int32" Nullable="false" />
-          <Property Name="pp_presupuestocabid" Type="Int32" />
-          <Property Name="pp_monedaid" Type="Int32" />
-          <Property Name="pp_bancoid" Type="Int32" />
-          <Property Name="pp_cuentaid" Type="Int32" />
-          <Property Name="pp_formapagoid" Type="Int32" />
-          <Property Name="pp_fechapago" Type="DateTime" Precision="0" />
-          <Property Name="pp_nrocheque" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="pp_bancochequeid" Type="Int32" />
-          <Property Name="pp_monedagastoid" Type="Int32" />
-          <Property Name="pp_gastocambiario" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="pp_montopago" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="pp_referencia" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="pp_fechaboletadeposito" Type="DateTime" Precision="0" />
-          <Property Name="pp_nrorecibo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="pp_fecharecibo" Type="DateTime" Precision="0" />
-          <Property Name="pp_anulado" Type="Boolean" />
-          <Property Name="pp_fechanotacredito" Type="DateTime" Precision="0" />
-          <Property Name="pp_notacreditonro" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="pp_pagomultipleid" Type="Int32" />
-          <Property Name="pp_notacreditopresupid" Type="Int32" />
-          <Property Name="pp_nroboletadeposito" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="pp_respcobroextid" Type="Int32" />
-          <Property Name="Audit_User" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Audit_Fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Audit_Operacion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="nf_numeracionfactura">
           <Key>
             <PropertyRef Name="nf_numeracionfacturaid" />
@@ -10206,6 +10388,8 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
           <NavigationProperty Name="pc_presupuestocab" Relationship="BerkeDBModel.FK_pc_presupuestocab_Cliente" FromRole="Cliente" ToRole="pc_presupuestocab" />
           <NavigationProperty Name="spc_solicitudpagocab" Relationship="BerkeDBModel.FK_spc_solicitudpagocab_Cliente" FromRole="Cliente" ToRole="spc_solicitudpagocab" />
           <NavigationProperty Name="ps_pagosolicitud" Relationship="BerkeDBModel.FK_ps_pagosolicitud_Cliente" FromRole="Cliente" ToRole="ps_pagosolicitud" />
+          <NavigationProperty Name="cr_clienteretencion" Relationship="BerkeDBModel.FK_cr_clienteretencion_Cliente" FromRole="Cliente" ToRole="cr_clienteretencion" />
+          <NavigationProperty Name="re_recibo" Relationship="BerkeDBModel.FK_re_recibo_Cliente" FromRole="Cliente" ToRole="re_recibo" />
         </EntityType>
         <Association Name="FK_Atencion_Cliente">
           <End Type="BerkeDBModel.Cliente" Role="Cliente" Multiplicity="0..1" />
@@ -10393,10 +10577,12 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
           <NavigationProperty Name="ccm_conclictamoneda" Relationship="BerkeDBModel.FK_ccm_conclictamoneda_cb_cuentabanco" FromRole="cb_cuentabanco" ToRole="ccm_conclictamoneda" />
           <NavigationProperty Name="cct_cierrecuenta" Relationship="BerkeDBModel.FK_cct_cierrecuenta_cb_cuentabanco" FromRole="cb_cuentabanco" ToRole="cct_cierrecuenta" />
           <NavigationProperty Name="mc_movimientoscuenta" Relationship="BerkeDBModel.FK_mc_movimientoscuenta_cb_cuentabanco" FromRole="cb_cuentabanco" ToRole="mc_movimientoscuenta" />
-          <NavigationProperty Name="pp_pagopresupuesto" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_cb_cuentabanco" FromRole="cb_cuentabanco" ToRole="pp_pagopresupuesto" />
           <NavigationProperty Name="ps_pagosolicitud" Relationship="BerkeDBModel.FK_ps_pagosolicitud_cb_cuentabanco" FromRole="cb_cuentabanco" ToRole="ps_pagosolicitud" />
           <NavigationProperty Name="ps_pagosolicitud1" Relationship="BerkeDBModel.FK_ps_pagosolicitud_cb_cuentabanco1" FromRole="cb_cuentabanco" ToRole="ps_pagosolicitud" />
           <NavigationProperty Name="Moneda" Relationship="BerkeDBModel.FK_cb_cuentabanco_Moneda" FromRole="cb_cuentabanco" ToRole="Moneda" />
+          <Property Name="cb_mostrar" Type="Boolean" />
+          <NavigationProperty Name="pp_pagopresupuesto" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_cb_cuentabanco" FromRole="cb_cuentabanco" ToRole="pp_pagopresupuesto" />
+          <NavigationProperty Name="rt_recibotransf" Relationship="BerkeDBModel.FK_rt_recibotransf_cb_cuentabanco" FromRole="cb_cuentabanco" ToRole="rt_recibotransf" />
           </EntityType>
         <Association Name="FK_cb_cuentabanco_ba_banco">
           <End Type="BerkeDBModel.ba_banco" Role="ba_banco" Multiplicity="1" />
@@ -10443,18 +10629,6 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
             </Principal>
             <Dependent Role="mc_movimientoscuenta">
               <PropertyRef Name="mc_cuentabancoid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_pp_pagopresupuesto_cb_cuentabanco">
-          <End Type="BerkeDBModel.cb_cuentabanco" Role="cb_cuentabanco" Multiplicity="0..1" />
-          <End Type="BerkeDBModel.pp_pagopresupuesto" Role="pp_pagopresupuesto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="cb_cuentabanco">
-              <PropertyRef Name="cb_cuentabancoid" />
-            </Principal>
-            <Dependent Role="pp_pagopresupuesto">
-              <PropertyRef Name="pp_cuentaid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -10654,7 +10828,6 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
           <NavigationProperty Name="Usuario2" Relationship="BerkeDBModel.FK_pc_presupuestocab_Usuario2" FromRole="pc_presupuestocab" ToRole="Usuario" />
           <NavigationProperty Name="pd_presupuestodetalle" Relationship="BerkeDBModel.FK_pd_presupuestodetalle_pc_presupuestocab" FromRole="pc_presupuestocab" ToRole="pd_presupuestodetalle" />
           <NavigationProperty Name="pm_pcabxmergeexpe" Relationship="BerkeDBModel.FK_pm_pcabxmergeexpe_pc_presupuestocab" FromRole="pc_presupuestocab" ToRole="pm_pcabxmergeexpe" />
-          <NavigationProperty Name="pp_pagopresupuesto" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_pc_presupuestocab" FromRole="pc_presupuestocab" ToRole="pp_pagopresupuesto" />
           <NavigationProperty Name="pc_presupuestocab1" Relationship="BerkeDBModel.FK_pc_presupuestocab_pc_presupuestocab" FromRole="pc_presupuestocab" ToRole="pc_presupuestocab1" />
           <NavigationProperty Name="pc_presupuestocab2" Relationship="BerkeDBModel.FK_pc_presupuestocab_pc_presupuestocab" FromRole="pc_presupuestocab1" ToRole="pc_presupuestocab" />
           <NavigationProperty Name="fpd_facturapresupuestodet" Relationship="BerkeDBModel.FK_fpd_facturapresupuestodet_pc_presupuestocab" FromRole="pc_presupuestocab" ToRole="fpd_facturapresupuestodet" />
@@ -10663,6 +10836,7 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
           <NavigationProperty Name="Moneda1" Relationship="BerkeDBModel.FK_pc_presupuestocab_Moneda1" FromRole="pc_presupuestocab" ToRole="Moneda" />
           <NavigationProperty Name="fc_facturacabecera" Relationship="BerkeDBModel.FK_pc_presupuestocab_fc_facturacabecera" FromRole="pc_presupuestocab" ToRole="fc_facturacabecera" />
           <NavigationProperty Name="fd_facturadetalle" Relationship="BerkeDBModel.FK_fd_facturadetalle_pc_presupuestocab" FromRole="pc_presupuestocab" ToRole="fd_facturadetalle" />
+          <NavigationProperty Name="pp_pagopresupuesto" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_pc_presupuestocab" FromRole="pc_presupuestocab" ToRole="pp_pagopresupuesto" />
           </EntityType>
         <Association Name="FK_pc_presupuestocab_ac_areacontabilidad">
           <End Type="BerkeDBModel.ac_areacontabilidad" Role="ac_areacontabilidad" Multiplicity="0..1" />
@@ -10781,18 +10955,6 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
             </Principal>
             <Dependent Role="pm_pcabxmergeexpe">
               <PropertyRef Name="pm_presupuestocabid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_pp_pagopresupuesto_pc_presupuestocab">
-          <End Type="BerkeDBModel.pc_presupuestocab" Role="pc_presupuestocab" Multiplicity="1" />
-          <End Type="BerkeDBModel.pp_pagopresupuesto" Role="pp_pagopresupuesto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="pc_presupuestocab">
-              <PropertyRef Name="pc_presupuestocabid" />
-            </Principal>
-            <Dependent Role="pp_pagopresupuesto">
-              <PropertyRef Name="pp_presupuestocabid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -11938,8 +12100,6 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
           <NavigationProperty Name="pc_presupuestocab" Relationship="BerkeDBModel.FK_pc_presupuestocab_Moneda" FromRole="Moneda" ToRole="pc_presupuestocab" />
           <NavigationProperty Name="pc_presupuestocab1" Relationship="BerkeDBModel.FK_pc_presupuestocab_Moneda1" FromRole="Moneda" ToRole="pc_presupuestocab" />
           <NavigationProperty Name="pmu_pagomultiple" Relationship="BerkeDBModel.FK_pmu_pagomultiple_Moneda" FromRole="Moneda" ToRole="pmu_pagomultiple" />
-          <NavigationProperty Name="pp_pagopresupuesto" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_Moneda" FromRole="Moneda" ToRole="pp_pagopresupuesto" />
-          <NavigationProperty Name="pp_pagopresupuesto1" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_Moneda1" FromRole="Moneda" ToRole="pp_pagopresupuesto" />
           <NavigationProperty Name="ps_pagosolicitud" Relationship="BerkeDBModel.FK_ps_pagosolicitud_Moneda" FromRole="Moneda" ToRole="ps_pagosolicitud" />
           <NavigationProperty Name="rc_reclamocliente" Relationship="BerkeDBModel.FK_rc_reclamocliente_Moneda" FromRole="Moneda" ToRole="rc_reclamocliente" />
           <NavigationProperty Name="rcm_relacotizamone" Relationship="BerkeDBModel.FK_rcm_relacotizamone_Moneda" FromRole="Moneda" ToRole="rcm_relacotizamone" />
@@ -11949,7 +12109,10 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
           <NavigationProperty Name="tc_tarifascliente" Relationship="BerkeDBModel.FK_tc_tarifascliente_Moneda" FromRole="Moneda" ToRole="tc_tarifascliente" />
           <NavigationProperty Name="tcd_tipocambiode" Relationship="BerkeDBModel.FK_tcd_tipocambiode_Moneda" FromRole="Moneda" ToRole="tcd_tipocambiode" />
           <NavigationProperty Name="nc_notacreditocabecera" Relationship="BerkeDBModel.FK_nc_notacreditocabecera_Moneda" FromRole="Moneda" ToRole="nc_notacreditocabecera" />
-        </EntityType>
+          <NavigationProperty Name="pp_pagopresupuesto" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_Moneda" FromRole="Moneda" ToRole="pp_pagopresupuesto" />
+          <NavigationProperty Name="pp_pagopresupuesto1" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_Moneda1" FromRole="Moneda" ToRole="pp_pagopresupuesto" />
+          <NavigationProperty Name="re_recibo" Relationship="BerkeDBModel.FK_re_recibo_Moneda" FromRole="Moneda" ToRole="re_recibo" />
+          </EntityType>
         <Association Name="FK_cb_cuentabanco_Moneda">
           <End Type="BerkeDBModel.Moneda" Role="Moneda" Multiplicity="1" />
           <End Type="BerkeDBModel.cb_cuentabanco" Role="cb_cuentabanco" Multiplicity="*" />
@@ -12031,30 +12194,6 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
             </Principal>
             <Dependent Role="pmu_pagomultiple">
               <PropertyRef Name="pmu_monedaid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_pp_pagopresupuesto_Moneda">
-          <End Type="BerkeDBModel.Moneda" Role="Moneda" Multiplicity="1" />
-          <End Type="BerkeDBModel.pp_pagopresupuesto" Role="pp_pagopresupuesto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Moneda">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="pp_pagopresupuesto">
-              <PropertyRef Name="pp_monedaid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_pp_pagopresupuesto_Moneda1">
-          <End Type="BerkeDBModel.Moneda" Role="Moneda" Multiplicity="0..1" />
-          <End Type="BerkeDBModel.pp_pagopresupuesto" Role="pp_pagopresupuesto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Moneda">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="pp_pagopresupuesto">
-              <PropertyRef Name="pp_monedagastoid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -12409,6 +12548,8 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
           <NavigationProperty Name="pc_presupuestocab" Relationship="BerkeDBModel.FK_pc_presupuestocab_fc_facturacabecera" FromRole="fc_facturacabecera" ToRole="pc_presupuestocab" />
           <NavigationProperty Name="fd_facturadetalle" Relationship="BerkeDBModel.FK_fd_facturadetalle_fc_facturacabecera" FromRole="fc_facturacabecera" ToRole="fd_facturadetalle" />
           <NavigationProperty Name="nc_notacreditocabecera" Relationship="BerkeDBModel.FK_nc_notacreditocabecera_fc_facturacabecera" FromRole="fc_facturacabecera" ToRole="nc_notacreditocabecera" />
+          <NavigationProperty Name="rf_recibofactura" Relationship="BerkeDBModel.FK_rf_recibofactura_fc_facturacabecera" FromRole="fc_facturacabecera" ToRole="rf_recibofactura" />
+          <NavigationProperty Name="rr_reciboretencion" Relationship="BerkeDBModel.FK_rr_reciboretencion_fc_facturacabecera" FromRole="fc_facturacabecera" ToRole="rr_reciboretencion" />
         </EntityType>
         <Association Name="FK_fpc_facturapresupuestocab_fc_facturacabecera">
           <End Type="BerkeDBModel.fc_facturacabecera" Role="fc_facturacabecera" Multiplicity="1" />
@@ -12813,6 +12954,495 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
           <Property Type="Int32" Name="CobroID" Nullable="true" />
           <Property Type="String" Name="DescripcionFE" Nullable="true" MaxLength="120" />
         </ComplexType>
+        <ComplexType Name="FacturasParaRecibos">
+          <Property Type="Int32" Name="FacturaCabId" Nullable="false" />
+          <Property Type="Int32" Name="TimbradoId" Nullable="true" />
+          <Property Type="DateTime" Name="FechaFactura" Nullable="false" />
+          <Property Type="String" Name="NroFactura" Nullable="true" MaxLength="35" />
+          <Property Type="Int32" Name="ClienteId" Nullable="true" />
+          <Property Type="String" Name="ClienteNombre" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="TipoFacturaDescrip" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="RUC" Nullable="true" MaxLength="15" />
+          <Property Type="Boolean" Name="EsDocumentoElectronico" Nullable="true" />
+          <Property Type="Int32" Name="MonedaId" Nullable="false" />
+          <Property Type="String" Name="MonedaAbrev" Nullable="true" MaxLength="10" />
+          <Property Type="Decimal" Name="TotalExentas" Nullable="false" Precision="14" Scale="2" />
+          <Property Type="Decimal" Name="TotalIVA5" Nullable="false" Precision="14" Scale="2" />
+          <Property Type="Decimal" Name="TotalIVA10" Nullable="false" Precision="14" Scale="2" />
+          <Property Type="Decimal" Name="LiqIVA5" Nullable="false" Precision="14" Scale="2" />
+          <Property Type="Decimal" Name="LiqIVA10" Nullable="false" Precision="14" Scale="2" />
+          <Property Type="Decimal" Name="TotalIVA" Nullable="false" Precision="14" Scale="2" />
+          <Property Type="Decimal" Name="Total" Nullable="false" Precision="14" Scale="2" />
+          <Property Type="String" Name="DocumentosAsociados" Nullable="true" MaxLength="500" />
+          <Property Type="Decimal" Name="Saldo" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="ImporteCobrado" Nullable="true" Precision="14" Scale="2" />
+          <Property Type="String" Name="CDC" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="TipoDocumento" Nullable="false" MaxLength="19" />
+          <Property Type="String" Name="EstadoDE" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="IdParaOrden" Nullable="false" />
+          <Property Type="Int32" Name="FacturaCabIdRel" Nullable="true" />
+          <Property Type="String" Name="MonedaDescrip" Nullable="false" MaxLength="60" />
+          <Property Type="Int32" Name="FacturaPresupuestoCabId" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="cr_clienteretencion">
+          <Key>
+            <PropertyRef Name="cr_clienteid" />
+          </Key>
+          <Property Name="cr_clienteretencionid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cr_clienteid" Type="Int32" Nullable="false" />
+          <Property Name="cr_porcentajeiva10" Type="Int32" Nullable="false" />
+          <Property Name="cr_porcentajerenta" Type="Int32" Nullable="false" />
+          <Property Name="cr_nrotimbrado" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Cliente" Relationship="BerkeDBModel.FK_cr_clienteretencion_Cliente" FromRole="cr_clienteretencion" ToRole="Cliente" />
+        </EntityType>
+        <Association Name="FK_cr_clienteretencion_Cliente">
+          <End Type="BerkeDBModel.Cliente" Role="Cliente" Multiplicity="1" />
+          <End Type="BerkeDBModel.cr_clienteretencion" Role="cr_clienteretencion" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="cr_clienteretencion">
+              <PropertyRef Name="cr_clienteid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="pp_pagopresupuesto">
+          <Key>
+            <PropertyRef Name="pp_pagopresupuestoid" />
+          </Key>
+          <Property Name="pp_pagopresupuestoid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="pp_presupuestocabid" Type="Int32" Nullable="false" />
+          <Property Name="pp_monedaid" Type="Int32" Nullable="false" />
+          <Property Name="pp_bancoid" Type="Int32" />
+          <Property Name="pp_cuentaid" Type="Int32" />
+          <Property Name="pp_formapagoid" Type="Int32" />
+          <Property Name="pp_fechapago" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="pp_nrocheque" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pp_bancochequeid" Type="Int32" />
+          <Property Name="pp_monedagastoid" Type="Int32" />
+          <Property Name="pp_gastocambiario" Type="Decimal" Precision="14" Scale="2" />
+          <Property Name="pp_montopago" Type="Decimal" Nullable="false" Precision="14" Scale="2" />
+          <Property Name="pp_referencia" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="pp_fechaboletadeposito" Type="DateTime" Precision="0" />
+          <Property Name="pp_nrorecibo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pp_fecharecibo" Type="DateTime" Precision="0" />
+          <Property Name="pp_anulado" Type="Boolean" Nullable="false" />
+          <Property Name="pp_fechanotacredito" Type="DateTime" Precision="0" />
+          <Property Name="pp_notacreditonro" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="pp_pagomultipleid" Type="Int32" />
+          <Property Name="pp_notacreditopresupid" Type="Int32" />
+          <Property Name="pp_nroboletadeposito" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="pp_respcobroextid" Type="Int32" />
+          <Property Name="pp_reciboid" Type="Int32" />
+          <NavigationProperty Name="ba_banco" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_ba_banco" FromRole="pp_pagopresupuesto" ToRole="ba_banco" />
+          <NavigationProperty Name="ba_banco1" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_ba_banco1" FromRole="pp_pagopresupuesto" ToRole="ba_banco" />
+          <NavigationProperty Name="cb_cuentabanco" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_cb_cuentabanco" FromRole="pp_pagopresupuesto" ToRole="cb_cuentabanco" />
+          <NavigationProperty Name="cxm_cobranzasxmov" Relationship="BerkeDBModel.FK_cxm_cobranzasxmov_pp_pagopresupuesto" FromRole="pp_pagopresupuesto" ToRole="cxm_cobranzasxmov" />
+          <NavigationProperty Name="fp_formadepago" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_fp_formadepago" FromRole="pp_pagopresupuesto" ToRole="fp_formadepago" />
+          <NavigationProperty Name="Moneda" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_Moneda" FromRole="pp_pagopresupuesto" ToRole="Moneda" />
+          <NavigationProperty Name="Moneda1" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_Moneda1" FromRole="pp_pagopresupuesto" ToRole="Moneda" />
+          <NavigationProperty Name="ncd_notacreditopresupdetalle" Relationship="BerkeDBModel.FK_ncd_notacreditopresupdetalle_pp_pagopresupuesto" FromRole="pp_pagopresupuesto" ToRole="ncd_notacreditopresupdetalle" />
+          <NavigationProperty Name="ncp_notacreditopresup" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_ncp_notacreditopresup" FromRole="pp_pagopresupuesto" ToRole="ncp_notacreditopresup" />
+          <NavigationProperty Name="pc_presupuestocab" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_pc_presupuestocab" FromRole="pp_pagopresupuesto" ToRole="pc_presupuestocab" />
+          <NavigationProperty Name="pmu_pagomultiple" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_pmu_pagomultiple" FromRole="pp_pagopresupuesto" ToRole="pmu_pagomultiple" />
+          <NavigationProperty Name="Usuario" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_Usuario" FromRole="pp_pagopresupuesto" ToRole="Usuario" />
+          <NavigationProperty Name="re_recibo" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_re_recibo" FromRole="pp_pagopresupuesto" ToRole="re_recibo" />
+        </EntityType>
+        <EntityType Name="rf_recibofactura">
+          <Key>
+            <PropertyRef Name="rf_recibofacturaid" />
+          </Key>
+          <Property Name="rf_recibofacturaid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rf_facturacabid" Type="Int32" Nullable="false" />
+          <Property Name="rf_reciboid" Type="Int32" Nullable="false" />
+          <Property Name="rf_montopagado" Type="Decimal" Nullable="false" Precision="14" Scale="2" />
+          <NavigationProperty Name="fc_facturacabecera" Relationship="BerkeDBModel.FK_rf_recibofactura_fc_facturacabecera" FromRole="rf_recibofactura" ToRole="fc_facturacabecera" />
+          <NavigationProperty Name="re_recibo" Relationship="BerkeDBModel.FK_rf_recibofactura_re_recibo" FromRole="rf_recibofactura" ToRole="re_recibo" />
+        </EntityType>
+        <EntityType Name="rr_reciboretencion">
+          <Key>
+            <PropertyRef Name="rr_reciboretencionid" />
+          </Key>
+          <Property Name="rr_reciboretencionid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rr_reciboid" Type="Int32" Nullable="false" />
+          <Property Name="rr_facturaid" Type="Int32" Nullable="false" />
+          <Property Name="rr_numero" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="rr_fecharetencion" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="rr_montoretencioniva10" Type="Decimal" Nullable="false" Precision="14" Scale="2" />
+          <Property Name="rr_montoretencionrenta" Type="Decimal" Nullable="false" Precision="14" Scale="2" />
+          <NavigationProperty Name="fc_facturacabecera" Relationship="BerkeDBModel.FK_rr_reciboretencion_fc_facturacabecera" FromRole="rr_reciboretencion" ToRole="fc_facturacabecera" />
+          <NavigationProperty Name="re_recibo" Relationship="BerkeDBModel.FK_rr_reciboretencion_re_recibo" FromRole="rr_reciboretencion" ToRole="re_recibo" />
+        </EntityType>
+        <EntityType Name="rt_recibotransf">
+          <Key>
+            <PropertyRef Name="rt_recibotransfid" />
+          </Key>
+          <Property Name="rt_recibotransfid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rt_reciboid" Type="Int32" Nullable="false" />
+          <Property Name="rt_fechatransf" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="rt_cuentabancoid" Type="Int32" Nullable="false" />
+          <Property Name="rt_numero" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="rt_montogasto" Type="Decimal" Nullable="false" Precision="14" Scale="2" />
+          <Property Name="rt_montotransf" Type="Decimal" Nullable="false" Precision="14" Scale="2" />
+          <NavigationProperty Name="cb_cuentabanco" Relationship="BerkeDBModel.FK_rt_recibotransf_cb_cuentabanco" FromRole="rt_recibotransf" ToRole="cb_cuentabanco" />
+          <NavigationProperty Name="re_recibo" Relationship="BerkeDBModel.FK_rt_recibotransf_re_recibo" FromRole="rt_recibotransf" ToRole="re_recibo" />
+        </EntityType>
+        <Association Name="FK_pp_pagopresupuesto_ba_banco">
+          <End Type="BerkeDBModel.ba_banco" Role="ba_banco" Multiplicity="0..1" />
+          <End Type="BerkeDBModel.pp_pagopresupuesto" Role="pp_pagopresupuesto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ba_banco">
+              <PropertyRef Name="ba_bancoid" />
+            </Principal>
+            <Dependent Role="pp_pagopresupuesto">
+              <PropertyRef Name="pp_bancoid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pp_pagopresupuesto_ba_banco1">
+          <End Type="BerkeDBModel.ba_banco" Role="ba_banco" Multiplicity="0..1" />
+          <End Type="BerkeDBModel.pp_pagopresupuesto" Role="pp_pagopresupuesto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ba_banco">
+              <PropertyRef Name="ba_bancoid" />
+            </Principal>
+            <Dependent Role="pp_pagopresupuesto">
+              <PropertyRef Name="pp_bancochequeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pp_pagopresupuesto_cb_cuentabanco">
+          <End Type="BerkeDBModel.cb_cuentabanco" Role="cb_cuentabanco" Multiplicity="0..1" />
+          <End Type="BerkeDBModel.pp_pagopresupuesto" Role="pp_pagopresupuesto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cb_cuentabanco">
+              <PropertyRef Name="cb_cuentabancoid" />
+            </Principal>
+            <Dependent Role="pp_pagopresupuesto">
+              <PropertyRef Name="pp_cuentaid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_recibotransf_cb_cuentabanco">
+          <End Type="BerkeDBModel.cb_cuentabanco" Role="cb_cuentabanco" Multiplicity="1" />
+          <End Type="BerkeDBModel.rt_recibotransf" Role="rt_recibotransf" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cb_cuentabanco">
+              <PropertyRef Name="cb_cuentabancoid" />
+            </Principal>
+            <Dependent Role="rt_recibotransf">
+              <PropertyRef Name="rt_cuentabancoid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cxm_cobranzasxmov_pp_pagopresupuesto">
+          <End Type="BerkeDBModel.pp_pagopresupuesto" Role="pp_pagopresupuesto" Multiplicity="1" />
+          <End Type="BerkeDBModel.cxm_cobranzasxmov" Role="cxm_cobranzasxmov" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pp_pagopresupuesto">
+              <PropertyRef Name="pp_pagopresupuestoid" />
+            </Principal>
+            <Dependent Role="cxm_cobranzasxmov">
+              <PropertyRef Name="cxm_cobranzaid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rf_recibofactura_fc_facturacabecera">
+          <End Type="BerkeDBModel.fc_facturacabecera" Role="fc_facturacabecera" Multiplicity="1" />
+          <End Type="BerkeDBModel.rf_recibofactura" Role="rf_recibofactura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fc_facturacabecera">
+              <PropertyRef Name="fc_facturacabeceraid" />
+            </Principal>
+            <Dependent Role="rf_recibofactura">
+              <PropertyRef Name="rf_facturacabid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rr_reciboretencion_fc_facturacabecera">
+          <End Type="BerkeDBModel.fc_facturacabecera" Role="fc_facturacabecera" Multiplicity="1" />
+          <End Type="BerkeDBModel.rr_reciboretencion" Role="rr_reciboretencion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fc_facturacabecera">
+              <PropertyRef Name="fc_facturacabeceraid" />
+            </Principal>
+            <Dependent Role="rr_reciboretencion">
+              <PropertyRef Name="rr_facturaid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pp_pagopresupuesto_fp_formadepago">
+          <End Type="BerkeDBModel.fp_formadepago" Role="fp_formadepago" Multiplicity="0..1" />
+          <End Type="BerkeDBModel.pp_pagopresupuesto" Role="pp_pagopresupuesto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="fp_formadepago">
+              <PropertyRef Name="fp_formadepagoid" />
+            </Principal>
+            <Dependent Role="pp_pagopresupuesto">
+              <PropertyRef Name="pp_formapagoid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pp_pagopresupuesto_Moneda">
+          <End Type="BerkeDBModel.Moneda" Role="Moneda" Multiplicity="1" />
+          <End Type="BerkeDBModel.pp_pagopresupuesto" Role="pp_pagopresupuesto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Moneda">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="pp_pagopresupuesto">
+              <PropertyRef Name="pp_monedaid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pp_pagopresupuesto_Moneda1">
+          <End Type="BerkeDBModel.Moneda" Role="Moneda" Multiplicity="0..1" />
+          <End Type="BerkeDBModel.pp_pagopresupuesto" Role="pp_pagopresupuesto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Moneda">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="pp_pagopresupuesto">
+              <PropertyRef Name="pp_monedagastoid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ncd_notacreditopresupdetalle_pp_pagopresupuesto">
+          <End Type="BerkeDBModel.pp_pagopresupuesto" Role="pp_pagopresupuesto" Multiplicity="1" />
+          <End Type="BerkeDBModel.ncd_notacreditopresupdetalle" Role="ncd_notacreditopresupdetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pp_pagopresupuesto">
+              <PropertyRef Name="pp_pagopresupuestoid" />
+            </Principal>
+            <Dependent Role="ncd_notacreditopresupdetalle">
+              <PropertyRef Name="ncd_pagoid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pp_pagopresupuesto_ncp_notacreditopresup">
+          <End Type="BerkeDBModel.ncp_notacreditopresup" Role="ncp_notacreditopresup" Multiplicity="0..1" />
+          <End Type="BerkeDBModel.pp_pagopresupuesto" Role="pp_pagopresupuesto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ncp_notacreditopresup">
+              <PropertyRef Name="ncp_notacreditoid" />
+            </Principal>
+            <Dependent Role="pp_pagopresupuesto">
+              <PropertyRef Name="pp_notacreditopresupid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pp_pagopresupuesto_pc_presupuestocab">
+          <End Type="BerkeDBModel.pc_presupuestocab" Role="pc_presupuestocab" Multiplicity="1" />
+          <End Type="BerkeDBModel.pp_pagopresupuesto" Role="pp_pagopresupuesto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pc_presupuestocab">
+              <PropertyRef Name="pc_presupuestocabid" />
+            </Principal>
+            <Dependent Role="pp_pagopresupuesto">
+              <PropertyRef Name="pp_presupuestocabid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pp_pagopresupuesto_pmu_pagomultiple">
+          <End Type="BerkeDBModel.pmu_pagomultiple" Role="pmu_pagomultiple" Multiplicity="0..1" />
+          <End Type="BerkeDBModel.pp_pagopresupuesto" Role="pp_pagopresupuesto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pmu_pagomultiple">
+              <PropertyRef Name="pmu_pagomultipleid" />
+            </Principal>
+            <Dependent Role="pp_pagopresupuesto">
+              <PropertyRef Name="pp_pagomultipleid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pp_pagopresupuesto_Usuario">
+          <End Type="BerkeDBModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="BerkeDBModel.pp_pagopresupuesto" Role="pp_pagopresupuesto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="pp_pagopresupuesto">
+              <PropertyRef Name="pp_respcobroextid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="rch_recibocheque">
+          <Key>
+            <PropertyRef Name="rch_recibochequeid" />
+          </Key>
+          <Property Name="rch_recibochequeid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rch_reciboid" Type="Int32" Nullable="false" />
+          <Property Name="rch_fechacheque" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="rch_bancoid" Type="Int32" Nullable="false" />
+          <Property Name="rch_numero" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="rch_monto" Type="Decimal" Nullable="false" Precision="14" Scale="2" />
+          <NavigationProperty Name="re_recibo" Relationship="BerkeDBModel.FK_rch_recibocheque_ba_banco" FromRole="rch_recibocheque" ToRole="re_recibo" />
+          <NavigationProperty Name="re_recibo1" Relationship="BerkeDBModel.FK_rch_recibocheque_re_recibo" FromRole="rch_recibocheque" ToRole="re_recibo" />
+          </EntityType>
+        <EntityType Name="Audit_pp_pagopresupuesto">
+          <Key>
+            <PropertyRef Name="pp_pagopresupuestoid" />
+            <PropertyRef Name="Audit_User" />
+            <PropertyRef Name="Audit_Fecha" />
+            <PropertyRef Name="Audit_Operacion" />
+          </Key>
+          <Property Name="pp_pagopresupuestoid" Type="Int32" Nullable="false" />
+          <Property Name="pp_presupuestocabid" Type="Int32" />
+          <Property Name="pp_monedaid" Type="Int32" />
+          <Property Name="pp_bancoid" Type="Int32" />
+          <Property Name="pp_cuentaid" Type="Int32" />
+          <Property Name="pp_formapagoid" Type="Int32" />
+          <Property Name="pp_fechapago" Type="DateTime" Precision="0" />
+          <Property Name="pp_nrocheque" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pp_bancochequeid" Type="Int32" />
+          <Property Name="pp_monedagastoid" Type="Int32" />
+          <Property Name="pp_gastocambiario" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="pp_montopago" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="pp_referencia" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="pp_fechaboletadeposito" Type="DateTime" Precision="0" />
+          <Property Name="pp_nrorecibo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pp_fecharecibo" Type="DateTime" Precision="0" />
+          <Property Name="pp_anulado" Type="Boolean" />
+          <Property Name="pp_fechanotacredito" Type="DateTime" Precision="0" />
+          <Property Name="pp_notacreditonro" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="pp_pagomultipleid" Type="Int32" />
+          <Property Name="pp_notacreditopresupid" Type="Int32" />
+          <Property Name="pp_nroboletadeposito" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="pp_respcobroextid" Type="Int32" />
+          <Property Name="pp_reciboid" Type="Int32" />
+          <Property Name="Audit_User" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Audit_Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Audit_Operacion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="re_recibo">
+          <Key>
+            <PropertyRef Name="re_reciboid" />
+          </Key>
+          <Property Name="re_reciboid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="re_fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="re_numero" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="re_clienteid" Type="Int32" Nullable="false" />
+          <Property Name="re_monedaid" Type="Int32" Nullable="false" />
+          <Property Name="re_totalrecibo" Type="Decimal" Nullable="false" Precision="14" Scale="2" />
+          <Property Name="re_totalnc" Type="Decimal" Nullable="false" Precision="14" Scale="2" />
+          <Property Name="re_montoret10" Type="Decimal" Nullable="false" Precision="14" Scale="2" />
+          <Property Name="re_montoretrenta" Type="Decimal" Nullable="false" Precision="14" Scale="2" />
+          <Property Name="re_totaltransf" Type="Decimal" Nullable="false" Precision="14" Scale="2" />
+          <Property Name="re_totalgastos" Type="Decimal" Nullable="false" Precision="14" Scale="2" />
+          <Property Name="re_totalcheques" Type="Decimal" Nullable="false" Precision="14" Scale="2" />
+          <Property Name="re_totalefectivo" Type="Decimal" Nullable="false" Precision="14" Scale="2" />
+          <Property Name="re_concepto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="re_usuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="re_anulado" Type="Boolean" Nullable="false" />
+          <Property Name="re_fechaanulacion" Type="DateTime" Precision="0" />
+          <Property Name="re_usuarioanulacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Cliente" Relationship="BerkeDBModel.FK_re_recibo_Cliente" FromRole="re_recibo" ToRole="Cliente" />
+          <NavigationProperty Name="Moneda" Relationship="BerkeDBModel.FK_re_recibo_Moneda" FromRole="re_recibo" ToRole="Moneda" />
+          <NavigationProperty Name="pp_pagopresupuesto" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_re_recibo" FromRole="re_recibo" ToRole="pp_pagopresupuesto" />
+          <NavigationProperty Name="rch_recibocheque" Relationship="BerkeDBModel.FK_rch_recibocheque_ba_banco" FromRole="re_recibo" ToRole="rch_recibocheque" />
+          <NavigationProperty Name="rch_recibocheque1" Relationship="BerkeDBModel.FK_rch_recibocheque_re_recibo" FromRole="re_recibo" ToRole="rch_recibocheque" />
+          <NavigationProperty Name="rf_recibofactura" Relationship="BerkeDBModel.FK_rf_recibofactura_re_recibo" FromRole="re_recibo" ToRole="rf_recibofactura" />
+          <NavigationProperty Name="rr_reciboretencion" Relationship="BerkeDBModel.FK_rr_reciboretencion_re_recibo" FromRole="re_recibo" ToRole="rr_reciboretencion" />
+          <NavigationProperty Name="rt_recibotransf" Relationship="BerkeDBModel.FK_rt_recibotransf_re_recibo" FromRole="re_recibo" ToRole="rt_recibotransf" />
+        </EntityType>
+        <Association Name="FK_re_recibo_Cliente">
+          <End Type="BerkeDBModel.Cliente" Role="Cliente" Multiplicity="1" />
+          <End Type="BerkeDBModel.re_recibo" Role="re_recibo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="re_recibo">
+              <PropertyRef Name="re_clienteid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_re_recibo_Moneda">
+          <End Type="BerkeDBModel.Moneda" Role="Moneda" Multiplicity="1" />
+          <End Type="BerkeDBModel.re_recibo" Role="re_recibo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Moneda">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="re_recibo">
+              <PropertyRef Name="re_monedaid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_pp_pagopresupuesto_re_recibo">
+          <End Type="BerkeDBModel.re_recibo" Role="re_recibo" Multiplicity="0..1" />
+          <End Type="BerkeDBModel.pp_pagopresupuesto" Role="pp_pagopresupuesto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="re_recibo">
+              <PropertyRef Name="re_reciboid" />
+            </Principal>
+            <Dependent Role="pp_pagopresupuesto">
+              <PropertyRef Name="pp_reciboid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rch_recibocheque_ba_banco">
+          <End Type="BerkeDBModel.re_recibo" Role="re_recibo" Multiplicity="1" />
+          <End Type="BerkeDBModel.rch_recibocheque" Role="rch_recibocheque" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="re_recibo">
+              <PropertyRef Name="re_reciboid" />
+            </Principal>
+            <Dependent Role="rch_recibocheque">
+              <PropertyRef Name="rch_reciboid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rch_recibocheque_re_recibo">
+          <End Type="BerkeDBModel.re_recibo" Role="re_recibo" Multiplicity="1" />
+          <End Type="BerkeDBModel.rch_recibocheque" Role="rch_recibocheque" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="re_recibo">
+              <PropertyRef Name="re_reciboid" />
+            </Principal>
+            <Dependent Role="rch_recibocheque">
+              <PropertyRef Name="rch_reciboid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rf_recibofactura_re_recibo">
+          <End Type="BerkeDBModel.re_recibo" Role="re_recibo" Multiplicity="1" />
+          <End Type="BerkeDBModel.rf_recibofactura" Role="rf_recibofactura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="re_recibo">
+              <PropertyRef Name="re_reciboid" />
+            </Principal>
+            <Dependent Role="rf_recibofactura">
+              <PropertyRef Name="rf_reciboid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rr_reciboretencion_re_recibo">
+          <End Type="BerkeDBModel.re_recibo" Role="re_recibo" Multiplicity="1" />
+          <End Type="BerkeDBModel.rr_reciboretencion" Role="rr_reciboretencion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="re_recibo">
+              <PropertyRef Name="re_reciboid" />
+            </Principal>
+            <Dependent Role="rr_reciboretencion">
+              <PropertyRef Name="rr_reciboid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_rt_recibotransf_re_recibo">
+          <End Type="BerkeDBModel.re_recibo" Role="re_recibo" Multiplicity="1" />
+          <End Type="BerkeDBModel.rt_recibotransf" Role="rt_recibotransf" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="re_recibo">
+              <PropertyRef Name="re_reciboid" />
+            </Principal>
+            <Dependent Role="rt_recibotransf">
+              <PropertyRef Name="rt_reciboid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <!--<EntityType Name="ncb_notacreditobancaria1">
           <Key>
             <PropertyRef Name="ncb_notacreditoid" />
@@ -13497,6 +14127,7 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
           <EntitySetMapping Name="ba_banco">
             <EntityTypeMapping TypeName="BerkeDBModel.ba_banco">
               <MappingFragment StoreEntitySet="ba_banco">
+                <ScalarProperty Name="ba_mostrar" ColumnName="ba_mostrar" />
                 <ScalarProperty Name="ba_ciudadid" ColumnName="ba_ciudadid" />
                 <ScalarProperty Name="ba_paisid" ColumnName="ba_paisid" />
                 <ScalarProperty Name="ba_descripcion" ColumnName="ba_descripcion" />
@@ -14606,35 +15237,6 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="pp_pagopresupuesto">
-            <EntityTypeMapping TypeName="BerkeDBModel.pp_pagopresupuesto">
-              <MappingFragment StoreEntitySet="pp_pagopresupuesto">
-                <ScalarProperty Name="pp_respcobroextid" ColumnName="pp_respcobroextid" />
-                <ScalarProperty Name="pp_nroboletadeposito" ColumnName="pp_nroboletadeposito" />
-                <ScalarProperty Name="pp_notacreditopresupid" ColumnName="pp_notacreditopresupid" />
-                <ScalarProperty Name="pp_pagomultipleid" ColumnName="pp_pagomultipleid" />
-                <ScalarProperty Name="pp_notacreditonro" ColumnName="pp_notacreditonro" />
-                <ScalarProperty Name="pp_fechanotacredito" ColumnName="pp_fechanotacredito" />
-                <ScalarProperty Name="pp_anulado" ColumnName="pp_anulado" />
-                <ScalarProperty Name="pp_fecharecibo" ColumnName="pp_fecharecibo" />
-                <ScalarProperty Name="pp_nrorecibo" ColumnName="pp_nrorecibo" />
-                <ScalarProperty Name="pp_fechaboletadeposito" ColumnName="pp_fechaboletadeposito" />
-                <ScalarProperty Name="pp_referencia" ColumnName="pp_referencia" />
-                <ScalarProperty Name="pp_montopago" ColumnName="pp_montopago" />
-                <ScalarProperty Name="pp_gastocambiario" ColumnName="pp_gastocambiario" />
-                <ScalarProperty Name="pp_monedagastoid" ColumnName="pp_monedagastoid" />
-                <ScalarProperty Name="pp_bancochequeid" ColumnName="pp_bancochequeid" />
-                <ScalarProperty Name="pp_nrocheque" ColumnName="pp_nrocheque" />
-                <ScalarProperty Name="pp_fechapago" ColumnName="pp_fechapago" />
-                <ScalarProperty Name="pp_formapagoid" ColumnName="pp_formapagoid" />
-                <ScalarProperty Name="pp_cuentaid" ColumnName="pp_cuentaid" />
-                <ScalarProperty Name="pp_bancoid" ColumnName="pp_bancoid" />
-                <ScalarProperty Name="pp_monedaid" ColumnName="pp_monedaid" />
-                <ScalarProperty Name="pp_presupuestocabid" ColumnName="pp_presupuestocabid" />
-                <ScalarProperty Name="pp_pagopresupuestoid" ColumnName="pp_pagopresupuestoid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="rm_rolmenu">
             <EntityTypeMapping TypeName="BerkeDBModel.rm_rolmenu">
               <MappingFragment StoreEntitySet="rm_rolmenu">
@@ -15054,38 +15656,6 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="Audit_pp_pagopresupuesto">
-            <EntityTypeMapping TypeName="BerkeDBModel.Audit_pp_pagopresupuesto">
-              <MappingFragment StoreEntitySet="Audit_pp_pagopresupuesto">
-                <ScalarProperty Name="Audit_Operacion" ColumnName="Audit_Operacion" />
-                <ScalarProperty Name="Audit_Fecha" ColumnName="Audit_Fecha" />
-                <ScalarProperty Name="Audit_User" ColumnName="Audit_User" />
-                <ScalarProperty Name="pp_respcobroextid" ColumnName="pp_respcobroextid" />
-                <ScalarProperty Name="pp_nroboletadeposito" ColumnName="pp_nroboletadeposito" />
-                <ScalarProperty Name="pp_notacreditopresupid" ColumnName="pp_notacreditopresupid" />
-                <ScalarProperty Name="pp_pagomultipleid" ColumnName="pp_pagomultipleid" />
-                <ScalarProperty Name="pp_notacreditonro" ColumnName="pp_notacreditonro" />
-                <ScalarProperty Name="pp_fechanotacredito" ColumnName="pp_fechanotacredito" />
-                <ScalarProperty Name="pp_anulado" ColumnName="pp_anulado" />
-                <ScalarProperty Name="pp_fecharecibo" ColumnName="pp_fecharecibo" />
-                <ScalarProperty Name="pp_nrorecibo" ColumnName="pp_nrorecibo" />
-                <ScalarProperty Name="pp_fechaboletadeposito" ColumnName="pp_fechaboletadeposito" />
-                <ScalarProperty Name="pp_referencia" ColumnName="pp_referencia" />
-                <ScalarProperty Name="pp_montopago" ColumnName="pp_montopago" />
-                <ScalarProperty Name="pp_gastocambiario" ColumnName="pp_gastocambiario" />
-                <ScalarProperty Name="pp_monedagastoid" ColumnName="pp_monedagastoid" />
-                <ScalarProperty Name="pp_bancochequeid" ColumnName="pp_bancochequeid" />
-                <ScalarProperty Name="pp_nrocheque" ColumnName="pp_nrocheque" />
-                <ScalarProperty Name="pp_fechapago" ColumnName="pp_fechapago" />
-                <ScalarProperty Name="pp_formapagoid" ColumnName="pp_formapagoid" />
-                <ScalarProperty Name="pp_cuentaid" ColumnName="pp_cuentaid" />
-                <ScalarProperty Name="pp_bancoid" ColumnName="pp_bancoid" />
-                <ScalarProperty Name="pp_monedaid" ColumnName="pp_monedaid" />
-                <ScalarProperty Name="pp_presupuestocabid" ColumnName="pp_presupuestocabid" />
-                <ScalarProperty Name="pp_pagopresupuestoid" ColumnName="pp_pagopresupuestoid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="nf_numeracionfactura">
             <EntityTypeMapping TypeName="BerkeDBModel.nf_numeracionfactura">
               <MappingFragment StoreEntitySet="nf_numeracionfactura">
@@ -15280,6 +15850,7 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
           <EntitySetMapping Name="cb_cuentabanco">
             <EntityTypeMapping TypeName="BerkeDBModel.cb_cuentabanco">
               <MappingFragment StoreEntitySet="cb_cuentabanco">
+                <ScalarProperty Name="cb_mostrar" ColumnName="cb_mostrar" />
                 <ScalarProperty Name="cb_color" ColumnName="cb_color" />
                 <ScalarProperty Name="cb_sello" ColumnName="cb_sello" />
                 <ScalarProperty Name="cb_escuentapago" ColumnName="cb_escuentapago" />
@@ -16386,6 +16957,186 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetListadoFacturasParaRecibos" FunctionName="BerkeDBModel.Store.GetListadoFacturasParaRecibos" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BerkeDBModel.FacturasParaRecibos">
+                <ScalarProperty Name="FacturaCabId" ColumnName="FacturaCabId" />
+                <ScalarProperty Name="TimbradoId" ColumnName="TimbradoId" />
+                <ScalarProperty Name="FechaFactura" ColumnName="FechaFactura" />
+                <ScalarProperty Name="NroFactura" ColumnName="NroFactura" />
+                <ScalarProperty Name="ClienteId" ColumnName="ClienteId" />
+                <ScalarProperty Name="ClienteNombre" ColumnName="ClienteNombre" />
+                <ScalarProperty Name="TipoFacturaDescrip" ColumnName="TipoFacturaDescrip" />
+                <ScalarProperty Name="RUC" ColumnName="RUC" />
+                <ScalarProperty Name="EsDocumentoElectronico" ColumnName="EsDocumentoElectronico" />
+                <ScalarProperty Name="MonedaId" ColumnName="MonedaId" />
+                <ScalarProperty Name="MonedaAbrev" ColumnName="MonedaAbrev" />
+                <ScalarProperty Name="TotalExentas" ColumnName="TotalExentas" />
+                <ScalarProperty Name="TotalIVA5" ColumnName="TotalIVA5" />
+                <ScalarProperty Name="TotalIVA10" ColumnName="TotalIVA10" />
+                <ScalarProperty Name="LiqIVA5" ColumnName="LiqIVA5" />
+                <ScalarProperty Name="LiqIVA10" ColumnName="LiqIVA10" />
+                <ScalarProperty Name="TotalIVA" ColumnName="TotalIVA" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="DocumentosAsociados" ColumnName="DocumentosAsociados" />
+                <ScalarProperty Name="Saldo" ColumnName="Saldo" />
+                <ScalarProperty Name="ImporteCobrado" ColumnName="ImporteCobrado" />
+                <ScalarProperty Name="CDC" ColumnName="CDC" />
+                <ScalarProperty Name="TipoDocumento" ColumnName="TipoDocumento" />
+                <ScalarProperty Name="EstadoDE" ColumnName="EstadoDE" />
+                <ScalarProperty Name="IdParaOrden" ColumnName="IdParaOrden" />
+                <ScalarProperty Name="FacturaCabIdRel" ColumnName="FacturaCabIdRel" />
+                <ScalarProperty Name="MonedaDescrip" ColumnName="MonedaDescrip" />
+                <ScalarProperty Name="FacturaPresupuestoCabId" ColumnName="FacturaPresupuestoCabId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="cr_clienteretencion">
+            <EntityTypeMapping TypeName="BerkeDBModel.cr_clienteretencion">
+              <MappingFragment StoreEntitySet="cr_clienteretencion">
+                <ScalarProperty Name="cr_nrotimbrado" ColumnName="cr_nrotimbrado" />
+                <ScalarProperty Name="cr_porcentajerenta" ColumnName="cr_porcentajerenta" />
+                <ScalarProperty Name="cr_porcentajeiva10" ColumnName="cr_porcentajeiva10" />
+                <ScalarProperty Name="cr_clienteid" ColumnName="cr_clienteid" />
+                <ScalarProperty Name="cr_clienteretencionid" ColumnName="cr_clienteretencionid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pp_pagopresupuesto">
+            <EntityTypeMapping TypeName="BerkeDBModel.pp_pagopresupuesto">
+              <MappingFragment StoreEntitySet="pp_pagopresupuesto">
+                <ScalarProperty Name="pp_reciboid" ColumnName="pp_reciboid" />
+                <ScalarProperty Name="pp_respcobroextid" ColumnName="pp_respcobroextid" />
+                <ScalarProperty Name="pp_nroboletadeposito" ColumnName="pp_nroboletadeposito" />
+                <ScalarProperty Name="pp_notacreditopresupid" ColumnName="pp_notacreditopresupid" />
+                <ScalarProperty Name="pp_pagomultipleid" ColumnName="pp_pagomultipleid" />
+                <ScalarProperty Name="pp_notacreditonro" ColumnName="pp_notacreditonro" />
+                <ScalarProperty Name="pp_fechanotacredito" ColumnName="pp_fechanotacredito" />
+                <ScalarProperty Name="pp_anulado" ColumnName="pp_anulado" />
+                <ScalarProperty Name="pp_fecharecibo" ColumnName="pp_fecharecibo" />
+                <ScalarProperty Name="pp_nrorecibo" ColumnName="pp_nrorecibo" />
+                <ScalarProperty Name="pp_fechaboletadeposito" ColumnName="pp_fechaboletadeposito" />
+                <ScalarProperty Name="pp_referencia" ColumnName="pp_referencia" />
+                <ScalarProperty Name="pp_montopago" ColumnName="pp_montopago" />
+                <ScalarProperty Name="pp_gastocambiario" ColumnName="pp_gastocambiario" />
+                <ScalarProperty Name="pp_monedagastoid" ColumnName="pp_monedagastoid" />
+                <ScalarProperty Name="pp_bancochequeid" ColumnName="pp_bancochequeid" />
+                <ScalarProperty Name="pp_nrocheque" ColumnName="pp_nrocheque" />
+                <ScalarProperty Name="pp_fechapago" ColumnName="pp_fechapago" />
+                <ScalarProperty Name="pp_formapagoid" ColumnName="pp_formapagoid" />
+                <ScalarProperty Name="pp_cuentaid" ColumnName="pp_cuentaid" />
+                <ScalarProperty Name="pp_bancoid" ColumnName="pp_bancoid" />
+                <ScalarProperty Name="pp_monedaid" ColumnName="pp_monedaid" />
+                <ScalarProperty Name="pp_presupuestocabid" ColumnName="pp_presupuestocabid" />
+                <ScalarProperty Name="pp_pagopresupuestoid" ColumnName="pp_pagopresupuestoid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rf_recibofactura">
+            <EntityTypeMapping TypeName="BerkeDBModel.rf_recibofactura">
+              <MappingFragment StoreEntitySet="rf_recibofactura">
+                <ScalarProperty Name="rf_montopagado" ColumnName="rf_montopagado" />
+                <ScalarProperty Name="rf_reciboid" ColumnName="rf_reciboid" />
+                <ScalarProperty Name="rf_facturacabid" ColumnName="rf_facturacabid" />
+                <ScalarProperty Name="rf_recibofacturaid" ColumnName="rf_recibofacturaid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rr_reciboretencion">
+            <EntityTypeMapping TypeName="BerkeDBModel.rr_reciboretencion">
+              <MappingFragment StoreEntitySet="rr_reciboretencion">
+                <ScalarProperty Name="rr_montoretencionrenta" ColumnName="rr_montoretencionrenta" />
+                <ScalarProperty Name="rr_montoretencioniva10" ColumnName="rr_montoretencioniva10" />
+                <ScalarProperty Name="rr_fecharetencion" ColumnName="rr_fecharetencion" />
+                <ScalarProperty Name="rr_numero" ColumnName="rr_numero" />
+                <ScalarProperty Name="rr_facturaid" ColumnName="rr_facturaid" />
+                <ScalarProperty Name="rr_reciboid" ColumnName="rr_reciboid" />
+                <ScalarProperty Name="rr_reciboretencionid" ColumnName="rr_reciboretencionid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rt_recibotransf">
+            <EntityTypeMapping TypeName="BerkeDBModel.rt_recibotransf">
+              <MappingFragment StoreEntitySet="rt_recibotransf">
+                <ScalarProperty Name="rt_montotransf" ColumnName="rt_montotransf" />
+                <ScalarProperty Name="rt_montogasto" ColumnName="rt_montogasto" />
+                <ScalarProperty Name="rt_numero" ColumnName="rt_numero" />
+                <ScalarProperty Name="rt_cuentabancoid" ColumnName="rt_cuentabancoid" />
+                <ScalarProperty Name="rt_fechatransf" ColumnName="rt_fechatransf" />
+                <ScalarProperty Name="rt_reciboid" ColumnName="rt_reciboid" />
+                <ScalarProperty Name="rt_recibotransfid" ColumnName="rt_recibotransfid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rch_recibocheque">
+            <EntityTypeMapping TypeName="BerkeDBModel.rch_recibocheque">
+              <MappingFragment StoreEntitySet="rch_recibocheque">
+                <ScalarProperty Name="rch_monto" ColumnName="rch_monto" />
+                <ScalarProperty Name="rch_numero" ColumnName="rch_numero" />
+                <ScalarProperty Name="rch_bancoid" ColumnName="rch_bancoid" />
+                <ScalarProperty Name="rch_fechacheque" ColumnName="rch_fechacheque" />
+                <ScalarProperty Name="rch_reciboid" ColumnName="rch_reciboid" />
+                <ScalarProperty Name="rch_recibochequeid" ColumnName="rch_recibochequeid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Audit_pp_pagopresupuesto">
+            <EntityTypeMapping TypeName="BerkeDBModel.Audit_pp_pagopresupuesto">
+              <MappingFragment StoreEntitySet="Audit_pp_pagopresupuesto">
+                <ScalarProperty Name="Audit_Operacion" ColumnName="Audit_Operacion" />
+                <ScalarProperty Name="Audit_Fecha" ColumnName="Audit_Fecha" />
+                <ScalarProperty Name="Audit_User" ColumnName="Audit_User" />
+                <ScalarProperty Name="pp_reciboid" ColumnName="pp_reciboid" />
+                <ScalarProperty Name="pp_respcobroextid" ColumnName="pp_respcobroextid" />
+                <ScalarProperty Name="pp_nroboletadeposito" ColumnName="pp_nroboletadeposito" />
+                <ScalarProperty Name="pp_notacreditopresupid" ColumnName="pp_notacreditopresupid" />
+                <ScalarProperty Name="pp_pagomultipleid" ColumnName="pp_pagomultipleid" />
+                <ScalarProperty Name="pp_notacreditonro" ColumnName="pp_notacreditonro" />
+                <ScalarProperty Name="pp_fechanotacredito" ColumnName="pp_fechanotacredito" />
+                <ScalarProperty Name="pp_anulado" ColumnName="pp_anulado" />
+                <ScalarProperty Name="pp_fecharecibo" ColumnName="pp_fecharecibo" />
+                <ScalarProperty Name="pp_nrorecibo" ColumnName="pp_nrorecibo" />
+                <ScalarProperty Name="pp_fechaboletadeposito" ColumnName="pp_fechaboletadeposito" />
+                <ScalarProperty Name="pp_referencia" ColumnName="pp_referencia" />
+                <ScalarProperty Name="pp_montopago" ColumnName="pp_montopago" />
+                <ScalarProperty Name="pp_gastocambiario" ColumnName="pp_gastocambiario" />
+                <ScalarProperty Name="pp_monedagastoid" ColumnName="pp_monedagastoid" />
+                <ScalarProperty Name="pp_bancochequeid" ColumnName="pp_bancochequeid" />
+                <ScalarProperty Name="pp_nrocheque" ColumnName="pp_nrocheque" />
+                <ScalarProperty Name="pp_fechapago" ColumnName="pp_fechapago" />
+                <ScalarProperty Name="pp_formapagoid" ColumnName="pp_formapagoid" />
+                <ScalarProperty Name="pp_cuentaid" ColumnName="pp_cuentaid" />
+                <ScalarProperty Name="pp_bancoid" ColumnName="pp_bancoid" />
+                <ScalarProperty Name="pp_monedaid" ColumnName="pp_monedaid" />
+                <ScalarProperty Name="pp_presupuestocabid" ColumnName="pp_presupuestocabid" />
+                <ScalarProperty Name="pp_pagopresupuestoid" ColumnName="pp_pagopresupuestoid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="re_recibo">
+            <EntityTypeMapping TypeName="BerkeDBModel.re_recibo">
+              <MappingFragment StoreEntitySet="re_recibo">
+                <ScalarProperty Name="re_usuarioanulacion" ColumnName="re_usuarioanulacion" />
+                <ScalarProperty Name="re_fechaanulacion" ColumnName="re_fechaanulacion" />
+                <ScalarProperty Name="re_anulado" ColumnName="re_anulado" />
+                <ScalarProperty Name="re_usuario" ColumnName="re_usuario" />
+                <ScalarProperty Name="re_concepto" ColumnName="re_concepto" />
+                <ScalarProperty Name="re_totalefectivo" ColumnName="re_totalefectivo" />
+                <ScalarProperty Name="re_totalcheques" ColumnName="re_totalcheques" />
+                <ScalarProperty Name="re_totalgastos" ColumnName="re_totalgastos" />
+                <ScalarProperty Name="re_totaltransf" ColumnName="re_totaltransf" />
+                <ScalarProperty Name="re_montoretrenta" ColumnName="re_montoretrenta" />
+                <ScalarProperty Name="re_montoret10" ColumnName="re_montoret10" />
+                <ScalarProperty Name="re_totalnc" ColumnName="re_totalnc" />
+                <ScalarProperty Name="re_totalrecibo" ColumnName="re_totalrecibo" />
+                <ScalarProperty Name="re_monedaid" ColumnName="re_monedaid" />
+                <ScalarProperty Name="re_clienteid" ColumnName="re_clienteid" />
+                <ScalarProperty Name="re_numero" ColumnName="re_numero" />
+                <ScalarProperty Name="re_fecha" ColumnName="re_fecha" />
+                <ScalarProperty Name="re_reciboid" ColumnName="re_reciboid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -16401,7 +17152,7 @@ advertencia 6037: La restricción de clave externa 'FK_spd_solicitudpagodet_spd_
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
       </DesignerInfoPropertySet>

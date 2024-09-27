@@ -31,19 +31,18 @@
         <AssociationConnector Association="BerkeDBModel.FK_OrdenTrabajo_TrabajoTipo" ManuallyRouted="true" >
           <ConnectorPoint PointX="5.25" PointY="7.1239031326779809" />
           <ConnectorPoint PointX="5.4225707038749409" PointY="7.1748630016012465" />
-          <ConnectorPoint PointX="6.7024292961250591" PointY="7.1748630016012465" />
-          <ConnectorPoint PointX="7.3081418432948881" PointY="7.6255238955383069" />
-          <ConnectorPoint PointX="7.4418581567051127" PointY="7.7250112078236253" />
+          <ConnectorPoint PointX="7.0774292961250591" PointY="7.1748630016012465" />
+          <ConnectorPoint PointX="7.3214355245855041" PointY="7.46566902062077" />
+          <ConnectorPoint PointX="7.4285644754144968" PointY="7.5933450390112931" />
+          <ConnectorPoint PointX="7.4464355245855041" PointY="7.6146437111718894" />
+          <ConnectorPoint PointX="7.5535644754144968" PointY="7.7423197295624124" />
           <ConnectorPoint PointX="7.7005183333333331" PointY="7.917458973632427" />
-          <ConnectorPoint PointX="7.4070664416691656" PointY="7.917458973632427" />
-          <ConnectorPoint PointX="7.5426188960279221" PointY="8.0405918306201" />
-          <ConnectorPoint PointX="7.697916666666667" PointY="8.0405918306200981" />
-          <ConnectorPoint PointX="8.0052108333333347" PointY="8.0405918306201" />
-          <ConnectorPoint PointX="8.4855354157668579" PointY="8.0405918306201" />
-          <ConnectorPoint PointX="8.4225732038749417" PointY="8.109779908284688" />
-          <ConnectorPoint PointX="8.4225732038749417" PointY="8.2193222587501626" />
-          <ConnectorPoint PointX="10.125" PointY="8.2879850260416674" />
-          <ConnectorPoint PointX="9.75" PointY="9" />
+          <ConnectorPoint PointX="7.7820664416691656" PointY="7.917458973632427" />
+          <ConnectorPoint PointX="7.9176188960279221" PointY="8.0405918306201" />
+          <ConnectorPoint PointX="9.1725732038749417" PointY="8.0405918306201" />
+          <ConnectorPoint PointX="9.1725732038749417" PointY="8.2193222587501626" />
+          <ConnectorPoint PointX="8.7987541133916434" PointY="8.2879850260416674" />
+          <ConnectorPoint PointX="8.25" PointY="9.4933641054923523" />
         </AssociationConnector>
         <EntityTypeShape EntityType="BerkeDBModel.rcm_relacotizamone" Width="1.5" PointX="5.25" PointY="22.125" />
         <EntityTypeShape EntityType="BerkeDBModel.Tarifas" Width="1.5" PointX="7" PointY="24.75" />
@@ -152,14 +151,6 @@
         <EntityTypeShape EntityType="BerkeDBModel.ta_tipoantecedente" Width="1.5" PointX="13.375" PointY="30.875" />
         <AssociationConnector Association="BerkeDBModel.FK_ta_tipoantecedente_ca_clienteantecedente" />
         <EntityTypeShape EntityType="BerkeDBModel.tse_tiposistelectronico" Width="1.5" PointX="13.75" PointY="35.25" />
-        <EntityTypeShape EntityType="BerkeDBModel.pp_pagopresupuesto" Width="1.5" PointX="38.5" PointY="20.25" />
-        <AssociationConnector Association="BerkeDBModel.FK_pp_pagopresupuesto_ba_banco" />
-        <AssociationConnector Association="BerkeDBModel.FK_pp_pagopresupuesto_ba_banco1" />
-        <AssociationConnector Association="BerkeDBModel.FK_cxm_cobranzasxmov_pp_pagopresupuesto" />
-        <AssociationConnector Association="BerkeDBModel.FK_pp_pagopresupuesto_fp_formadepago" />
-        <AssociationConnector Association="BerkeDBModel.FK_ncd_notacreditopresupdetalle_pp_pagopresupuesto" />
-        <AssociationConnector Association="BerkeDBModel.FK_pp_pagopresupuesto_ncp_notacreditopresup" />
-        <AssociationConnector Association="BerkeDBModel.FK_pp_pagopresupuesto_pmu_pagomultiple" />
         <EntityTypeShape EntityType="BerkeDBModel.rm_rolmenu" Width="1.5" PointX="37.625" PointY="3" />
         <EntityTypeShape EntityType="BerkeDBModel.ro_rol" Width="1.5" PointX="35.375" PointY="7" />
         <EntityTypeShape EntityType="BerkeDBModel.td_tipodocumento" Width="1.5" PointX="0.75" PointY="0.75" />
@@ -179,9 +170,7 @@
         <AssociationConnector Association="BerkeDBModel.FK_Usuario_CArea" />
         <AssociationConnector Association="BerkeDBModel.FK_Correspondencia_Usuario" />
         <AssociationConnector Association="BerkeDBModel.FK_op_oposicion_Usuario" />
-        <AssociationConnector Association="BerkeDBModel.FK_pp_pagopresupuesto_Usuario" />
         <EntityTypeShape EntityType="BerkeDBModel.ra_reporteasunto" Width="1.5" PointX="0.75" PointY="7.75" />
-        <EntityTypeShape EntityType="BerkeDBModel.Audit_pp_pagopresupuesto" Width="1.5" PointX="28.375" PointY="32.75" />
         <EntityTypeShape EntityType="BerkeDBModel.nf_numeracionfactura" Width="1.5" PointX="25.625" PointY="39.125" />
         <AssociationConnector Association="BerkeDBModel.FK_nf_numeracionfactura_nf_numeracionfactura" />
         <EntityTypeShape EntityType="BerkeDBModel.su_serieusuario" Width="1.5" PointX="28.625" PointY="39.5" />
@@ -218,7 +207,6 @@
         <AssociationConnector Association="BerkeDBModel.FK_ccm_conclictamoneda_cb_cuentabanco" />
         <AssociationConnector Association="BerkeDBModel.FK_cct_cierrecuenta_cb_cuentabanco" />
         <AssociationConnector Association="BerkeDBModel.FK_mc_movimientoscuenta_cb_cuentabanco" />
-        <AssociationConnector Association="BerkeDBModel.FK_pp_pagopresupuesto_cb_cuentabanco" />
         <EntityTypeShape EntityType="BerkeDBModel.rc_reclamocliente" Width="1.5" PointX="16.25" PointY="32" />
         <EntityTypeShape EntityType="BerkeDBModel.rd_reclamoclientedetalle" Width="1.5" PointX="18.5" PointY="35" />
         <AssociationConnector Association="BerkeDBModel.FK_rc_reclamocliente_Cliente" />
@@ -235,7 +223,6 @@
         <AssociationConnector Association="BerkeDBModel.FK_pc_presupuestocab_Usuario2" />
         <AssociationConnector Association="BerkeDBModel.FK_pd_presupuestodetalle_pc_presupuestocab" />
         <AssociationConnector Association="BerkeDBModel.FK_pm_pcabxmergeexpe_pc_presupuestocab" />
-        <AssociationConnector Association="BerkeDBModel.FK_pp_pagopresupuesto_pc_presupuestocab" />
         <EntityTypeShape EntityType="BerkeDBModel.sed_solexclusiondet" Width="1.5" PointX="34.75" PointY="28.375" />
         <EntityTypeShape EntityType="BerkeDBModel.spc_solicitudpagocab" Width="1.5" PointX="28.25" PointY="19.5" />
         <AssociationConnector Association="BerkeDBModel.FK_spc_solicitudpagocab_Cliente" />
@@ -309,8 +296,6 @@
         <AssociationConnector Association="BerkeDBModel.FK_pc_presupuestocab_Moneda" />
         <AssociationConnector Association="BerkeDBModel.FK_pc_presupuestocab_Moneda1" />
         <AssociationConnector Association="BerkeDBModel.FK_pmu_pagomultiple_Moneda" />
-        <AssociationConnector Association="BerkeDBModel.FK_pp_pagopresupuesto_Moneda" />
-        <AssociationConnector Association="BerkeDBModel.FK_pp_pagopresupuesto_Moneda1" />
         <AssociationConnector Association="BerkeDBModel.FK_ps_pagosolicitud_Moneda" />
         <AssociationConnector Association="BerkeDBModel.FK_rc_reclamocliente_Moneda" />
         <AssociationConnector Association="BerkeDBModel.FK_rcm_relacotizamone_Moneda" />
@@ -343,6 +328,38 @@
         <AssociationConnector Association="BerkeDBModel.FK_nc_notacreditocabecera_me_motivoemision" />
         <AssociationConnector Association="BerkeDBModel.FK_nc_notacreditocabecera_Moneda" />
         <AssociationConnector Association="BerkeDBModel.FK_nd_notacreditodetalle_nc_notacreditocabecera" />
+        <EntityTypeShape EntityType="BerkeDBModel.cr_clienteretencion" Width="1.5" PointX="3.375" PointY="47.375" />
+        <AssociationConnector Association="BerkeDBModel.FK_cr_clienteretencion_Cliente" />
+        <EntityTypeShape EntityType="BerkeDBModel.pp_pagopresupuesto" Width="1.5" PointX="43.5" PointY="12.625" />
+        <EntityTypeShape EntityType="BerkeDBModel.rf_recibofactura" Width="1.5" PointX="41.25" PointY="36.875" />
+        <EntityTypeShape EntityType="BerkeDBModel.rr_reciboretencion" Width="1.5" PointX="41.25" PointY="40.625" />
+        <EntityTypeShape EntityType="BerkeDBModel.rt_recibotransf" Width="1.5" PointX="43.5" PointY="8.625" />
+        <AssociationConnector Association="BerkeDBModel.FK_pp_pagopresupuesto_ba_banco" />
+        <AssociationConnector Association="BerkeDBModel.FK_pp_pagopresupuesto_ba_banco1" />
+        <AssociationConnector Association="BerkeDBModel.FK_pp_pagopresupuesto_cb_cuentabanco" />
+        <AssociationConnector Association="BerkeDBModel.FK_rt_recibotransf_cb_cuentabanco" />
+        <AssociationConnector Association="BerkeDBModel.FK_cxm_cobranzasxmov_pp_pagopresupuesto" />
+        <AssociationConnector Association="BerkeDBModel.FK_rf_recibofactura_fc_facturacabecera" />
+        <AssociationConnector Association="BerkeDBModel.FK_rr_reciboretencion_fc_facturacabecera" />
+        <AssociationConnector Association="BerkeDBModel.FK_pp_pagopresupuesto_fp_formadepago" />
+        <AssociationConnector Association="BerkeDBModel.FK_pp_pagopresupuesto_Moneda" />
+        <AssociationConnector Association="BerkeDBModel.FK_pp_pagopresupuesto_Moneda1" />
+        <AssociationConnector Association="BerkeDBModel.FK_ncd_notacreditopresupdetalle_pp_pagopresupuesto" />
+        <AssociationConnector Association="BerkeDBModel.FK_pp_pagopresupuesto_ncp_notacreditopresup" />
+        <AssociationConnector Association="BerkeDBModel.FK_pp_pagopresupuesto_pc_presupuestocab" />
+        <AssociationConnector Association="BerkeDBModel.FK_pp_pagopresupuesto_pmu_pagomultiple" />
+        <AssociationConnector Association="BerkeDBModel.FK_pp_pagopresupuesto_Usuario" />
+        <EntityTypeShape EntityType="BerkeDBModel.rch_recibocheque" Width="1.5" PointX="43.5" PointY="4.375" />
+        <EntityTypeShape EntityType="BerkeDBModel.Audit_pp_pagopresupuesto" Width="1.5" PointX="5.375" PointY="36.75" />
+        <EntityTypeShape EntityType="BerkeDBModel.re_recibo" Width="1.5" PointX="13.25" PointY="37.625" />
+        <AssociationConnector Association="BerkeDBModel.FK_re_recibo_Cliente" />
+        <AssociationConnector Association="BerkeDBModel.FK_re_recibo_Moneda" />
+        <AssociationConnector Association="BerkeDBModel.FK_pp_pagopresupuesto_re_recibo" />
+        <AssociationConnector Association="BerkeDBModel.FK_rch_recibocheque_ba_banco" />
+        <AssociationConnector Association="BerkeDBModel.FK_rch_recibocheque_re_recibo" />
+        <AssociationConnector Association="BerkeDBModel.FK_rf_recibofactura_re_recibo" />
+        <AssociationConnector Association="BerkeDBModel.FK_rr_reciboretencion_re_recibo" />
+        <AssociationConnector Association="BerkeDBModel.FK_rt_recibotransf_re_recibo" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

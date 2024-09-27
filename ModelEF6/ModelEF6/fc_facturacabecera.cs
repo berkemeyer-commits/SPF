@@ -20,6 +20,8 @@ namespace ModelEF6
             this.pc_presupuestocab = new ObservableListSource<pc_presupuestocab>();
             this.fd_facturadetalle = new ObservableListSource<fd_facturadetalle>();
             this.nc_notacreditocabecera = new ObservableListSource<nc_notacreditocabecera>();
+            this.rf_recibofactura = new ObservableListSource<rf_recibofactura>();
+            this.rr_reciboretencion = new ObservableListSource<rr_reciboretencion>();
         }
     
         public int fc_facturacabeceraid { get; set; }
@@ -57,5 +59,7 @@ namespace ModelEF6
         public virtual ObservableListSource<pc_presupuestocab> pc_presupuestocab { get; set; }
         public virtual ObservableListSource<fd_facturadetalle> fd_facturadetalle { get; set; }
         public virtual ObservableListSource<nc_notacreditocabecera> nc_notacreditocabecera { get; set; }
+        public virtual ObservableListSource<rf_recibofactura> rf_recibofactura { get; set; }
+        public virtual ObservableListSource<rr_reciboretencion> rr_reciboretencion { get; set; }
     }
 }

@@ -40,6 +40,7 @@ namespace SPF.UserControls.UI
         private const string CAMPO_BANCOPAIS = "BancoPais";
         private const string CAMPO_BANCOCIUDADID = "BancoCiudadID";
         private const string CAMPO_BANCOCIUDAD = "BancoCiudad";
+        private const string CAMPO_BANCOMOSTRAR = "BancoMostrar";
         #endregion Constantes
 
         #region Variables
@@ -75,6 +76,7 @@ namespace SPF.UserControls.UI
                                  BancoPais = pais.descrip,
                                  BancoCiudadID = banc.ba_ciudadid,
                                  BancoCiudad = ciud.nomciudad,
+                                 BancoMostrar = banc.ba_mostrar
                           })
                           .OrderByDescending(a => a.BancoID)
                           .Take(50);
@@ -88,6 +90,7 @@ namespace SPF.UserControls.UI
             this.SetFilter(CAMPO_BANCOPAIS, "País Banco");
             this.SetFilter(CAMPO_BANCOCIUDADID, "Ciudad ID", false);
             this.SetFilter(CAMPO_BANCOCIUDAD, "Ciudad Banco");
+            this.SetFilter(CAMPO_BANCOMOSTRAR, "Seleccionable (S/N)", false);
             this.TituloBuscador = "Buscar Bancos";
             #endregion Especificar campos para filtro
 
@@ -206,6 +209,7 @@ namespace SPF.UserControls.UI
                                  BancoPais = pais.descrip,
                                  BancoCiudadID = banc.ba_ciudadid,
                                  BancoCiudad = ciud.nomciudad,
+                                 BancoMostrar = banc.ba_mostrar
                              });
 
                 if (where != "")
@@ -262,6 +266,16 @@ namespace SPF.UserControls.UI
             this.dgvListadoABM.Columns[CAMPO_BANCOCIUDAD].DisplayIndex = displayIndex;
             this.dgvListadoABM.Columns[CAMPO_BANCOCIUDAD].Visible = true;
             displayIndex++;
+
+            DataGridViewCheckBoxColumn colMostrar = new DataGridViewCheckBoxColumn();
+            colMostrar.DataPropertyName = CAMPO_BANCOMOSTRAR;
+            colMostrar.Name = CAMPO_BANCOMOSTRAR;
+            colMostrar.HeaderText = "Seleccionable";
+            colMostrar.FalseValue = false;
+            colMostrar.TrueValue = true;
+            colMostrar.ReadOnly = true;
+            this.dgvListadoABM.Columns.Insert(displayIndex, colMostrar);
+            displayIndex++;
         }
 
         protected override void tbbNuevo_Click(object sender, EventArgs e)
@@ -300,6 +314,7 @@ namespace SPF.UserControls.UI
             this.txtNombreBanco.Text = "";
             this.tSBPais.Clear();
             this.tSBCiudad.Clear();
+            this.chkMostrar.Checked = false;
         }
         #endregion Limpiar Datos
 
@@ -310,6 +325,7 @@ namespace SPF.UserControls.UI
             this.txtNombreBanco.ReadOnly = editar;
             this.tSBPais.Editable = !editar;
             this.tSBCiudad.Editable = !editar;
+            this.chkMostrar.Enabled = !editar;
         }
         #endregion ReadOnly condicional
 
@@ -320,6 +336,7 @@ namespace SPF.UserControls.UI
 
             this.txtBancoID.Text = row.Cells[CAMPO_BANCOID].Value.ToString();
             this.txtNombreBanco.Text = row.Cells[CAMPO_BANCONOMBRE].Value.ToString();
+            this.chkMostrar.Checked = (bool)row.Cells[CAMPO_BANCOMOSTRAR].Value;
 
             if (row.Cells[CAMPO_BANCOPAISID].Value != null)
             {
@@ -554,6 +571,7 @@ namespace SPF.UserControls.UI
                 banco = context.ba_banco.First(a => a.ba_bancoid == bancoID);
 
                 banco.ba_descripcion = this.txtNombreBanco.Text != "" ? this.txtNombreBanco.Text : "";
+                banco.ba_mostrar = this.chkMostrar.Checked;
                 
                 #region Datos Pais
                 int paisID;
@@ -577,6 +595,7 @@ namespace SPF.UserControls.UI
             else if (this.FormEditStatus == INSERT)
             {
                 banco.ba_descripcion = this.txtNombreBanco.Text != "" ? this.txtNombreBanco.Text : "";
+                banco.ba_mostrar = this.chkMostrar.Checked;
 
                 #region Datos Pais
                 int paisID;

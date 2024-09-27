@@ -42,9 +42,13 @@ namespace SPF.UserControls.UI
             this.txtNombreBanco = new Gizmox.WebGUI.Forms.TextBox();
             this.label1 = new Gizmox.WebGUI.Forms.Label();
             this.txtBancoID = new Gizmox.WebGUI.Forms.TextBox();
+            this.chkMostrar = new Gizmox.WebGUI.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListadoABM)).BeginInit();
             this.pnlDetalle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabListaABM)).BeginInit();
+            this.pnlListadoContainer.SuspendLayout();
+            this.pnlContainer.SuspendLayout();
+            this.pnlTabControl.SuspendLayout();
             this.label8.SuspendLayout();
             this.label4.SuspendLayout();
             this.SuspendLayout();
@@ -73,6 +77,7 @@ namespace SPF.UserControls.UI
             // 
             // pnlDetalle
             // 
+            this.pnlDetalle.Controls.Add(this.chkMostrar);
             this.pnlDetalle.Controls.Add(this.txtBancoID);
             this.pnlDetalle.Controls.Add(this.label1);
             this.pnlDetalle.Controls.Add(this.txtNombreBanco);
@@ -94,6 +99,7 @@ namespace SPF.UserControls.UI
             // 
             this.tabListaABM.Alignment = Gizmox.WebGUI.Forms.TabAlignment.Top;
             this.tabListaABM.Size = new System.Drawing.Size(1122, 388);
+            this.pnlListadoContainer.Controls.SetChildIndex(this.dgvListadoABM, 0);
             // 
             // textBox4
             // 
@@ -169,6 +175,7 @@ namespace SPF.UserControls.UI
             this.tSBPais.NombreCampoDescrip = "";
             this.tSBPais.NombreCampoID = "";
             this.tSBPais.Size = new System.Drawing.Size(467, 20);
+            this.tSBPais.SoloLectura = false;
             this.tSBPais.TabIndex = 1;
             this.tSBPais.Text = "ucTextSearchBox";
             this.tSBPais.TituloBuscador = "";
@@ -185,6 +192,7 @@ namespace SPF.UserControls.UI
             this.tSBCiudad.NombreCampoDescrip = "";
             this.tSBCiudad.NombreCampoID = "";
             this.tSBCiudad.Size = new System.Drawing.Size(467, 20);
+            this.tSBCiudad.SoloLectura = false;
             this.tSBCiudad.TabIndex = 2;
             this.tSBCiudad.Text = "ucTextSearchBox";
             this.tSBCiudad.TituloBuscador = "";
@@ -216,6 +224,18 @@ namespace SPF.UserControls.UI
             this.txtBancoID.TabStop = false;
             this.txtBancoID.TextAlign = Gizmox.WebGUI.Forms.HorizontalAlignment.Right;
             // 
+            // chkMostrar
+            // 
+            this.chkMostrar.AutoSize = true;
+            this.chkMostrar.Checked = true;
+            this.chkMostrar.CheckState = Gizmox.WebGUI.Forms.CheckState.Checked;
+            this.chkMostrar.Location = new System.Drawing.Point(455, 173);
+            this.chkMostrar.Name = "chkMostrar";
+            this.chkMostrar.Size = new System.Drawing.Size(150, 17);
+            this.chkMostrar.TabIndex = 3;
+            this.chkMostrar.Text = "Seleccionable para cargas";
+            this.tTBaseForm.SetToolTip(this.chkMostrar, "Seleccionable para cargas de Recibos");
+            // 
             // ucCRUDBancos
             // 
             this.Size = new System.Drawing.Size(1124, 466);
@@ -224,6 +244,9 @@ namespace SPF.UserControls.UI
             ((System.ComponentModel.ISupportInitialize)(this.dgvListadoABM)).EndInit();
             this.pnlDetalle.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.tabListaABM)).EndInit();
+            this.pnlListadoContainer.ResumeLayout(false);
+            this.pnlContainer.ResumeLayout(false);
+            this.pnlTabControl.ResumeLayout(false);
             this.label8.ResumeLayout(false);
             this.label4.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -243,6 +266,7 @@ namespace SPF.UserControls.UI
         private TextBox txtBancoID;
         private Label label1;
         private TextBox txtNombreBanco;
+        private CheckBox chkMostrar;
 
 
     }

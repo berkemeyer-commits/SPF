@@ -97,14 +97,12 @@ namespace ModelEF6
         public virtual DbSet<Area> Area { get; set; }
         public virtual DbSet<ta_tipoantecedente> ta_tipoantecedente { get; set; }
         public virtual DbSet<tse_tiposistelectronico> tse_tiposistelectronico { get; set; }
-        public virtual DbSet<pp_pagopresupuesto> pp_pagopresupuesto { get; set; }
         public virtual DbSet<rm_rolmenu> rm_rolmenu { get; set; }
         public virtual DbSet<ro_rol> ro_rol { get; set; }
         public virtual DbSet<td_tipodocumento> td_tipodocumento { get; set; }
         public virtual DbSet<Merge_Expediente> Merge_Expediente { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<ra_reporteasunto> ra_reporteasunto { get; set; }
-        public virtual DbSet<Audit_pp_pagopresupuesto> Audit_pp_pagopresupuesto { get; set; }
         public virtual DbSet<nf_numeracionfactura> nf_numeracionfactura { get; set; }
         public virtual DbSet<su_serieusuario> su_serieusuario { get; set; }
         public virtual DbSet<ru_rolusuario> ru_rolusuario { get; set; }
@@ -141,6 +139,14 @@ namespace ModelEF6
         public virtual DbSet<fd_facturadetalle> fd_facturadetalle { get; set; }
         public virtual DbSet<nc_notacreditocabecera> nc_notacreditocabecera { get; set; }
         public virtual DbSet<nd_notacreditodetalle> nd_notacreditodetalle { get; set; }
+        public virtual DbSet<cr_clienteretencion> cr_clienteretencion { get; set; }
+        public virtual DbSet<pp_pagopresupuesto> pp_pagopresupuesto { get; set; }
+        public virtual DbSet<rf_recibofactura> rf_recibofactura { get; set; }
+        public virtual DbSet<rr_reciboretencion> rr_reciboretencion { get; set; }
+        public virtual DbSet<rt_recibotransf> rt_recibotransf { get; set; }
+        public virtual DbSet<rch_recibocheque> rch_recibocheque { get; set; }
+        public virtual DbSet<Audit_pp_pagopresupuesto> Audit_pp_pagopresupuesto { get; set; }
+        public virtual DbSet<re_recibo> re_recibo { get; set; }
     
         [DbFunction("BerkeDBEntities", "GetAutorizacionPorDocumentoID")]
         public virtual IQueryable<Nullable<bool>> GetAutorizacionPorDocumentoID(Nullable<int> tipoDocumentoID, Nullable<int> documentoID, Nullable<int> usuarioID)
@@ -1484,6 +1490,27 @@ namespace ModelEF6
                 new ObjectParameter("WhereString", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetListadoFacturas_Result>("GetListadoFacturas", usuarioIDParameter, whereStringParameter);
+        }
+    
+        public virtual ObjectResult<FacturasParaRecibos> GetListadoFacturasParaRecibos(Nullable<int> clienteId, Nullable<int> monedaId, Nullable<System.DateTime> fechaInicio, Nullable<System.DateTime> fechaFin)
+        {
+            var clienteIdParameter = clienteId.HasValue ?
+                new ObjectParameter("ClienteId", clienteId) :
+                new ObjectParameter("ClienteId", typeof(int));
+    
+            var monedaIdParameter = monedaId.HasValue ?
+                new ObjectParameter("MonedaId", monedaId) :
+                new ObjectParameter("MonedaId", typeof(int));
+    
+            var fechaInicioParameter = fechaInicio.HasValue ?
+                new ObjectParameter("FechaInicio", fechaInicio) :
+                new ObjectParameter("FechaInicio", typeof(System.DateTime));
+    
+            var fechaFinParameter = fechaFin.HasValue ?
+                new ObjectParameter("FechaFin", fechaFin) :
+                new ObjectParameter("FechaFin", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FacturasParaRecibos>("GetListadoFacturasParaRecibos", clienteIdParameter, monedaIdParameter, fechaInicioParameter, fechaFinParameter);
         }
     }
 }

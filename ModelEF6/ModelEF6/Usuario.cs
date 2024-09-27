@@ -20,7 +20,6 @@ namespace ModelEF6
             this.ca_clienteantecedente1 = new ObservableListSource<ca_clienteantecedente>();
             this.Correspondencia = new ObservableListSource<Correspondencia>();
             this.op_oposicion = new ObservableListSource<op_oposicion>();
-            this.pp_pagopresupuesto = new ObservableListSource<pp_pagopresupuesto>();
             this.su_serieusuario = new ObservableListSource<su_serieusuario>();
             this.ru_rolusuario = new ObservableListSource<ru_rolusuario>();
             this.rc_reclamocliente = new ObservableListSource<rc_reclamocliente>();
@@ -30,6 +29,7 @@ namespace ModelEF6
             this.spd_solicitudpagodet = new ObservableListSource<spd_solicitudpagodet>();
             this.ad_autorizaciondocumento = new ObservableListSource<ad_autorizaciondocumento>();
             this.ad_autorizaciondocumento1 = new ObservableListSource<ad_autorizaciondocumento>();
+            this.pp_pagopresupuesto = new ObservableListSource<pp_pagopresupuesto>();
         }
     
         public int ID { get; set; }
@@ -50,7 +50,6 @@ namespace ModelEF6
         public virtual CArea CArea { get; set; }
         public virtual ObservableListSource<Correspondencia> Correspondencia { get; set; }
         public virtual ObservableListSource<op_oposicion> op_oposicion { get; set; }
-        public virtual ObservableListSource<pp_pagopresupuesto> pp_pagopresupuesto { get; set; }
         public virtual ObservableListSource<su_serieusuario> su_serieusuario { get; set; }
         public virtual ObservableListSource<ru_rolusuario> ru_rolusuario { get; set; }
         public virtual ObservableListSource<rc_reclamocliente> rc_reclamocliente { get; set; }
@@ -60,5 +59,6 @@ namespace ModelEF6
         public virtual ObservableListSource<spd_solicitudpagodet> spd_solicitudpagodet { get; set; }
         public virtual ObservableListSource<ad_autorizaciondocumento> ad_autorizaciondocumento { get; set; }
         public virtual ObservableListSource<ad_autorizaciondocumento> ad_autorizaciondocumento1 { get; set; }
+        public virtual ObservableListSource<pp_pagopresupuesto> pp_pagopresupuesto { get; set; }
     }
 }

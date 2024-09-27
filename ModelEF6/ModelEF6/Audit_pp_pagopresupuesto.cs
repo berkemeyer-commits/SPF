@@ -37,6 +37,7 @@ namespace ModelEF6
         public Nullable<int> pp_notacreditopresupid { get; set; }
         public string pp_nroboletadeposito { get; set; }
         public Nullable<int> pp_respcobroextid { get; set; }
+        public Nullable<int> pp_reciboid { get; set; }
         public string Audit_User { get; set; }
         public System.DateTime Audit_Fecha { get; set; }
         public string Audit_Operacion { get; set; }

@@ -19,9 +19,9 @@ namespace ModelEF6
             this.cp_cotizacionesxpresup = new ObservableListSource<cp_cotizacionesxpresup>();
             this.pd_presupuestodetalle = new ObservableListSource<pd_presupuestodetalle>();
             this.pm_pcabxmergeexpe = new ObservableListSource<pm_pcabxmergeexpe>();
-            this.pp_pagopresupuesto = new ObservableListSource<pp_pagopresupuesto>();
             this.fpd_facturapresupuestodet = new ObservableListSource<fpd_facturapresupuestodet>();
             this.fd_facturadetalle = new ObservableListSource<fd_facturadetalle>();
+            this.pp_pagopresupuesto = new ObservableListSource<pp_pagopresupuesto>();
         }
     
         public int pc_presupuestocabid { get; set; }
@@ -69,7 +69,6 @@ namespace ModelEF6
         public virtual Usuario Usuario2 { get; set; }
         public virtual ObservableListSource<pd_presupuestodetalle> pd_presupuestodetalle { get; set; }
         public virtual ObservableListSource<pm_pcabxmergeexpe> pm_pcabxmergeexpe { get; set; }
-        public virtual ObservableListSource<pp_pagopresupuesto> pp_pagopresupuesto { get; set; }
         public virtual pc_presupuestocab pc_presupuestocab1 { get; set; }
         public virtual pc_presupuestocab pc_presupuestocab2 { get; set; }
         public virtual ObservableListSource<fpd_facturapresupuestodet> fpd_facturapresupuestodet { get; set; }
@@ -78,5 +77,6 @@ namespace ModelEF6
         public virtual Moneda Moneda1 { get; set; }
         public virtual fc_facturacabecera fc_facturacabecera { get; set; }
         public virtual ObservableListSource<fd_facturadetalle> fd_facturadetalle { get; set; }
+        public virtual ObservableListSource<pp_pagopresupuesto> pp_pagopresupuesto { get; set; }
     }
 }

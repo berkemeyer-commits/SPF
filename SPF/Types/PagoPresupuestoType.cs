@@ -17,7 +17,7 @@ namespace SPF.Types
         public string BancoNombre { get; set; }
         public Nullable<int> CuentaDepID { get; set; }
         public string CuentaDepNombre { get; set; }
-        public int FormaPagoID { get; set; }
+        public Nullable<int> FormaPagoID { get; set; }
         public string FormaPagoDescrip { get; set; }
         public string ChequeNro { get; set; }
         public Nullable<int> BancoChequeID { get; set; }

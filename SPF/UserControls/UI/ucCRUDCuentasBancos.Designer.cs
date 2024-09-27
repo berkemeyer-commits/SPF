@@ -45,6 +45,7 @@ namespace SPF.UserControls.UI
             this.txtSello = new Gizmox.WebGUI.Forms.TextBox();
             this.colorDialog1 = new Gizmox.WebGUI.Forms.ColorDialog();
             this.btnColorDeFondo = new Gizmox.WebGUI.Forms.Button();
+            this.chkMostrar = new Gizmox.WebGUI.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListadoABM)).BeginInit();
             this.pnlDetalle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabListaABM)).BeginInit();
@@ -77,6 +78,7 @@ namespace SPF.UserControls.UI
             // 
             // pnlDetalle
             // 
+            this.pnlDetalle.Controls.Add(this.chkMostrar);
             this.pnlDetalle.Controls.Add(this.btnColorDeFondo);
             this.pnlDetalle.Controls.Add(this.txtSello);
             this.pnlDetalle.Controls.Add(this.label3);
@@ -243,6 +245,18 @@ namespace SPF.UserControls.UI
             this.btnColorDeFondo.Text = "Seleccionar Color de Fondo";
             this.btnColorDeFondo.Click += new System.EventHandler(this.btnColorDeFondo_Click);
             // 
+            // chkMostrar
+            // 
+            this.chkMostrar.AutoSize = true;
+            this.chkMostrar.Checked = true;
+            this.chkMostrar.CheckState = Gizmox.WebGUI.Forms.CheckState.Checked;
+            this.chkMostrar.Location = new System.Drawing.Point(492, 325);
+            this.chkMostrar.Name = "chkMostrar";
+            this.chkMostrar.Size = new System.Drawing.Size(150, 17);
+            this.chkMostrar.TabIndex = 3;
+            this.chkMostrar.Text = "Seleccionable para cargas";
+            this.tTBaseForm.SetToolTip(this.chkMostrar, "Seleccionable para cargas de Recibos");
+            // 
             // ucCRUDCuentasBancos
             // 
             this.Size = new System.Drawing.Size(1153, 485);
@@ -274,6 +288,7 @@ namespace SPF.UserControls.UI
         private TextBox txtSello;
         private Label label3;
         private ColorDialog colorDialog1;
+        private CheckBox chkMostrar;
 
 
     }
