@@ -36,13 +36,11 @@ namespace SPF.Types
         public string Concepto { get; set; }
         public string Efectivo { get; set; }
         public bool Cheque { get; set; }
-        //public string NroCheque { get; set; }
-        //public string BancoCheque { get; set; }
-        //public bool Transferencia { get; set; }
-        //public string NroTransferencia { get; set; }
         public string FechaRecibo { get; set; }
         public string ElaboradoPor { get; set; }
         public string NroRecibo { get; set; }
+        public Nullable<bool> ImprimirReciboSimple { get; set; }
+        public bool Anulado { get; set; }
     }
 
     public class DatosTransferenciaReciboType
@@ -56,6 +54,7 @@ namespace SPF.Types
         public int MonedaTransferenciaId { get; set; }
         public string MonedaTransferenciaAbrev { get; set; }
         public Nullable<int> PaisId { get; set; }
+        public Nullable<int> ReciboId { get; set; }
     }
 
     public class DatosChequeReciboType
@@ -67,7 +66,31 @@ namespace SPF.Types
         public decimal MontoCheque { get; set; }
         public int MonedaChequeId { get; set; }
         public string MonedaChequeAbrev { get; set; }
+        public Nullable<int> ReciboId { get; set; }
     }
+
+    public class FacturaRetencionConsultaType
+    {
+        public string NroFactura { get; set; }
+        public DateTime FechaFactura { get; set; }
+        public decimal TotalFactura { get; set; }
+        public decimal MontoPagadoFactura { get; set; }
+        public string NumeroRetencion { get; set; }
+        public Nullable<DateTime> FechaRetencion { get; set; }
+        public Nullable<int> ReciboId { get; set; }
+        public Nullable<decimal> MontoRetencionIVA10 { get; set; }
+        public Nullable<decimal> MontoRetencionRenta { get; set; }
+        public string RUC { get; set; }
+        //public string FechaFacturaString
+        //{
+        //    get { return FechaFactura.ToShortDateString(); }
+        //}
+        //public string FechaRetencionString
+        //{
+        //    get { return FechaRetencion.HasValue ? FechaRetencion.Value.ToShortDateString() : string.Empty; }
+        //}
+    }
+
 
     public class DatosCuentaBancaria
     {
@@ -159,5 +182,41 @@ namespace SPF.Types
         public int Ix { get; set; }
         public string FechaRetencion { get; set; }
         public string NumeroRetencion { get; set; }
+    }
+
+    public class DocumentosAsociadosType
+    {
+        public string NroDocumento { get; set; }
+        public Nullable<DateTime> FechaDocumento { get; set; }
+        public string Servicios { get; set; }
+        public decimal TotalDocumento { get; set; }
+        public decimal SaldoDocumento { get; set; }
+        public string TramiteDescrip { get; set; }
+        public string AreaDescrip { get; set; }
+        public Nullable<int> ReciboId { get; set; }
+    }
+
+    public class DatosRecaudacionesType
+    {
+        public int ReciboId { get; set; }
+        public string NroRecibo { get; set; }
+        public DateTime FechaRecibo { get; set; }
+        public int ClienteId { get; set; }
+        public string ClienteNombre { get; set; }
+        public int MonedaId { get; set; }
+        public string MonedaAbrev { get; set; }
+        public decimal TotalRecibo { get; set; }
+        public decimal TotalEfectivo { get; set; }
+        public decimal TotalCheque { get; set; }
+        public Nullable<int> DepositoRecaudacionId { get; set; }
+        public Nullable<DateTime> FechaDeposito { get; set; }
+        public string NroBoleta { get; set; }
+        public Nullable<int> CtaBancariaId { get; set; }
+        public string CtaBancariaDescrip { get; set; }
+        public string CtaBancariaNro { get; set; }
+        public Nullable<decimal> MontoDeposito { get; set; }
+        public Nullable<int> UsuarioCargaId { get; set; }
+        public string UsuarioCargaNombre { get; set; }
+        public Nullable<decimal> MontoDepositable { get; set; } 
     }
 }
