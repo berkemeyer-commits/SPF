@@ -17,6 +17,7 @@ namespace ModelEF6
         public ti_timbrado()
         {
             this.nf_numeracionfactura = new ObservableListSource<nf_numeracionfactura>();
+            this.re_recibo = new ObservableListSource<re_recibo>();
             this.su_serieusuario = new ObservableListSource<su_serieusuario>();
         }
     
@@ -32,9 +33,12 @@ namespace ModelEF6
         public Nullable<long> ti_nrotimbrado { get; set; }
         public bool ti_facthojasuelta { get; set; }
         public int ti_tipodocumentoid { get; set; }
+        public Nullable<int> ti_usuarioid { get; set; }
     
         public virtual ObservableListSource<nf_numeracionfactura> nf_numeracionfactura { get; set; }
+        public virtual ObservableListSource<re_recibo> re_recibo { get; set; }
         public virtual ObservableListSource<su_serieusuario> su_serieusuario { get; set; }
         public virtual td_tipodocumento td_tipodocumento { get; set; }
+        public virtual Usuario Usuario { get; set; }
     }
 }

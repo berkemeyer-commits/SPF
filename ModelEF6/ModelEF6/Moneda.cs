@@ -33,7 +33,7 @@ namespace ModelEF6
             this.nc_notacreditocabecera = new ObservableListSource<nc_notacreditocabecera>();
             this.pp_pagopresupuesto = new ObservableListSource<pp_pagopresupuesto>();
             this.pp_pagopresupuesto1 = new ObservableListSource<pp_pagopresupuesto>();
-            this.re_recibo = new ObservableListSource<re_recibo>();
+            this.dr_depositorecaudacion = new ObservableListSource<dr_depositorecaudacion>();
         }
     
         public int ID { get; set; }
@@ -63,6 +63,6 @@ namespace ModelEF6
         public virtual ObservableListSource<nc_notacreditocabecera> nc_notacreditocabecera { get; set; }
         public virtual ObservableListSource<pp_pagopresupuesto> pp_pagopresupuesto { get; set; }
         public virtual ObservableListSource<pp_pagopresupuesto> pp_pagopresupuesto1 { get; set; }
-        public virtual ObservableListSource<re_recibo> re_recibo { get; set; }
+        public virtual ObservableListSource<dr_depositorecaudacion> dr_depositorecaudacion { get; set; }
     }
 }

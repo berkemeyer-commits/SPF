@@ -30,6 +30,7 @@ namespace ModelEF6
             this.ad_autorizaciondocumento = new ObservableListSource<ad_autorizaciondocumento>();
             this.ad_autorizaciondocumento1 = new ObservableListSource<ad_autorizaciondocumento>();
             this.pp_pagopresupuesto = new ObservableListSource<pp_pagopresupuesto>();
+            this.ti_timbrado = new ObservableListSource<ti_timbrado>();
         }
     
         public int ID { get; set; }
@@ -60,5 +61,6 @@ namespace ModelEF6
         public virtual ObservableListSource<ad_autorizaciondocumento> ad_autorizaciondocumento { get; set; }
         public virtual ObservableListSource<ad_autorizaciondocumento> ad_autorizaciondocumento1 { get; set; }
         public virtual ObservableListSource<pp_pagopresupuesto> pp_pagopresupuesto { get; set; }
+        public virtual ObservableListSource<ti_timbrado> ti_timbrado { get; set; }
     }
 }

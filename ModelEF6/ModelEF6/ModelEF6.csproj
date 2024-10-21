@@ -189,6 +189,9 @@
     <Compile Include="DocumentoPlantilla.cs">
       <DependentUpon>BerkeDBEF6.tt</DependentUpon>
     </Compile>
+    <Compile Include="dr_depositorecaudacion.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
     <Compile Include="Expediente.cs">
       <DependentUpon>BerkeDBEF6.tt</DependentUpon>
     </Compile>
@@ -505,6 +508,9 @@
       <DependentUpon>BerkeDBEF6.tt</DependentUpon>
     </Compile>
     <Compile Include="rd_reclamoclientedetalle.cs">
+      <DependentUpon>BerkeDBEF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RecibosParaRecaudaciones.cs">
       <DependentUpon>BerkeDBEF6.tt</DependentUpon>
     </Compile>
     <Compile Include="RepEstadoDeCuenta1_Result.cs">

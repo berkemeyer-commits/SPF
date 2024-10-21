@@ -131,7 +131,6 @@ namespace ModelEF6
         public virtual DbSet<Moneda> Moneda { get; set; }
         public virtual DbSet<tcd_tipocambiode> tcd_tipocambiode { get; set; }
         public virtual DbSet<ad_autorizaciondocumento> ad_autorizaciondocumento { get; set; }
-        public virtual DbSet<ti_timbrado> ti_timbrado { get; set; }
         public virtual DbSet<me_motivoemision> me_motivoemision { get; set; }
         public virtual DbSet<Audit_fc_facturacabecera> Audit_fc_facturacabecera { get; set; }
         public virtual DbSet<Audit_nc_notacreditocabecera> Audit_nc_notacreditocabecera { get; set; }
@@ -147,6 +146,8 @@ namespace ModelEF6
         public virtual DbSet<rch_recibocheque> rch_recibocheque { get; set; }
         public virtual DbSet<Audit_pp_pagopresupuesto> Audit_pp_pagopresupuesto { get; set; }
         public virtual DbSet<re_recibo> re_recibo { get; set; }
+        public virtual DbSet<dr_depositorecaudacion> dr_depositorecaudacion { get; set; }
+        public virtual DbSet<ti_timbrado> ti_timbrado { get; set; }
     
         [DbFunction("BerkeDBEntities", "GetAutorizacionPorDocumentoID")]
         public virtual IQueryable<Nullable<bool>> GetAutorizacionPorDocumentoID(Nullable<int> tipoDocumentoID, Nullable<int> documentoID, Nullable<int> usuarioID)
@@ -1511,6 +1512,23 @@ namespace ModelEF6
                 new ObjectParameter("FechaFin", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FacturasParaRecibos>("GetListadoFacturasParaRecibos", clienteIdParameter, monedaIdParameter, fechaInicioParameter, fechaFinParameter);
+        }
+    
+        public virtual ObjectResult<RecibosParaRecaudaciones> ObtenerRecibosParaRecaudaciones(Nullable<int> clienteId, Nullable<System.DateTime> fechaDesde, Nullable<System.DateTime> fechaHasta)
+        {
+            var clienteIdParameter = clienteId.HasValue ?
+                new ObjectParameter("ClienteId", clienteId) :
+                new ObjectParameter("ClienteId", typeof(int));
+    
+            var fechaDesdeParameter = fechaDesde.HasValue ?
+                new ObjectParameter("FechaDesde", fechaDesde) :
+                new ObjectParameter("FechaDesde", typeof(System.DateTime));
+    
+            var fechaHastaParameter = fechaHasta.HasValue ?
+                new ObjectParameter("FechaHasta", fechaHasta) :
+                new ObjectParameter("FechaHasta", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<RecibosParaRecaudaciones>("ObtenerRecibosParaRecaudaciones", clienteIdParameter, fechaDesdeParameter, fechaHastaParameter);
         }
     }
 }

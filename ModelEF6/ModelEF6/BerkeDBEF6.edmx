@@ -514,6 +514,19 @@
           <Property Name="MergeID" Type="int" />
           <Property Name="EnTramite" Type="bit" />
         </EntityType>
+        <EntityType Name="dr_depositorecaudacion">
+          <Key>
+            <PropertyRef Name="dr_depositorecaudacionid" />
+          </Key>
+          <Property Name="dr_depositorecaudacionid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dr_reciboid" Type="int" Nullable="false" />
+          <Property Name="dr_fechadeposito" Type="date" Nullable="false" />
+          <Property Name="dr_cuentadepositoid" Type="int" Nullable="false" />
+          <Property Name="dr_nroboleta" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="dr_monedaid" Type="int" Nullable="false" />
+          <Property Name="dr_monto" Type="decimal" Precision="14" Scale="2" Nullable="false" />
+          <Property Name="dr_usuariocargaid" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Expediente">
           <Key>
             <PropertyRef Name="ID" />
@@ -1291,6 +1304,7 @@
           <Property Name="re_reciboid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="re_fecha" Type="date" Nullable="false" />
           <Property Name="re_numero" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="re_timbradoid" Type="int" Nullable="false" />
           <Property Name="re_clienteid" Type="int" Nullable="false" />
           <Property Name="re_monedaid" Type="int" Nullable="false" />
           <Property Name="re_totalrecibo" Type="decimal" Precision="14" Scale="2" Nullable="false" />
@@ -1302,7 +1316,7 @@
           <Property Name="re_totalcheques" Type="decimal" Precision="14" Scale="2" Nullable="false" />
           <Property Name="re_totalefectivo" Type="decimal" Precision="14" Scale="2" Nullable="false" />
           <Property Name="re_concepto" Type="varchar" MaxLength="200" Nullable="false" />
-          <Property Name="re_usuario" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="re_usuarioid" Type="int" />
           <Property Name="re_anulado" Type="bit" Nullable="false" />
           <Property Name="re_fechaanulacion" Type="date" />
           <Property Name="re_usuarioanulacion" Type="varchar" MaxLength="25" />
@@ -1643,6 +1657,7 @@
           <Property Name="ti_nrotimbrado" Type="bigint" />
           <Property Name="ti_facthojasuelta" Type="bit" Nullable="false" />
           <Property Name="ti_tipodocumentoid" Type="int" Nullable="false" />
+          <Property Name="ti_usuarioid" Type="int" />
         </EntityType>
         <EntityType Name="tm_tipomovimientocuenta">
           <Key>
@@ -2208,6 +2223,42 @@
             </Principal>
             <Dependent Role="DocumentoPlantilla">
               <PropertyRef Name="TramiteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dr_depositorecaudacion_cb_cuentabanco">
+          <End Role="cb_cuentabanco" Type="Self.cb_cuentabanco" Multiplicity="1" />
+          <End Role="dr_depositorecaudacion" Type="Self.dr_depositorecaudacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cb_cuentabanco">
+              <PropertyRef Name="cb_cuentabancoid" />
+            </Principal>
+            <Dependent Role="dr_depositorecaudacion">
+              <PropertyRef Name="dr_cuentadepositoid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dr_depositorecaudacion_Moneda">
+          <End Role="Moneda" Type="Self.Moneda" Multiplicity="1" />
+          <End Role="dr_depositorecaudacion" Type="Self.dr_depositorecaudacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Moneda">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="dr_depositorecaudacion">
+              <PropertyRef Name="dr_monedaid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dr_depositorecaudacion_re_recibo">
+          <End Role="re_recibo" Type="Self.re_recibo" Multiplicity="1" />
+          <End Role="dr_depositorecaudacion" Type="Self.dr_depositorecaudacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="re_recibo">
+              <PropertyRef Name="re_reciboid" />
+            </Principal>
+            <Dependent Role="dr_depositorecaudacion">
+              <PropertyRef Name="dr_reciboid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3555,27 +3606,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_re_recibo_Cliente">
-          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+        <Association Name="FK_re_recibo_ti_timbrado">
+          <End Role="ti_timbrado" Type="Self.ti_timbrado" Multiplicity="1" />
           <End Role="re_recibo" Type="Self.re_recibo" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Cliente">
-              <PropertyRef Name="ID" />
+            <Principal Role="ti_timbrado">
+              <PropertyRef Name="ti_timbradoid" />
             </Principal>
             <Dependent Role="re_recibo">
-              <PropertyRef Name="re_clienteid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_re_recibo_Moneda">
-          <End Role="Moneda" Type="Self.Moneda" Multiplicity="1" />
-          <End Role="re_recibo" Type="Self.re_recibo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Moneda">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="re_recibo">
-              <PropertyRef Name="re_monedaid" />
+              <PropertyRef Name="re_timbradoid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4179,6 +4218,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ti_timbrado_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="ti_timbrado" Type="Self.ti_timbrado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ti_timbrado">
+              <PropertyRef Name="ti_usuarioid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Tramite_ac_areacontabilidad">
           <End Role="ac_areacontabilidad" Type="Self.ac_areacontabilidad" Multiplicity="0..1" />
           <End Role="Tramite" Type="Self.Tramite" Multiplicity="*" />
@@ -4739,6 +4790,11 @@
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="ObtenerRecibosParaRecaudaciones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ClienteId" Type="int" Mode="In" />
+          <Parameter Name="FechaDesde" Type="date" Mode="In" />
+          <Parameter Name="FechaHasta" Type="date" Mode="In" />
+        </Function>
         <Function Name="RepEstadoDeCuenta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ClienteID" Type="varchar(max)" Mode="In" />
           <Parameter Name="FechaDesde" Type="char" Mode="In" />
@@ -4794,6 +4850,7 @@
           <EntitySet Name="cr_clienteretencion" EntityType="Self.cr_clienteretencion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="cxm_cobranzasxmov" EntityType="Self.cxm_cobranzasxmov" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DocumentoPlantilla" EntityType="Self.DocumentoPlantilla" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="dr_depositorecaudacion" EntityType="Self.dr_depositorecaudacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Expediente" EntityType="Self.Expediente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExpedienteCampo" EntityType="Self.ExpedienteCampo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ExpedienteXPoder" EntityType="Self.ExpedienteXPoder" Schema="dbo" store:Type="Tables" />
@@ -5031,6 +5088,18 @@
           <AssociationSet Name="FK_DocumentoPlantilla_Tramite" Association="Self.FK_DocumentoPlantilla_Tramite">
             <End Role="Tramite" EntitySet="Tramite" />
             <End Role="DocumentoPlantilla" EntitySet="DocumentoPlantilla" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dr_depositorecaudacion_cb_cuentabanco" Association="Self.FK_dr_depositorecaudacion_cb_cuentabanco">
+            <End Role="cb_cuentabanco" EntitySet="cb_cuentabanco" />
+            <End Role="dr_depositorecaudacion" EntitySet="dr_depositorecaudacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dr_depositorecaudacion_Moneda" Association="Self.FK_dr_depositorecaudacion_Moneda">
+            <End Role="Moneda" EntitySet="Moneda" />
+            <End Role="dr_depositorecaudacion" EntitySet="dr_depositorecaudacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dr_depositorecaudacion_re_recibo" Association="Self.FK_dr_depositorecaudacion_re_recibo">
+            <End Role="re_recibo" EntitySet="re_recibo" />
+            <End Role="dr_depositorecaudacion" EntitySet="dr_depositorecaudacion" />
           </AssociationSet>
           <AssociationSet Name="FK_Expediente_CAgenteLocal" Association="Self.FK_Expediente_CAgenteLocal">
             <End Role="CAgenteLocal" EntitySet="CAgenteLocal" />
@@ -5480,12 +5549,8 @@
             <End Role="rc_reclamocliente" EntitySet="rc_reclamocliente" />
             <End Role="rd_reclamoclientedetalle" EntitySet="rd_reclamoclientedetalle" />
           </AssociationSet>
-          <AssociationSet Name="FK_re_recibo_Cliente" Association="Self.FK_re_recibo_Cliente">
-            <End Role="Cliente" EntitySet="Cliente" />
-            <End Role="re_recibo" EntitySet="re_recibo" />
-          </AssociationSet>
-          <AssociationSet Name="FK_re_recibo_Moneda" Association="Self.FK_re_recibo_Moneda">
-            <End Role="Moneda" EntitySet="Moneda" />
+          <AssociationSet Name="FK_re_recibo_ti_timbrado" Association="Self.FK_re_recibo_ti_timbrado">
+            <End Role="ti_timbrado" EntitySet="ti_timbrado" />
             <End Role="re_recibo" EntitySet="re_recibo" />
           </AssociationSet>
           <AssociationSet Name="FK_rf_recibofactura_fc_facturacabecera" Association="Self.FK_rf_recibofactura_fc_facturacabecera">
@@ -5686,6 +5751,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_ti_timbrado_td_tipodocumento" Association="Self.FK_ti_timbrado_td_tipodocumento">
             <End Role="td_tipodocumento" EntitySet="td_tipodocumento" />
+            <End Role="ti_timbrado" EntitySet="ti_timbrado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ti_timbrado_Usuario" Association="Self.FK_ti_timbrado_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
             <End Role="ti_timbrado" EntitySet="ti_timbrado" />
           </AssociationSet>
           <AssociationSet Name="FK_Tramite_ac_areacontabilidad" Association="Self.FK_Tramite_ac_areacontabilidad">
@@ -7121,19 +7190,6 @@
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="ad_autorizaciondocumento" EntitySet="ad_autorizaciondocumento" />
           </AssociationSet>
-          <EntitySet Name="ti_timbrado" EntityType="BerkeDBModel.ti_timbrado" />
-          <AssociationSet Name="FK_nf_numeracionfactura_ti_timbrado" Association="BerkeDBModel.FK_nf_numeracionfactura_ti_timbrado">
-            <End Role="ti_timbrado" EntitySet="ti_timbrado" />
-            <End Role="nf_numeracionfactura" EntitySet="nf_numeracionfactura" />
-          </AssociationSet>
-          <AssociationSet Name="FK_su_serieusuario_ti_timbrado" Association="BerkeDBModel.FK_su_serieusuario_ti_timbrado">
-            <End Role="ti_timbrado" EntitySet="ti_timbrado" />
-            <End Role="su_serieusuario" EntitySet="su_serieusuario" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ti_timbrado_td_tipodocumento" Association="BerkeDBModel.FK_ti_timbrado_td_tipodocumento">
-            <End Role="td_tipodocumento" EntitySet="td_tipodocumento" />
-            <End Role="ti_timbrado" EntitySet="ti_timbrado" />
-          </AssociationSet>
           <EntitySet Name="me_motivoemision" EntityType="BerkeDBModel.me_motivoemision" />
           <EntitySet Name="Audit_fc_facturacabecera" EntityType="BerkeDBModel.Audit_fc_facturacabecera" />
           <EntitySet Name="Audit_nc_notacreditocabecera" EntityType="BerkeDBModel.Audit_nc_notacreditocabecera" />
@@ -7278,14 +7334,6 @@
           <EntitySet Name="rch_recibocheque" EntityType="BerkeDBModel.rch_recibocheque" />
           <EntitySet Name="Audit_pp_pagopresupuesto" EntityType="BerkeDBModel.Audit_pp_pagopresupuesto" />
           <EntitySet Name="re_recibo" EntityType="BerkeDBModel.re_recibo" />
-          <AssociationSet Name="FK_re_recibo_Cliente" Association="BerkeDBModel.FK_re_recibo_Cliente">
-            <End Role="Cliente" EntitySet="Cliente" />
-            <End Role="re_recibo" EntitySet="re_recibo" />
-          </AssociationSet>
-          <AssociationSet Name="FK_re_recibo_Moneda" Association="BerkeDBModel.FK_re_recibo_Moneda">
-            <End Role="Moneda" EntitySet="Moneda" />
-            <End Role="re_recibo" EntitySet="re_recibo" />
-          </AssociationSet>
           <AssociationSet Name="FK_pp_pagopresupuesto_re_recibo" Association="BerkeDBModel.FK_pp_pagopresupuesto_re_recibo">
             <End Role="re_recibo" EntitySet="re_recibo" />
             <End Role="pp_pagopresupuesto" EntitySet="pp_pagopresupuesto" />
@@ -7309,6 +7357,45 @@
           <AssociationSet Name="FK_rt_recibotransf_re_recibo" Association="BerkeDBModel.FK_rt_recibotransf_re_recibo">
             <End Role="re_recibo" EntitySet="re_recibo" />
             <End Role="rt_recibotransf" EntitySet="rt_recibotransf" />
+          </AssociationSet>
+          <EntitySet Name="dr_depositorecaudacion" EntityType="BerkeDBModel.dr_depositorecaudacion" />
+          <AssociationSet Name="FK_dr_depositorecaudacion_cb_cuentabanco" Association="BerkeDBModel.FK_dr_depositorecaudacion_cb_cuentabanco">
+            <End Role="cb_cuentabanco" EntitySet="cb_cuentabanco" />
+            <End Role="dr_depositorecaudacion" EntitySet="dr_depositorecaudacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dr_depositorecaudacion_Moneda" Association="BerkeDBModel.FK_dr_depositorecaudacion_Moneda">
+            <End Role="Moneda" EntitySet="Moneda" />
+            <End Role="dr_depositorecaudacion" EntitySet="dr_depositorecaudacion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dr_depositorecaudacion_re_recibo" Association="BerkeDBModel.FK_dr_depositorecaudacion_re_recibo">
+            <End Role="re_recibo" EntitySet="re_recibo" />
+            <End Role="dr_depositorecaudacion" EntitySet="dr_depositorecaudacion" />
+          </AssociationSet>
+          <FunctionImport Name="ObtenerRecibosParaRecaudaciones" ReturnType="Collection(BerkeDBModel.RecibosParaRecaudaciones)">
+            <Parameter Name="ClienteId" Mode="In" Type="Int32" />
+            <Parameter Name="FechaDesde" Mode="In" Type="DateTime" />
+            <Parameter Name="FechaHasta" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <EntitySet Name="ti_timbrado" EntityType="BerkeDBModel.ti_timbrado" />
+          <AssociationSet Name="FK_nf_numeracionfactura_ti_timbrado" Association="BerkeDBModel.FK_nf_numeracionfactura_ti_timbrado">
+            <End Role="ti_timbrado" EntitySet="ti_timbrado" />
+            <End Role="nf_numeracionfactura" EntitySet="nf_numeracionfactura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_re_recibo_ti_timbrado" Association="BerkeDBModel.FK_re_recibo_ti_timbrado">
+            <End Role="ti_timbrado" EntitySet="ti_timbrado" />
+            <End Role="re_recibo" EntitySet="re_recibo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_su_serieusuario_ti_timbrado" Association="BerkeDBModel.FK_su_serieusuario_ti_timbrado">
+            <End Role="ti_timbrado" EntitySet="ti_timbrado" />
+            <End Role="su_serieusuario" EntitySet="su_serieusuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ti_timbrado_td_tipodocumento" Association="BerkeDBModel.FK_ti_timbrado_td_tipodocumento">
+            <End Role="td_tipodocumento" EntitySet="td_tipodocumento" />
+            <End Role="ti_timbrado" EntitySet="ti_timbrado" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ti_timbrado_Usuario" Association="BerkeDBModel.FK_ti_timbrado_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="ti_timbrado" EntitySet="ti_timbrado" />
           </AssociationSet>
           <!--<EntitySet Name="ncb_notacreditobancaria1Set" EntityType="BerkeDBModel.ncb_notacreditobancaria1" />
           <AssociationSet Name="FK_ncb_notacreditobancaria_Cliente1" Association="BerkeDBModel.FK_ncb_notacreditobancaria_Cliente1">
@@ -9857,6 +9944,7 @@
           <NavigationProperty Name="ad_autorizaciondocumento" Relationship="BerkeDBModel.FK_ad_autorizaciondocumento_UsuarioAutorizado" FromRole="Usuario" ToRole="ad_autorizaciondocumento" />
           <NavigationProperty Name="ad_autorizaciondocumento1" Relationship="BerkeDBModel.FK_ad_autorizaciondocumento_UsuarioAutorizador" FromRole="Usuario" ToRole="ad_autorizaciondocumento" />
           <NavigationProperty Name="pp_pagopresupuesto" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_Usuario" FromRole="Usuario" ToRole="pp_pagopresupuesto" />
+          <NavigationProperty Name="ti_timbrado" Relationship="BerkeDBModel.FK_ti_timbrado_Usuario" FromRole="Usuario" ToRole="ti_timbrado" />
         </EntityType>
         <Association Name="FK_ca_clienteantecedente_Usuario_autorizadopor">
           <End Type="BerkeDBModel.Usuario" Role="Usuario" Multiplicity="0..1" />
@@ -10389,7 +10477,6 @@
           <NavigationProperty Name="spc_solicitudpagocab" Relationship="BerkeDBModel.FK_spc_solicitudpagocab_Cliente" FromRole="Cliente" ToRole="spc_solicitudpagocab" />
           <NavigationProperty Name="ps_pagosolicitud" Relationship="BerkeDBModel.FK_ps_pagosolicitud_Cliente" FromRole="Cliente" ToRole="ps_pagosolicitud" />
           <NavigationProperty Name="cr_clienteretencion" Relationship="BerkeDBModel.FK_cr_clienteretencion_Cliente" FromRole="Cliente" ToRole="cr_clienteretencion" />
-          <NavigationProperty Name="re_recibo" Relationship="BerkeDBModel.FK_re_recibo_Cliente" FromRole="Cliente" ToRole="re_recibo" />
         </EntityType>
         <Association Name="FK_Atencion_Cliente">
           <End Type="BerkeDBModel.Cliente" Role="Cliente" Multiplicity="0..1" />
@@ -10583,6 +10670,7 @@
           <Property Name="cb_mostrar" Type="Boolean" />
           <NavigationProperty Name="pp_pagopresupuesto" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_cb_cuentabanco" FromRole="cb_cuentabanco" ToRole="pp_pagopresupuesto" />
           <NavigationProperty Name="rt_recibotransf" Relationship="BerkeDBModel.FK_rt_recibotransf_cb_cuentabanco" FromRole="cb_cuentabanco" ToRole="rt_recibotransf" />
+          <NavigationProperty Name="dr_depositorecaudacion" Relationship="BerkeDBModel.FK_dr_depositorecaudacion_cb_cuentabanco" FromRole="cb_cuentabanco" ToRole="dr_depositorecaudacion" />
           </EntityType>
         <Association Name="FK_cb_cuentabanco_ba_banco">
           <End Type="BerkeDBModel.ba_banco" Role="ba_banco" Multiplicity="1" />
@@ -12111,7 +12199,7 @@
           <NavigationProperty Name="nc_notacreditocabecera" Relationship="BerkeDBModel.FK_nc_notacreditocabecera_Moneda" FromRole="Moneda" ToRole="nc_notacreditocabecera" />
           <NavigationProperty Name="pp_pagopresupuesto" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_Moneda" FromRole="Moneda" ToRole="pp_pagopresupuesto" />
           <NavigationProperty Name="pp_pagopresupuesto1" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_Moneda1" FromRole="Moneda" ToRole="pp_pagopresupuesto" />
-          <NavigationProperty Name="re_recibo" Relationship="BerkeDBModel.FK_re_recibo_Moneda" FromRole="Moneda" ToRole="re_recibo" />
+          <NavigationProperty Name="dr_depositorecaudacion" Relationship="BerkeDBModel.FK_dr_depositorecaudacion_Moneda" FromRole="Moneda" ToRole="dr_depositorecaudacion" />
           </EntityType>
         <Association Name="FK_cb_cuentabanco_Moneda">
           <End Type="BerkeDBModel.Moneda" Role="Moneda" Multiplicity="1" />
@@ -12357,62 +12445,6 @@
             </Principal>
             <Dependent Role="ad_autorizaciondocumento">
               <PropertyRef Name="ad_usuarioautorizador" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="ti_timbrado">
-          <Key>
-            <PropertyRef Name="ti_timbradoid" />
-          </Key>
-          <Property Name="ti_timbradoid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ti_vigenciadesde" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="ti_vigenciahasta" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="ti_numerodesde" Type="Int64" Nullable="false" />
-          <Property Name="ti_numerohasta" Type="Int64" Nullable="false" />
-          <Property Name="ti_vigente" Type="Boolean" Nullable="false" />
-          <Property Name="ti_serie" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="ti_sucursal" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="ti_descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ti_nrotimbrado" Type="Int64" />
-          <Property Name="ti_facthojasuelta" Type="Boolean" Nullable="false" />
-          <Property Name="ti_tipodocumentoid" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="nf_numeracionfactura" Relationship="BerkeDBModel.FK_nf_numeracionfactura_ti_timbrado" FromRole="ti_timbrado" ToRole="nf_numeracionfactura" />
-          <NavigationProperty Name="su_serieusuario" Relationship="BerkeDBModel.FK_su_serieusuario_ti_timbrado" FromRole="ti_timbrado" ToRole="su_serieusuario" />
-          <NavigationProperty Name="td_tipodocumento" Relationship="BerkeDBModel.FK_ti_timbrado_td_tipodocumento" FromRole="ti_timbrado" ToRole="td_tipodocumento" />
-        </EntityType>
-        <Association Name="FK_nf_numeracionfactura_ti_timbrado">
-          <End Type="BerkeDBModel.ti_timbrado" Role="ti_timbrado" Multiplicity="1" />
-          <End Type="BerkeDBModel.nf_numeracionfactura" Role="nf_numeracionfactura" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ti_timbrado">
-              <PropertyRef Name="ti_timbradoid" />
-            </Principal>
-            <Dependent Role="nf_numeracionfactura">
-              <PropertyRef Name="nf_timbradoid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_su_serieusuario_ti_timbrado">
-          <End Type="BerkeDBModel.ti_timbrado" Role="ti_timbrado" Multiplicity="1" />
-          <End Type="BerkeDBModel.su_serieusuario" Role="su_serieusuario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ti_timbrado">
-              <PropertyRef Name="ti_timbradoid" />
-            </Principal>
-            <Dependent Role="su_serieusuario">
-              <PropertyRef Name="su_timbradoid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ti_timbrado_td_tipodocumento">
-          <End Type="BerkeDBModel.td_tipodocumento" Role="td_tipodocumento" Multiplicity="1" />
-          <End Type="BerkeDBModel.ti_timbrado" Role="ti_timbrado" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="td_tipodocumento">
-              <PropertyRef Name="td_tipodocumentoid" />
-            </Principal>
-            <Dependent Role="ti_timbrado">
-              <PropertyRef Name="ti_tipodocumentoid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -13323,6 +13355,7 @@
           <Property Name="re_reciboid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="re_fecha" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="re_numero" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="re_timbradoid" Type="Int32" Nullable="false" />
           <Property Name="re_clienteid" Type="Int32" Nullable="false" />
           <Property Name="re_monedaid" Type="Int32" Nullable="false" />
           <Property Name="re_totalrecibo" Type="Decimal" Nullable="false" Precision="14" Scale="2" />
@@ -13334,43 +13367,19 @@
           <Property Name="re_totalcheques" Type="Decimal" Nullable="false" Precision="14" Scale="2" />
           <Property Name="re_totalefectivo" Type="Decimal" Nullable="false" Precision="14" Scale="2" />
           <Property Name="re_concepto" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="re_usuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="re_usuarioid" Type="Int32" />
           <Property Name="re_anulado" Type="Boolean" Nullable="false" />
           <Property Name="re_fechaanulacion" Type="DateTime" Precision="0" />
           <Property Name="re_usuarioanulacion" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Cliente" Relationship="BerkeDBModel.FK_re_recibo_Cliente" FromRole="re_recibo" ToRole="Cliente" />
-          <NavigationProperty Name="Moneda" Relationship="BerkeDBModel.FK_re_recibo_Moneda" FromRole="re_recibo" ToRole="Moneda" />
           <NavigationProperty Name="pp_pagopresupuesto" Relationship="BerkeDBModel.FK_pp_pagopresupuesto_re_recibo" FromRole="re_recibo" ToRole="pp_pagopresupuesto" />
           <NavigationProperty Name="rch_recibocheque" Relationship="BerkeDBModel.FK_rch_recibocheque_ba_banco" FromRole="re_recibo" ToRole="rch_recibocheque" />
           <NavigationProperty Name="rch_recibocheque1" Relationship="BerkeDBModel.FK_rch_recibocheque_re_recibo" FromRole="re_recibo" ToRole="rch_recibocheque" />
           <NavigationProperty Name="rf_recibofactura" Relationship="BerkeDBModel.FK_rf_recibofactura_re_recibo" FromRole="re_recibo" ToRole="rf_recibofactura" />
           <NavigationProperty Name="rr_reciboretencion" Relationship="BerkeDBModel.FK_rr_reciboretencion_re_recibo" FromRole="re_recibo" ToRole="rr_reciboretencion" />
           <NavigationProperty Name="rt_recibotransf" Relationship="BerkeDBModel.FK_rt_recibotransf_re_recibo" FromRole="re_recibo" ToRole="rt_recibotransf" />
+          <NavigationProperty Name="dr_depositorecaudacion" Relationship="BerkeDBModel.FK_dr_depositorecaudacion_re_recibo" FromRole="re_recibo" ToRole="dr_depositorecaudacion" />
+          <NavigationProperty Name="ti_timbrado" Relationship="BerkeDBModel.FK_re_recibo_ti_timbrado" FromRole="re_recibo" ToRole="ti_timbrado" />
         </EntityType>
-        <Association Name="FK_re_recibo_Cliente">
-          <End Type="BerkeDBModel.Cliente" Role="Cliente" Multiplicity="1" />
-          <End Type="BerkeDBModel.re_recibo" Role="re_recibo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Cliente">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="re_recibo">
-              <PropertyRef Name="re_clienteid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_re_recibo_Moneda">
-          <End Type="BerkeDBModel.Moneda" Role="Moneda" Multiplicity="1" />
-          <End Type="BerkeDBModel.re_recibo" Role="re_recibo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Moneda">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="re_recibo">
-              <PropertyRef Name="re_monedaid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_pp_pagopresupuesto_re_recibo">
           <End Type="BerkeDBModel.re_recibo" Role="re_recibo" Multiplicity="0..1" />
           <End Type="BerkeDBModel.pp_pagopresupuesto" Role="pp_pagopresupuesto" Multiplicity="*" />
@@ -13440,6 +13449,163 @@
             </Principal>
             <Dependent Role="rt_recibotransf">
               <PropertyRef Name="rt_reciboid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="dr_depositorecaudacion">
+          <Key>
+            <PropertyRef Name="dr_depositorecaudacionid" />
+          </Key>
+          <Property Name="dr_depositorecaudacionid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dr_reciboid" Type="Int32" Nullable="false" />
+          <Property Name="dr_fechadeposito" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="dr_cuentadepositoid" Type="Int32" Nullable="false" />
+          <Property Name="dr_nroboleta" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="dr_monedaid" Type="Int32" Nullable="false" />
+          <Property Name="dr_monto" Type="Decimal" Nullable="false" Precision="14" Scale="2" />
+          <Property Name="dr_usuariocargaid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="cb_cuentabanco" Relationship="BerkeDBModel.FK_dr_depositorecaudacion_cb_cuentabanco" FromRole="dr_depositorecaudacion" ToRole="cb_cuentabanco" />
+          <NavigationProperty Name="Moneda" Relationship="BerkeDBModel.FK_dr_depositorecaudacion_Moneda" FromRole="dr_depositorecaudacion" ToRole="Moneda" />
+          <NavigationProperty Name="re_recibo" Relationship="BerkeDBModel.FK_dr_depositorecaudacion_re_recibo" FromRole="dr_depositorecaudacion" ToRole="re_recibo" />
+        </EntityType>
+        <Association Name="FK_dr_depositorecaudacion_cb_cuentabanco">
+          <End Type="BerkeDBModel.cb_cuentabanco" Role="cb_cuentabanco" Multiplicity="1" />
+          <End Type="BerkeDBModel.dr_depositorecaudacion" Role="dr_depositorecaudacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cb_cuentabanco">
+              <PropertyRef Name="cb_cuentabancoid" />
+            </Principal>
+            <Dependent Role="dr_depositorecaudacion">
+              <PropertyRef Name="dr_cuentadepositoid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dr_depositorecaudacion_Moneda">
+          <End Type="BerkeDBModel.Moneda" Role="Moneda" Multiplicity="1" />
+          <End Type="BerkeDBModel.dr_depositorecaudacion" Role="dr_depositorecaudacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Moneda">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="dr_depositorecaudacion">
+              <PropertyRef Name="dr_monedaid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dr_depositorecaudacion_re_recibo">
+          <End Type="BerkeDBModel.re_recibo" Role="re_recibo" Multiplicity="1" />
+          <End Type="BerkeDBModel.dr_depositorecaudacion" Role="dr_depositorecaudacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="re_recibo">
+              <PropertyRef Name="re_reciboid" />
+            </Principal>
+            <Dependent Role="dr_depositorecaudacion">
+              <PropertyRef Name="dr_reciboid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="RecibosParaRecaudaciones">
+          <Property Type="Int32" Name="ReciboId" Nullable="false" />
+          <Property Type="String" Name="NroRecibo" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="FechaRecibo" Nullable="false" />
+          <Property Type="String" Name="ClienteNombre" Nullable="true" MaxLength="150" />
+          <Property Type="Int32" Name="MonedaId" Nullable="false" />
+          <Property Type="String" Name="MonedaAbrev" Nullable="true" MaxLength="10" />
+          <Property Type="Decimal" Name="TotalRecibo" Nullable="false" Precision="14" Scale="2" />
+          <Property Type="Decimal" Name="TotalEfectivo" Nullable="false" Precision="14" Scale="2" />
+          <Property Type="Decimal" Name="TotalCheque" Nullable="false" Precision="14" Scale="2" />
+          <Property Type="DateTime" Name="FechaDeposito" Nullable="true" />
+          <Property Type="String" Name="NroBoleta" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="CtaBancariaId" Nullable="true" />
+          <Property Type="String" Name="CtaBancariaDescrip" Nullable="true" MaxLength="60" />
+          <Property Type="Decimal" Name="MontoDeposito" Nullable="true" Precision="14" Scale="2" />
+          <Property Type="Int32" Name="UsuarioCargaId" Nullable="true" />
+          <Property Type="String" Name="UsuarioCargaNombre" Nullable="true" MaxLength="60" />
+          <Property Type="Decimal" Name="MontoDepositable" Nullable="true" Precision="15" Scale="2" />
+          <Property Type="Int32" Name="ClienteId" Nullable="false" />
+          <Property Type="String" Name="CtaBancariaNro" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="DepositoRecaudacionId" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="ti_timbrado">
+          <Key>
+            <PropertyRef Name="ti_timbradoid" />
+          </Key>
+          <Property Name="ti_timbradoid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ti_vigenciadesde" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ti_vigenciahasta" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ti_numerodesde" Type="Int64" Nullable="false" />
+          <Property Name="ti_numerohasta" Type="Int64" Nullable="false" />
+          <Property Name="ti_vigente" Type="Boolean" Nullable="false" />
+          <Property Name="ti_serie" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ti_sucursal" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ti_descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ti_nrotimbrado" Type="Int64" />
+          <Property Name="ti_facthojasuelta" Type="Boolean" Nullable="false" />
+          <Property Name="ti_tipodocumentoid" Type="Int32" Nullable="false" />
+          <Property Name="ti_usuarioid" Type="Int32" />
+          <NavigationProperty Name="nf_numeracionfactura" Relationship="BerkeDBModel.FK_nf_numeracionfactura_ti_timbrado" FromRole="ti_timbrado" ToRole="nf_numeracionfactura" />
+          <NavigationProperty Name="re_recibo" Relationship="BerkeDBModel.FK_re_recibo_ti_timbrado" FromRole="ti_timbrado" ToRole="re_recibo" />
+          <NavigationProperty Name="su_serieusuario" Relationship="BerkeDBModel.FK_su_serieusuario_ti_timbrado" FromRole="ti_timbrado" ToRole="su_serieusuario" />
+          <NavigationProperty Name="td_tipodocumento" Relationship="BerkeDBModel.FK_ti_timbrado_td_tipodocumento" FromRole="ti_timbrado" ToRole="td_tipodocumento" />
+          <NavigationProperty Name="Usuario" Relationship="BerkeDBModel.FK_ti_timbrado_Usuario" FromRole="ti_timbrado" ToRole="Usuario" />
+        </EntityType>
+        <Association Name="FK_nf_numeracionfactura_ti_timbrado">
+          <End Type="BerkeDBModel.ti_timbrado" Role="ti_timbrado" Multiplicity="1" />
+          <End Type="BerkeDBModel.nf_numeracionfactura" Role="nf_numeracionfactura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ti_timbrado">
+              <PropertyRef Name="ti_timbradoid" />
+            </Principal>
+            <Dependent Role="nf_numeracionfactura">
+              <PropertyRef Name="nf_timbradoid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_re_recibo_ti_timbrado">
+          <End Type="BerkeDBModel.ti_timbrado" Role="ti_timbrado" Multiplicity="1" />
+          <End Type="BerkeDBModel.re_recibo" Role="re_recibo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ti_timbrado">
+              <PropertyRef Name="ti_timbradoid" />
+            </Principal>
+            <Dependent Role="re_recibo">
+              <PropertyRef Name="re_timbradoid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_su_serieusuario_ti_timbrado">
+          <End Type="BerkeDBModel.ti_timbrado" Role="ti_timbrado" Multiplicity="1" />
+          <End Type="BerkeDBModel.su_serieusuario" Role="su_serieusuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ti_timbrado">
+              <PropertyRef Name="ti_timbradoid" />
+            </Principal>
+            <Dependent Role="su_serieusuario">
+              <PropertyRef Name="su_timbradoid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ti_timbrado_td_tipodocumento">
+          <End Type="BerkeDBModel.td_tipodocumento" Role="td_tipodocumento" Multiplicity="1" />
+          <End Type="BerkeDBModel.ti_timbrado" Role="ti_timbrado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="td_tipodocumento">
+              <PropertyRef Name="td_tipodocumentoid" />
+            </Principal>
+            <Dependent Role="ti_timbrado">
+              <PropertyRef Name="ti_tipodocumentoid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ti_timbrado_Usuario">
+          <End Type="BerkeDBModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="BerkeDBModel.ti_timbrado" Role="ti_timbrado" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ti_timbrado">
+              <PropertyRef Name="ti_usuarioid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -16486,24 +16652,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ti_timbrado">
-            <EntityTypeMapping TypeName="BerkeDBModel.ti_timbrado">
-              <MappingFragment StoreEntitySet="ti_timbrado">
-                <ScalarProperty Name="ti_tipodocumentoid" ColumnName="ti_tipodocumentoid" />
-                <ScalarProperty Name="ti_facthojasuelta" ColumnName="ti_facthojasuelta" />
-                <ScalarProperty Name="ti_nrotimbrado" ColumnName="ti_nrotimbrado" />
-                <ScalarProperty Name="ti_descripcion" ColumnName="ti_descripcion" />
-                <ScalarProperty Name="ti_sucursal" ColumnName="ti_sucursal" />
-                <ScalarProperty Name="ti_serie" ColumnName="ti_serie" />
-                <ScalarProperty Name="ti_vigente" ColumnName="ti_vigente" />
-                <ScalarProperty Name="ti_numerohasta" ColumnName="ti_numerohasta" />
-                <ScalarProperty Name="ti_numerodesde" ColumnName="ti_numerodesde" />
-                <ScalarProperty Name="ti_vigenciahasta" ColumnName="ti_vigenciahasta" />
-                <ScalarProperty Name="ti_vigenciadesde" ColumnName="ti_vigenciadesde" />
-                <ScalarProperty Name="ti_timbradoid" ColumnName="ti_timbradoid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="me_motivoemision">
             <EntityTypeMapping TypeName="BerkeDBModel.me_motivoemision">
               <MappingFragment StoreEntitySet="me_motivoemision">
@@ -17119,7 +17267,7 @@
                 <ScalarProperty Name="re_usuarioanulacion" ColumnName="re_usuarioanulacion" />
                 <ScalarProperty Name="re_fechaanulacion" ColumnName="re_fechaanulacion" />
                 <ScalarProperty Name="re_anulado" ColumnName="re_anulado" />
-                <ScalarProperty Name="re_usuario" ColumnName="re_usuario" />
+                <ScalarProperty Name="re_usuarioid" ColumnName="re_usuarioid" />
                 <ScalarProperty Name="re_concepto" ColumnName="re_concepto" />
                 <ScalarProperty Name="re_totalefectivo" ColumnName="re_totalefectivo" />
                 <ScalarProperty Name="re_totalcheques" ColumnName="re_totalcheques" />
@@ -17131,9 +17279,69 @@
                 <ScalarProperty Name="re_totalrecibo" ColumnName="re_totalrecibo" />
                 <ScalarProperty Name="re_monedaid" ColumnName="re_monedaid" />
                 <ScalarProperty Name="re_clienteid" ColumnName="re_clienteid" />
+                <ScalarProperty Name="re_timbradoid" ColumnName="re_timbradoid" />
                 <ScalarProperty Name="re_numero" ColumnName="re_numero" />
                 <ScalarProperty Name="re_fecha" ColumnName="re_fecha" />
                 <ScalarProperty Name="re_reciboid" ColumnName="re_reciboid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="dr_depositorecaudacion">
+            <EntityTypeMapping TypeName="BerkeDBModel.dr_depositorecaudacion">
+              <MappingFragment StoreEntitySet="dr_depositorecaudacion">
+                <ScalarProperty Name="dr_usuariocargaid" ColumnName="dr_usuariocargaid" />
+                <ScalarProperty Name="dr_monto" ColumnName="dr_monto" />
+                <ScalarProperty Name="dr_monedaid" ColumnName="dr_monedaid" />
+                <ScalarProperty Name="dr_nroboleta" ColumnName="dr_nroboleta" />
+                <ScalarProperty Name="dr_cuentadepositoid" ColumnName="dr_cuentadepositoid" />
+                <ScalarProperty Name="dr_fechadeposito" ColumnName="dr_fechadeposito" />
+                <ScalarProperty Name="dr_reciboid" ColumnName="dr_reciboid" />
+                <ScalarProperty Name="dr_depositorecaudacionid" ColumnName="dr_depositorecaudacionid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ObtenerRecibosParaRecaudaciones" FunctionName="BerkeDBModel.Store.ObtenerRecibosParaRecaudaciones">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BerkeDBModel.RecibosParaRecaudaciones">
+                <ScalarProperty Name="ReciboId" ColumnName="ReciboId" />
+                <ScalarProperty Name="NroRecibo" ColumnName="NroRecibo" />
+                <ScalarProperty Name="FechaRecibo" ColumnName="FechaRecibo" />
+                <ScalarProperty Name="ClienteNombre" ColumnName="ClienteNombre" />
+                <ScalarProperty Name="MonedaId" ColumnName="MonedaId" />
+                <ScalarProperty Name="MonedaAbrev" ColumnName="MonedaAbrev" />
+                <ScalarProperty Name="TotalRecibo" ColumnName="TotalRecibo" />
+                <ScalarProperty Name="TotalEfectivo" ColumnName="TotalEfectivo" />
+                <ScalarProperty Name="TotalCheque" ColumnName="TotalCheque" />
+                <ScalarProperty Name="FechaDeposito" ColumnName="FechaDeposito" />
+                <ScalarProperty Name="NroBoleta" ColumnName="NroBoleta" />
+                <ScalarProperty Name="CtaBancariaId" ColumnName="CtaBancariaId" />
+                <ScalarProperty Name="CtaBancariaDescrip" ColumnName="CtaBancariaDescrip" />
+                <ScalarProperty Name="MontoDeposito" ColumnName="MontoDeposito" />
+                <ScalarProperty Name="UsuarioCargaId" ColumnName="UsuarioCargaId" />
+                <ScalarProperty Name="UsuarioCargaNombre" ColumnName="UsuarioCargaNombre" />
+                <ScalarProperty Name="MontoDepositable" ColumnName="MontoDepositable" />
+                <ScalarProperty Name="ClienteId" ColumnName="ClienteId" />
+                <ScalarProperty Name="CtaBancariaNro" ColumnName="CtaBancariaNro" />
+                <ScalarProperty Name="DepositoRecaudacionId" ColumnName="DepositoRecaudacionId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="ti_timbrado">
+            <EntityTypeMapping TypeName="BerkeDBModel.ti_timbrado">
+              <MappingFragment StoreEntitySet="ti_timbrado">
+                <ScalarProperty Name="ti_usuarioid" ColumnName="ti_usuarioid" />
+                <ScalarProperty Name="ti_tipodocumentoid" ColumnName="ti_tipodocumentoid" />
+                <ScalarProperty Name="ti_facthojasuelta" ColumnName="ti_facthojasuelta" />
+                <ScalarProperty Name="ti_nrotimbrado" ColumnName="ti_nrotimbrado" />
+                <ScalarProperty Name="ti_descripcion" ColumnName="ti_descripcion" />
+                <ScalarProperty Name="ti_sucursal" ColumnName="ti_sucursal" />
+                <ScalarProperty Name="ti_serie" ColumnName="ti_serie" />
+                <ScalarProperty Name="ti_vigente" ColumnName="ti_vigente" />
+                <ScalarProperty Name="ti_numerohasta" ColumnName="ti_numerohasta" />
+                <ScalarProperty Name="ti_numerodesde" ColumnName="ti_numerodesde" />
+                <ScalarProperty Name="ti_vigenciahasta" ColumnName="ti_vigenciahasta" />
+                <ScalarProperty Name="ti_vigenciadesde" ColumnName="ti_vigenciadesde" />
+                <ScalarProperty Name="ti_timbradoid" ColumnName="ti_timbradoid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

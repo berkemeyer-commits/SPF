@@ -22,11 +22,13 @@ namespace ModelEF6
             this.rf_recibofactura = new ObservableListSource<rf_recibofactura>();
             this.rr_reciboretencion = new ObservableListSource<rr_reciboretencion>();
             this.rt_recibotransf = new ObservableListSource<rt_recibotransf>();
+            this.dr_depositorecaudacion = new ObservableListSource<dr_depositorecaudacion>();
         }
     
         public int re_reciboid { get; set; }
         public System.DateTime re_fecha { get; set; }
         public string re_numero { get; set; }
+        public int re_timbradoid { get; set; }
         public int re_clienteid { get; set; }
         public int re_monedaid { get; set; }
         public decimal re_totalrecibo { get; set; }
@@ -38,18 +40,18 @@ namespace ModelEF6
         public decimal re_totalcheques { get; set; }
         public decimal re_totalefectivo { get; set; }
         public string re_concepto { get; set; }
-        public string re_usuario { get; set; }
+        public Nullable<int> re_usuarioid { get; set; }
         public bool re_anulado { get; set; }
         public Nullable<System.DateTime> re_fechaanulacion { get; set; }
         public string re_usuarioanulacion { get; set; }
     
-        public virtual Cliente Cliente { get; set; }
-        public virtual Moneda Moneda { get; set; }
         public virtual ObservableListSource<pp_pagopresupuesto> pp_pagopresupuesto { get; set; }
         public virtual ObservableListSource<rch_recibocheque> rch_recibocheque { get; set; }
         public virtual ObservableListSource<rch_recibocheque> rch_recibocheque1 { get; set; }
         public virtual ObservableListSource<rf_recibofactura> rf_recibofactura { get; set; }
         public virtual ObservableListSource<rr_reciboretencion> rr_reciboretencion { get; set; }
         public virtual ObservableListSource<rt_recibotransf> rt_recibotransf { get; set; }
+        public virtual ObservableListSource<dr_depositorecaudacion> dr_depositorecaudacion { get; set; }
+        public virtual ti_timbrado ti_timbrado { get; set; }
     }
 }

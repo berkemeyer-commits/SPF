@@ -23,6 +23,7 @@ namespace ModelEF6
             this.ps_pagosolicitud1 = new ObservableListSource<ps_pagosolicitud>();
             this.pp_pagopresupuesto = new ObservableListSource<pp_pagopresupuesto>();
             this.rt_recibotransf = new ObservableListSource<rt_recibotransf>();
+            this.dr_depositorecaudacion = new ObservableListSource<dr_depositorecaudacion>();
         }
     
         public int cb_cuentabancoid { get; set; }
@@ -45,5 +46,6 @@ namespace ModelEF6
         public virtual Moneda Moneda { get; set; }
         public virtual ObservableListSource<pp_pagopresupuesto> pp_pagopresupuesto { get; set; }
         public virtual ObservableListSource<rt_recibotransf> rt_recibotransf { get; set; }
+        public virtual ObservableListSource<dr_depositorecaudacion> dr_depositorecaudacion { get; set; }
     }
 }

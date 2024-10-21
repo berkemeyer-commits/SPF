@@ -32,8 +32,6 @@
           <ConnectorPoint PointX="5.25" PointY="7.1239031326779809" />
           <ConnectorPoint PointX="5.4225707038749409" PointY="7.1748630016012465" />
           <ConnectorPoint PointX="7.0774292961250591" PointY="7.1748630016012465" />
-          <ConnectorPoint PointX="7.3214355245855041" PointY="7.46566902062077" />
-          <ConnectorPoint PointX="7.4285644754144968" PointY="7.5933450390112931" />
           <ConnectorPoint PointX="7.4464355245855041" PointY="7.6146437111718894" />
           <ConnectorPoint PointX="7.5535644754144968" PointY="7.7423197295624124" />
           <ConnectorPoint PointX="7.7005183333333331" PointY="7.917458973632427" />
@@ -41,8 +39,8 @@
           <ConnectorPoint PointX="7.9176188960279221" PointY="8.0405918306201" />
           <ConnectorPoint PointX="9.1725732038749417" PointY="8.0405918306201" />
           <ConnectorPoint PointX="9.1725732038749417" PointY="8.2193222587501626" />
-          <ConnectorPoint PointX="8.7987541133916434" PointY="8.2879850260416674" />
-          <ConnectorPoint PointX="8.25" PointY="9.4933641054923523" />
+          <ConnectorPoint PointX="8.782273533312301" PointY="8.2879850260416674" />
+          <ConnectorPoint PointX="8.782273533312301" PointY="9" />
         </AssociationConnector>
         <EntityTypeShape EntityType="BerkeDBModel.rcm_relacotizamone" Width="1.5" PointX="5.25" PointY="22.125" />
         <EntityTypeShape EntityType="BerkeDBModel.Tarifas" Width="1.5" PointX="7" PointY="24.75" />
@@ -309,10 +307,6 @@
         <AssociationConnector Association="BerkeDBModel.FK_ad_autorizaciondocumento_td_tipodocumento" />
         <AssociationConnector Association="BerkeDBModel.FK_ad_autorizaciondocumento_UsuarioAutorizado" />
         <AssociationConnector Association="BerkeDBModel.FK_ad_autorizaciondocumento_UsuarioAutorizador" />
-        <EntityTypeShape EntityType="BerkeDBModel.ti_timbrado" Width="1.5" PointX="3" PointY="42.5" />
-        <AssociationConnector Association="BerkeDBModel.FK_nf_numeracionfactura_ti_timbrado" />
-        <AssociationConnector Association="BerkeDBModel.FK_su_serieusuario_ti_timbrado" />
-        <AssociationConnector Association="BerkeDBModel.FK_ti_timbrado_td_tipodocumento" />
         <EntityTypeShape EntityType="BerkeDBModel.me_motivoemision" Width="1.5" PointX="40.375" PointY="13.75" />
         <EntityTypeShape EntityType="BerkeDBModel.Audit_fc_facturacabecera" Width="1.5" PointX="21.375" PointY="34.75" />
         <EntityTypeShape EntityType="BerkeDBModel.Audit_nc_notacreditocabecera" Width="1.5" PointX="31.375" PointY="34.75" />
@@ -351,15 +345,23 @@
         <AssociationConnector Association="BerkeDBModel.FK_pp_pagopresupuesto_Usuario" />
         <EntityTypeShape EntityType="BerkeDBModel.rch_recibocheque" Width="1.5" PointX="43.5" PointY="4.375" />
         <EntityTypeShape EntityType="BerkeDBModel.Audit_pp_pagopresupuesto" Width="1.5" PointX="5.375" PointY="36.75" />
-        <EntityTypeShape EntityType="BerkeDBModel.re_recibo" Width="1.5" PointX="13.25" PointY="37.625" />
-        <AssociationConnector Association="BerkeDBModel.FK_re_recibo_Cliente" />
-        <AssociationConnector Association="BerkeDBModel.FK_re_recibo_Moneda" />
+        <EntityTypeShape EntityType="BerkeDBModel.re_recibo" Width="1.5" PointX="5.25" PointY="50.5" />
         <AssociationConnector Association="BerkeDBModel.FK_pp_pagopresupuesto_re_recibo" />
         <AssociationConnector Association="BerkeDBModel.FK_rch_recibocheque_ba_banco" />
         <AssociationConnector Association="BerkeDBModel.FK_rch_recibocheque_re_recibo" />
         <AssociationConnector Association="BerkeDBModel.FK_rf_recibofactura_re_recibo" />
         <AssociationConnector Association="BerkeDBModel.FK_rr_reciboretencion_re_recibo" />
         <AssociationConnector Association="BerkeDBModel.FK_rt_recibotransf_re_recibo" />
+        <EntityTypeShape EntityType="BerkeDBModel.dr_depositorecaudacion" Width="1.5" PointX="26.75" PointY="33.125" />
+        <AssociationConnector Association="BerkeDBModel.FK_dr_depositorecaudacion_cb_cuentabanco" />
+        <AssociationConnector Association="BerkeDBModel.FK_dr_depositorecaudacion_Moneda" />
+        <AssociationConnector Association="BerkeDBModel.FK_dr_depositorecaudacion_re_recibo" />
+        <EntityTypeShape EntityType="BerkeDBModel.ti_timbrado" Width="1.5" PointX="13.25" PointY="37.875" />
+        <AssociationConnector Association="BerkeDBModel.FK_nf_numeracionfactura_ti_timbrado" />
+        <AssociationConnector Association="BerkeDBModel.FK_re_recibo_ti_timbrado" />
+        <AssociationConnector Association="BerkeDBModel.FK_su_serieusuario_ti_timbrado" />
+        <AssociationConnector Association="BerkeDBModel.FK_ti_timbrado_td_tipodocumento" />
+        <AssociationConnector Association="BerkeDBModel.FK_ti_timbrado_Usuario" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
