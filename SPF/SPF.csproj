@@ -305,6 +305,18 @@
     <Compile Include="Forms\Base\FVisorRichText.Designer.cs">
       <DependentUpon>FVisorRichText.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\UI\FCargarDatosRecaudacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UI\FCargarDatosRecaudacion.Designer.cs">
+      <DependentUpon>FCargarDatosRecaudacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\UI\FCargarDepositoRecaudacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UI\FCargarDepositoRecaudacion.Designer.cs">
+      <DependentUpon>FCargarDepositoRecaudacion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\UI\FCargarDatosRetencion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -692,6 +704,12 @@
     <Compile Include="UserControls\Base\ucBaseForm2015.designer.cs">
       <DependentUpon>ucBaseForm2015.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\UI\ucConsultaRecibos.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\UI\ucConsultaRecibos.Designer.cs">
+      <DependentUpon>ucConsultaRecibos.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\UI\ucCRUDNCElectronicaCliente.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -992,6 +1010,14 @@
       <DependentUpon>FVisorRichText.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UI\FCargarDatosRecaudacion.resx">
+      <DependentUpon>FCargarDatosRecaudacion.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UI\FCargarDepositoRecaudacion.resx">
+      <DependentUpon>FCargarDepositoRecaudacion.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\UI\FCargarDatosRetencion.resx">
       <DependentUpon>FCargarDatosRetencion.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -1239,6 +1265,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\Base\ucBaseForm2015.resx">
       <DependentUpon>ucBaseForm2015.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\UI\ucConsultaRecibos.resx">
+      <DependentUpon>ucConsultaRecibos.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControls\UI\ucCRUDNCElectronicaCliente.resx">
       <DependentUpon>ucCRUDNCElectronicaCliente.cs</DependentUpon>

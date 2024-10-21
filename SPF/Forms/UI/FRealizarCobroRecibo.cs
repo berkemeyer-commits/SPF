@@ -17,6 +17,7 @@ using SPF.Forms;
 using SPF.Forms.Base;
 using SPF.Types;
 using SPF.Base;
+using SPF.Classes;
 using System.Data.Entity;
 using System.Linq;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -188,7 +189,7 @@ namespace SPF.Forms.UI
             this.Text = titulo;
             this.ListaFacturas = listaFacturas;
             this.TimbradoReciboID = timbradoReciboID;
-
+            
             this.formatoNumeroRecibo = new FormatoNumeroReciboType();
 
             if (this.ListaFacturas.First().MonedaId == GUARANIES_MONEDA_ID)
@@ -418,6 +419,16 @@ namespace SPF.Forms.UI
             displayIndex++;
             #endregion Columna Imagen
 
+            DataGridViewTextBoxColumn bancoChequeId = new DataGridViewTextBoxColumn();
+            bancoChequeId.Name = CAMPO_BANCO_CHEQUE_ID;
+            bancoChequeId.DataPropertyName = CAMPO_BANCO_CHEQUE_ID;
+            bancoChequeId.Visible = false;
+            bancoChequeId.DisplayIndex = displayIndex;
+            bancoChequeId.HeaderText = "Banco";
+            bancoChequeId.Width = 160;
+            this.dgvCheques.Columns.Add(bancoChequeId);
+            displayIndex++;
+
             DataGridViewTextBoxColumn fechaCheque = new DataGridViewTextBoxColumn();
             fechaCheque.Name = CAMPO_FECHA_CHEQUE;
             fechaCheque.DataPropertyName = CAMPO_FECHA_CHEQUE;
@@ -467,25 +478,15 @@ namespace SPF.Forms.UI
         private List<ReciboFacturasType> GetFacturasParaRecibo()
         {
             List<ReciboFacturasType> reciboFacturas = new List<ReciboFacturasType>();
-            //string formatoMoneda = Convert.ToInt32(this.txtMoneda.Text) == GUARANIES_MONEDA_ID ? FORMATO_MONEDA_GUARANIES : FORMATO_MONEDA_OTROS;
-
+            
             for (int i = 0; i < LIMITE_FACTURAS_POR_RECIBO; i++)
             {
                 if (i < this.listaFacturas.Count)
                 {
-                    //if (this.ListaFacturas[i].TipoDocumento != NOTA_CREDITO_ELECTRONICA)
-                    //{
-                    //    reciboFacturas.Add(new ReciboFacturasType()
-                    //    {
-                    //        ID = i + 1,
-                    //        NroFactura = this.ListaFacturas[i].NroFactura,
-                    //        Importe = string.Format(this.formatoNumeroRecibo.General, this.ListaFacturas[i].ImporteCobrado)
-                    //    });
-                    //}
-                    string importe = string.Format(this.formatoNumeroRecibo.General, this.ListaFacturas[i].ImporteCobrado);
+                    string importe = string.Format(this.FormatoNumeroRecibo.General, this.ListaFacturas[i].ImporteCobrado);
                     if (this.ListaFacturas[i].TipoDocumento == NOTA_CREDITO_ELECTRONICA)
                     {
-                        importe = "-" + string.Format(this.formatoNumeroRecibo.General, this.ListaFacturas[i].Total);
+                        importe = "-" + string.Format(this.FormatoNumeroRecibo.General, this.ListaFacturas[i].Total);
                     }
                     reciboFacturas.Add(new ReciboFacturasType()
                     {
@@ -623,7 +624,7 @@ namespace SPF.Forms.UI
             }
 
             datosRecibo.DescripMoneda = descripMoneda;
-            datosRecibo.TotalLetras = this.TruncarTexto(descripMoneda + " " + this.ObtenerTotalEnLetras(IDIOMA_ESPANOL,
+            datosRecibo.TotalLetras = Utils.TruncarTexto(descripMoneda + " " + Utils.ObtenerTotalEnLetras(IDIOMA_ESPANOL,
                                                                                                         this.ListaFacturas.First().MonedaId,
                                                                                                         this.txtTotalRecibo.Text,
                                                                                                         descripMoneda,
@@ -632,7 +633,7 @@ namespace SPF.Forms.UI
                                                                                                         .TrimStart()
                                                                                                         .TrimEnd();
 
-            datosRecibo.Concepto = this.TruncarTexto(this.txtConcepto.Text.ToUpper(), 45).TrimStart().TrimEnd();
+            datosRecibo.Concepto = Utils.TruncarTexto(this.txtConcepto.Text.ToUpper(), 45).TrimStart().TrimEnd();
             datosRecibo.Efectivo = Convert.ToDecimal(this.txtEfectivo.Text) > 0 ? this.txtEfectivo.Text : string.Empty;
             datosRecibo.Cheque = Convert.ToDecimal(this.txtCheque.Text) > 0;
             //datosRecibo.Transferencia = Convert.ToDecimal(this.txtTransferencia.Text) > 0;
@@ -641,145 +642,146 @@ namespace SPF.Forms.UI
             //datosRecibo.NroTransferencia = "123456789";
             datosRecibo.FechaRecibo = this.dtpFechaRecibo.Value.ToShortDateString();
             datosRecibo.ElaboradoPor = this.txtUsuario.Text;
+            datosRecibo.Anulado = false;
             List<DatosReciboType> result = new List<DatosReciboType>();
             result.Add(datosRecibo);
 
             return result;
         }
 
-        private string TruncarTexto(string texto, int longitud = 52, int longitudMax = 55)
-        {
-            if (texto.Length <= longitud)
-                return texto;
+        //private string TruncarTexto(string texto, int longitud = 52, int longitudMax = 55)
+        //{
+        //    if (texto.Length <= longitud)
+        //        return texto;
 
-            string primeraParte = texto.Substring(0, longitud);
-            int i = 0;
-            for(i = longitud-1; i >= 0; i--) 
-            {
-                if (Char.IsWhiteSpace(primeraParte[i]))
-                    break;
-            }
+        //    string primeraParte = texto.Substring(0, longitud);
+        //    int i = 0;
+        //    for(i = longitud-1; i >= 0; i--) 
+        //    {
+        //        if (Char.IsWhiteSpace(primeraParte[i]))
+        //            break;
+        //    }
 
-            int longitudSegundaLinea = texto.Length - i - 1 > longitudMax ? longitudMax : texto.Length - i - 1;
+        //    int longitudSegundaLinea = texto.Length - i - 1 > longitudMax ? longitudMax : texto.Length - i - 1;
             
-            return texto.Substring(0, i) + "<br><br>" + texto.Substring(i+1, longitudSegundaLinea);
-        }
+        //    return texto.Substring(0, i) + "<br><br>" + texto.Substring(i+1, longitudSegundaLinea);
+        //}
 
-        private string ObtenerTotalEnLetras(int idiomaID, int monedaID, string montoTotal, string monedaDescrip, bool mostrarDescripMoneda = true)
-        {
-            decimal total = Convert.ToDecimal(montoTotal);
-            string totalEnLetras = "";
+        //private string ObtenerTotalEnLetras(int idiomaID, int monedaID, string montoTotal, string monedaDescrip, bool mostrarDescripMoneda = true)
+        //{
+        //    decimal total = Convert.ToDecimal(montoTotal);
+        //    string totalEnLetras = "";
 
-            if (idiomaID == IDIOMA_ESPANOL)
-            {
-                Numalet let = new Numalet();
-                let.ConvertirDecimales = false;
-                let.Decimales = 0;
+        //    if (idiomaID == IDIOMA_ESPANOL)
+        //    {
+        //        Numalet let = new Numalet();
+        //        let.ConvertirDecimales = false;
+        //        let.Decimales = 0;
 
-                int number = (int)Math.Truncate(total);
-                decimal decimalPart = total - number;
-                if (decimalPart > 0)
-                {
-                    let.ConvertirDecimales = true;
-                    let.Decimales = 2;
-                }
+        //        int number = (int)Math.Truncate(total);
+        //        decimal decimalPart = total - number;
+        //        if (decimalPart > 0)
+        //        {
+        //            let.ConvertirDecimales = true;
+        //            let.Decimales = 2;
+        //        }
 
-                if (mostrarDescripMoneda)
-                {
-                    if (monedaID == DOLARES_MONEDA_ID)
-                        totalEnLetras = let.ToCustomCardinal(total) + " " + monedaDescrip;
-                    else
-                        totalEnLetras = monedaDescrip + " " + let.ToCustomCardinal(total);
-                }
-                else totalEnLetras = let.ToCustomCardinal(total);
+        //        if (mostrarDescripMoneda)
+        //        {
+        //            if (monedaID == DOLARES_MONEDA_ID)
+        //                totalEnLetras = let.ToCustomCardinal(total) + " " + monedaDescrip;
+        //            else
+        //                totalEnLetras = monedaDescrip + " " + let.ToCustomCardinal(total);
+        //        }
+        //        else totalEnLetras = let.ToCustomCardinal(total);
 
-                let = null;
-            }
-            else
-            {
-                if (mostrarDescripMoneda)
-                {
-                    if (monedaID == DOLARES_MONEDA_ID)
-                        totalEnLetras = this.NumberToText(total) + " " + monedaDescrip;
-                    else
-                        totalEnLetras = monedaDescrip + " " + this.NumberToText(total);
-                }
-                else totalEnLetras = this.NumberToText(total);
-            }
+        //        let = null;
+        //    }
+        //    else
+        //    {
+        //        if (mostrarDescripMoneda)
+        //        {
+        //            if (monedaID == DOLARES_MONEDA_ID)
+        //                totalEnLetras = this.NumberToText(total) + " " + monedaDescrip;
+        //            else
+        //                totalEnLetras = monedaDescrip + " " + this.NumberToText(total);
+        //        }
+        //        else totalEnLetras = this.NumberToText(total);
+        //    }
 
-            return totalEnLetras.ToUpper();
-        }
+        //    return totalEnLetras.ToUpper();
+        //}
 
-        #region Convertir Números a Texto
-        public string NumberToText(decimal inputDecimal, bool isUK = true)
-        {
-            int number = (int)Math.Truncate(inputDecimal);
-            decimal decimalPart = inputDecimal - number;
+        //#region Convertir Números a Texto
+        //public string NumberToText(decimal inputDecimal, bool isUK = true)
+        //{
+        //    int number = (int)Math.Truncate(inputDecimal);
+        //    decimal decimalPart = inputDecimal - number;
 
-            string decimalPartString = "";
-            if (decimalPart > 0)
-                decimalPartString += " WITH " + this.NumberToText(decimalPart * 100);
+        //    string decimalPartString = "";
+        //    if (decimalPart > 0)
+        //        decimalPartString += " WITH " + this.NumberToText(decimalPart * 100);
 
-            if (number == 0) return "Zero";
-            string and = isUK ? "and " : ""; // deals with UK or US numbering
-            if (number == -2147483648) return "Minus Two Billion One Hundred " + and +
-            "Forty Seven Million Four Hundred " + and + "Eighty Three Thousand " +
-            "Six Hundred " + and + "Forty Eight";
-            int[] num = new int[4];
-            int first = 0;
-            int u, h, t;
-            System.Text.StringBuilder sb = new System.Text.StringBuilder();
-            if (number < 0)
-            {
-                sb.Append("Minus ");
-                number = -number;
-            }
+        //    if (number == 0) return "Zero";
+        //    string and = isUK ? "and " : ""; // deals with UK or US numbering
+        //    if (number == -2147483648) return "Minus Two Billion One Hundred " + and +
+        //    "Forty Seven Million Four Hundred " + and + "Eighty Three Thousand " +
+        //    "Six Hundred " + and + "Forty Eight";
+        //    int[] num = new int[4];
+        //    int first = 0;
+        //    int u, h, t;
+        //    System.Text.StringBuilder sb = new System.Text.StringBuilder();
+        //    if (number < 0)
+        //    {
+        //        sb.Append("Minus ");
+        //        number = -number;
+        //    }
 
-            //string[] words0 = new string[10];
+        //    //string[] words0 = new string[10];
 
 
-            string[] words0 = { "", "One ", "Two ", "Three ", "Four ", "Five ", "Six ", "Seven ", "Eight ", "Nine " };
-            string[] words1 = { "Ten ", "Eleven ", "Twelve ", "Thirteen ", "Fourteen ", "Fifteen ", "Sixteen ", "Seventeen ", "Eighteen ", "Nineteen " };
-            string[] words2 = { "Twenty ", "Thirty ", "Forty ", "Fifty ", "Sixty ", "Seventy ", "Eighty ", "Ninety " };
-            string[] words3 = { "Thousand ", "Million ", "Billion " };
+        //    string[] words0 = { "", "One ", "Two ", "Three ", "Four ", "Five ", "Six ", "Seven ", "Eight ", "Nine " };
+        //    string[] words1 = { "Ten ", "Eleven ", "Twelve ", "Thirteen ", "Fourteen ", "Fifteen ", "Sixteen ", "Seventeen ", "Eighteen ", "Nineteen " };
+        //    string[] words2 = { "Twenty ", "Thirty ", "Forty ", "Fifty ", "Sixty ", "Seventy ", "Eighty ", "Ninety " };
+        //    string[] words3 = { "Thousand ", "Million ", "Billion " };
 
-            num[0] = number % 1000;           // units
-            num[1] = number / 1000;
-            num[2] = number / 1000000;
-            num[1] = num[1] - 1000 * num[2];  // thousands
-            num[3] = number / 1000000000;     // billions
-            num[2] = num[2] - 1000 * num[3];  // millions
-            for (int i = 3; i > 0; i--)
-            {
-                if (num[i] != 0)
-                {
-                    first = i;
-                    break;
-                }
-            }
-            for (int i = first; i >= 0; i--)
-            {
-                if (num[i] == 0) continue;
-                u = num[i] % 10;              // ones
-                t = num[i] / 10;
-                h = num[i] / 100;             // hundreds
-                t = t - 10 * h;               // tens
-                if (h > 0) sb.Append(words0[h] + "Hundred ");
-                if (u > 0 || t > 0)
-                {
-                    if (h > 0 || i < first) sb.Append(and);
-                    if (t == 0)
-                        sb.Append(words0[u]);
-                    else if (t == 1)
-                        sb.Append(words1[u]);
-                    else
-                        sb.Append(words2[t - 2] + words0[u]);
-                }
-                if (i != 0) sb.Append(words3[i - 1]);
-            }
-            return sb.ToString().TrimEnd() + decimalPartString;
-        }
-        #endregion Convertir Números a Texto
+        //    num[0] = number % 1000;           // units
+        //    num[1] = number / 1000;
+        //    num[2] = number / 1000000;
+        //    num[1] = num[1] - 1000 * num[2];  // thousands
+        //    num[3] = number / 1000000000;     // billions
+        //    num[2] = num[2] - 1000 * num[3];  // millions
+        //    for (int i = 3; i > 0; i--)
+        //    {
+        //        if (num[i] != 0)
+        //        {
+        //            first = i;
+        //            break;
+        //        }
+        //    }
+        //    for (int i = first; i >= 0; i--)
+        //    {
+        //        if (num[i] == 0) continue;
+        //        u = num[i] % 10;              // ones
+        //        t = num[i] / 10;
+        //        h = num[i] / 100;             // hundreds
+        //        t = t - 10 * h;               // tens
+        //        if (h > 0) sb.Append(words0[h] + "Hundred ");
+        //        if (u > 0 || t > 0)
+        //        {
+        //            if (h > 0 || i < first) sb.Append(and);
+        //            if (t == 0)
+        //                sb.Append(words0[u]);
+        //            else if (t == 1)
+        //                sb.Append(words1[u]);
+        //            else
+        //                sb.Append(words2[t - 2] + words0[u]);
+        //        }
+        //        if (i != 0) sb.Append(words3[i - 1]);
+        //    }
+        //    return sb.ToString().TrimEnd() + decimalPartString;
+        //}
+        //#endregion Convertir Números a Texto
 
         private string GetNroRecibo()
         {
@@ -890,7 +892,8 @@ namespace SPF.Forms.UI
             re.re_totalcheques = Convert.ToDecimal(this.txtCheque.Text);
             re.re_totalefectivo = Convert.ToDecimal(this.txtEfectivo.Text);
             re.re_concepto = this.txtConcepto.Text;
-            re.re_usuario = VWGContext.Current.Session["WindowsUser"].ToString();
+            re.re_usuarioid = Convert.ToInt32(VWGContext.Current.Session["UsuarioID"].ToString());
+            re.re_timbradoid = this.TimbradoReciboID;
             context.re_recibo.Add(re);
             context.SaveChanges();
             int reciboid = re.re_reciboid;
@@ -901,8 +904,10 @@ namespace SPF.Forms.UI
                                                        join fpd in context.fpd_facturapresupuestodet
                                                        on pc.pc_presupuestocabid equals fpd.fpd_presupuestocabid
                                                        where fpd.fpd_facturapresupuestocabid == row.FacturaPresupuestoCabId
+                                                       && pc.pc_saldo > 0
                                                        select pc)
                                                       .ToList();
+
                 //Pago presupuestos: pp_pagopresupuesto
                 decimal importe = row.ImporteCobrado.Value;
                 foreach (pc_presupuestocab pc in listaPresup)
@@ -924,7 +929,7 @@ namespace SPF.Forms.UI
                 rf_recibofactura rf = new rf_recibofactura();
                 rf.rf_facturacabid = row.FacturaCabId;
                 rf.rf_reciboid = reciboid;
-                rf.rf_montopagado = row.ImporteCobrado.Value;
+                rf.rf_montopagado = row.TipoDocumento != NOTA_CREDITO_ELECTRONICA ? row.ImporteCobrado.Value : row.Total * -1;
                 context.rf_recibofactura.Add(rf);
                 context.SaveChanges();
             }
@@ -1018,21 +1023,55 @@ namespace SPF.Forms.UI
             return bytes;
         }
 
-        public void OpenPdfInBrowser(byte[] pdfBytes, string fileName)
-        {
-            string specialpath = Context.HttpContext.Request.Url.Authority.IndexOf(LOCALHOST) > -1 ? String.Empty : @"\" + Context.HttpContext.Request.ApplicationPath;
-            string tempFilePath = VWGContext.Current.Server.MapPath(specialpath +
-                                                            @"\Resources\UserData\" + VWGContext.Current.Session["WindowsUser"].ToString() + @"\") +
-                                                            fileName;
+        //public void OpenPdfInBrowser(byte[] pdfBytes, string fileName)
+        //{
+        //    string specialpath = Context.HttpContext.Request.Url.Authority.IndexOf(LOCALHOST) > -1 ? String.Empty : @"\" + Context.HttpContext.Request.ApplicationPath;
+        //    string tempFilePath = VWGContext.Current.Server.MapPath(specialpath +
+        //                                                    @"\Resources\UserData\" + VWGContext.Current.Session["WindowsUser"].ToString() + @"\") +
+        //                                                    fileName;
 
             
+        //    File.WriteAllBytes(tempFilePath, pdfBytes);
+        //    string pdfUrl = @"http://" + Context.HttpContext.Request.Url.Authority + @"/Resources/UserData/" + VWGContext.Current.Session["WindowsUser"].ToString() + @"/" + fileName;
+        //    LinkParameters linkParameters = new LinkParameters();
+        //    linkParameters.Target = "_blank";
+            
+        //    Link.Open(pdfUrl, linkParameters);
+        //}
+
+        public void OpenPdfInBrowser(byte[] pdfBytes, string fileName)
+        {
+            string path = VWGContext.Current.Server.MapPath(@"\" +
+                                                            Context.HttpContext.Request.ApplicationPath +
+                                                            @"\Resources\UserData\" +
+                                                            VWGContext.Current.Session["WindowsUser"].ToString() +
+                                                            @"\Recibos\");
+            Directory.CreateDirectory(path);
+            string tempFilePath = path + fileName;
+
             File.WriteAllBytes(tempFilePath, pdfBytes);
-            string pdfUrl = @"http://" + Context.HttpContext.Request.Url.Authority + @"/Resources/UserData/" + VWGContext.Current.Session["WindowsUser"].ToString() + @"/" + fileName;
+
+            string pdfUrl = @"http://" +
+                            Context.HttpContext.Request.Url.Authority +
+                            @"/sistema/Resources/UserData/" +
+                            VWGContext.Current.Session["WindowsUser"].ToString().Replace('\\', '/') +
+                            @"/Recibos/" + fileName;
+
+            bool isTestMode = (bool)VWGContext.Current.Session["TestMode"];
+            if (isTestMode)
+            {
+                pdfUrl = @"http://" +
+                         Context.HttpContext.Request.Url.Authority +
+                         @"/Resources/UserData/" +
+                         VWGContext.Current.Session["WindowsUser"].ToString().Replace('\\', '/') +
+                         @"/Recibos/" + fileName;
+            }
+
             LinkParameters linkParameters = new LinkParameters();
             linkParameters.Target = "_blank";
-            
+
             Link.Open(pdfUrl, linkParameters);
-        }
+        } 
 
         private void CerarTextBoxes()
         {
@@ -1150,6 +1189,18 @@ namespace SPF.Forms.UI
             return totalNC;
         }
 
+        private DateTime GetMaxFechaRecibo()
+        {
+            Nullable<DateTime> result = null;
+
+            using (var context = new BerkeDBEntities())
+            {
+                result = context.re_recibo.Where(a => a.re_timbradoid == this.TimbradoReciboID).Max(x => (DateTime?)x.re_fecha);
+            }
+
+            return result.HasValue ? result.Value : this.dtpFechaRecibo.Value;
+        }
+
         private bool ValidarTotales()
         {
             decimal totalRecibo = Convert.ToDecimal(this.txtTotalRecibo.Text);
@@ -1168,6 +1219,17 @@ namespace SPF.Forms.UI
         #region Controles Locales
         private void btnAceptar_Click(object sender, EventArgs e)
         {
+            DateTime fechaMaxRecibo = this.GetMaxFechaRecibo();
+            if (this.dtpFechaRecibo.Value < fechaMaxRecibo)
+            {
+                MessageBox.Show("La fecha del recibo no puede ser anterior al " + fechaMaxRecibo.ToShortDateString() + ".",
+                                       "Atención Requerida",
+                                       MessageBoxButtons.OK,
+                                       MessageBoxIcon.Exclamation);
+                return;
+            }
+
+
             if (this.ValidarTotales())
             {
                 string message = "";
@@ -1198,7 +1260,6 @@ namespace SPF.Forms.UI
                 {
                     this.GuardarRegistro();
                     //this.GenerarReporte();
-                    //this.guardarRecibo(this.DBContext);
                 }
             }
         }

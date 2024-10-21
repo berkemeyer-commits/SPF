@@ -33,6 +33,7 @@ namespace SPF.Forms.UI
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FSeleccionarFacturaRecibos));
             this.panel5 = new Gizmox.WebGUI.Forms.Panel();
+            this.lblSeleccionadas = new Gizmox.WebGUI.Forms.Label();
             this.lblTotalRecibo = new Gizmox.WebGUI.Forms.Label();
             this.txtTotalRecibo = new Gizmox.WebGUI.Forms.TextBox();
             this.txtTotalNCred = new Gizmox.WebGUI.Forms.TextBox();
@@ -62,7 +63,6 @@ namespace SPF.Forms.UI
             this.panel1 = new Gizmox.WebGUI.Forms.Panel();
             this.dgvFacturasRecibos = new Gizmox.WebGUI.Forms.DataGridView();
             this.toolTip1 = new Gizmox.WebGUI.Forms.ToolTip();
-            this.lblSeleccionadas = new Gizmox.WebGUI.Forms.Label();
             this.panel5.SuspendLayout();
             this.panel6.SuspendLayout();
             this.pnlFiltroFecha.SuspendLayout();
@@ -91,6 +91,16 @@ namespace SPF.Forms.UI
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(1057, 64);
             this.panel5.TabIndex = 0;
+            // 
+            // lblSeleccionadas
+            // 
+            this.lblSeleccionadas.AutoSize = true;
+            this.lblSeleccionadas.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.lblSeleccionadas.Location = new System.Drawing.Point(21, 25);
+            this.lblSeleccionadas.Name = "lblSeleccionadas";
+            this.lblSeleccionadas.Size = new System.Drawing.Size(46, 13);
+            this.lblSeleccionadas.TabIndex = 0;
+            this.lblSeleccionadas.Text = "lblSeleccionadas";
             // 
             // lblTotalRecibo
             // 
@@ -435,16 +445,7 @@ namespace SPF.Forms.UI
             this.dgvFacturasRecibos.CellValidating += new Gizmox.WebGUI.Forms.DataGridViewCellValidatingEventHandler(this.dgvFacturasRecibos_CellValidating);
             this.dgvFacturasRecibos.CellValueChanged += new Gizmox.WebGUI.Forms.DataGridViewCellEventHandler(this.dgvFacturasRecibos_CellValueChanged);
             this.dgvFacturasRecibos.DataError += new Gizmox.WebGUI.Forms.DataGridViewDataErrorEventHandler(this.dgvFacturasRecibos_DataError);
-            // 
-            // lblSeleccionadas
-            // 
-            this.lblSeleccionadas.AutoSize = true;
-            this.lblSeleccionadas.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.lblSeleccionadas.Location = new System.Drawing.Point(21, 25);
-            this.lblSeleccionadas.Name = "lblSeleccionadas";
-            this.lblSeleccionadas.Size = new System.Drawing.Size(46, 13);
-            this.lblSeleccionadas.TabIndex = 0;
-            this.lblSeleccionadas.Text = "lblSeleccionadas";
+            this.dgvFacturasRecibos.KeyDown += new Gizmox.WebGUI.Forms.KeyEventHandler(this.dgvFacturasRecibos_KeyDown);
             // 
             // FSeleccionarFacturaRecibos
             // 

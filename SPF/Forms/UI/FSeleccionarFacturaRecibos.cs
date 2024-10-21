@@ -217,7 +217,7 @@ namespace SPF.Forms.UI
             fPickCliente.Dispose();
         }
         #endregion Cliente
-        #endregion Cliente
+        #endregion Picks
 
         private void GetFacturas(int clienteId, int monedaId, Nullable<DateTime> fechaDesde = null, Nullable<DateTime> fechaHasta = null)
         {
@@ -292,11 +292,11 @@ namespace SPF.Forms.UI
             //this.dgvFacturasRecibos.Columns[CAMPO_DOCUMENTOSASOCIADOS].Width = 100;
             //displayIndex++;
 
-            this.dgvFacturasRecibos.Columns[CAMPO_FACTURAPRESUPUESTOCABID].Visible = true;
-            this.dgvFacturasRecibos.Columns[CAMPO_FACTURAPRESUPUESTOCABID].DisplayIndex = displayIndex;
-            this.dgvFacturasRecibos.Columns[CAMPO_FACTURAPRESUPUESTOCABID].HeaderText = "FacturaPresupuestoCabId";
-            this.dgvFacturasRecibos.Columns[CAMPO_FACTURAPRESUPUESTOCABID].Width = 100;
-            displayIndex++;
+            //this.dgvFacturasRecibos.Columns[CAMPO_FACTURAPRESUPUESTOCABID].Visible = true;
+            //this.dgvFacturasRecibos.Columns[CAMPO_FACTURAPRESUPUESTOCABID].DisplayIndex = displayIndex;
+            //this.dgvFacturasRecibos.Columns[CAMPO_FACTURAPRESUPUESTOCABID].HeaderText = "FacturaPresupuestoCabId";
+            //this.dgvFacturasRecibos.Columns[CAMPO_FACTURAPRESUPUESTOCABID].Width = 100;
+            //displayIndex++;
 
             this.dgvFacturasRecibos.Columns[CAMPO_TIPODOCUMENTO].Visible = true;
             this.dgvFacturasRecibos.Columns[CAMPO_TIPODOCUMENTO].DisplayIndex = displayIndex;
@@ -643,7 +643,7 @@ namespace SPF.Forms.UI
             }
             else
             {   
-                MessageBox.Show("El usuario no cuenta con permisos para realizar cobros para este cliente.",
+                MessageBox.Show("El usuario no cuenta con permisos para emisión de recibos.",
                                        "Atención Requerida",
                                        MessageBoxButtons.OK,
                                        MessageBoxIcon.Exclamation);
@@ -654,39 +654,45 @@ namespace SPF.Forms.UI
 
         private int CheckPermisoTimbradoRecibo()
         {
-            int timbradoID = -1;
+            //int timbradoID = -1;
+            //using (BerkeDBEntities context = new BerkeDBEntities())
+            //{
+            //    int clienteID = Convert.ToInt32(this.tSBCliente.KeyMember);
+            //    Nullable<bool> esClienteLocal = context.Cliente.FirstOrDefault(a => a.ID == clienteID).PaisID == PARAGUAY_ID;
+
+            //    int checkTimbradoID = ((esClienteLocal.HasValue) && (esClienteLocal.Value)) ? RECIBO_SERIE_3_CLIENTE_LOCAL : RECIBO_SERIE_4_CLIENTE_EXTERIOR;
+
+            //    var lista = (from ti in this.DBContext.ti_timbrado
+            //                 join su in this.DBContext.su_serieusuario
+            //                     on ti.ti_timbradoid equals su.su_timbradoid
+            //                 select new CBSerie
+            //                 {
+            //                     TimbradoID = ti.ti_timbradoid,
+            //                     DescripcionTimbrado = ti.ti_descripcion,
+            //                     Vigente = ti.ti_vigente,
+            //                     UsuarioID = su.su_usuarioid,
+            //                     TipoDocumentoID = ti.ti_tipodocumentoid
+            //                 })
+            //                 .Where(a => a.Vigente == true 
+            //                     && a.UsuarioID == this.UsuarioID 
+            //                     && a.TimbradoID == checkTimbradoID)
+            //                 .OrderBy(b => b.TimbradoID)
+            //                 .ToList();
+
+            //    if (lista.Count > 0)
+            //        timbradoID = lista.First().TimbradoID;
+                
+            //}
+            ti_timbrado timbrado = null;
             using (BerkeDBEntities context = new BerkeDBEntities())
             {
-                int clienteID = Convert.ToInt32(this.tSBCliente.KeyMember);
-                Nullable<bool> esClienteLocal = context.Cliente.FirstOrDefault(a => a.ID == clienteID).PaisID == PARAGUAY_ID;
-
-                int checkTimbradoID = ((esClienteLocal.HasValue) && (esClienteLocal.Value)) ? RECIBO_SERIE_3_CLIENTE_LOCAL : RECIBO_SERIE_4_CLIENTE_EXTERIOR;
-
-                var lista = (from ti in this.DBContext.ti_timbrado
-                             join su in this.DBContext.su_serieusuario
-                                 on ti.ti_timbradoid equals su.su_timbradoid
-                             select new CBSerie
-                             {
-                                 TimbradoID = ti.ti_timbradoid,
-                                 DescripcionTimbrado = ti.ti_descripcion,
-                                 Vigente = ti.ti_vigente,
-                                 UsuarioID = su.su_usuarioid,
-                                 TipoDocumentoID = ti.ti_tipodocumentoid
-                             })
-                             .Where(a => a.Vigente == true 
-                                 && a.UsuarioID == this.UsuarioID 
-                                 && a.TimbradoID == checkTimbradoID)
-                             .OrderBy(b => b.TimbradoID)
-                             .ToList();
-
-                if (lista.Count > 0)
-                    timbradoID = lista.First().TimbradoID;
-                
+                timbrado = context.ti_timbrado.FirstOrDefault(a => a.ti_tipodocumentoid == TIPODOCUMENTO_RECIBO_CLIENTE 
+                                                                && a.ti_usuarioid == this.UsuarioID
+                                                                && a.ti_vigente == true);
             }
 
-            return timbradoID;
+            return timbrado != null ? timbrado.ti_timbradoid : -1;
         }
-
 
         private void dgvFacturasRecibos_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
@@ -738,6 +744,23 @@ namespace SPF.Forms.UI
                 (e.Exception.Message == ERROR_CADENA_FORMATO))
             {
                 this.dgvFacturasRecibos.Rows[e.RowIndex].Cells[CAMPO_IMPORTECOBRADO].Value = (Nullable<decimal>)0; ;
+            }
+        }
+
+        private void dgvFacturasRecibos_KeyDown(object objSender, KeyEventArgs objArgs)
+        {
+            if (objArgs.KeyCode == Keys.Space)
+            {
+                if (this.dgvFacturasRecibos.CurrentRow != null)
+                {
+                    DataGridViewRow row = this.dgvFacturasRecibos.CurrentRow;
+                    bool checkState = row.Cells[CAMPO_SELECCIONAR].Value != null
+                                        ? (bool)row.Cells[CAMPO_SELECCIONAR].Value
+                                        : false;
+                    row.Cells[CAMPO_SELECCIONAR].Value = !checkState;
+                    this.btnCancelar.Focus();
+                    this.dgvFacturasRecibos.Focus();
+                }
             }
         }
     }

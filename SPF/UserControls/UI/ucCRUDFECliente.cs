@@ -2751,16 +2751,16 @@ namespace SPF.UserControls.UI
                 totalIVA5 += iva5;
                 totalExentas += exentas;
                 
-                liqIVA10 += this.tSBMoneda.DisplayMember == GUARANIES ? decimal.Round(iva10 / 11, 0) : decimal.Round(iva10 / 11, 2);
-                liqIVA5 += this.tSBMoneda.DisplayMember == GUARANIES ? decimal.Round(iva5 / 21, 0) : decimal.Round(iva5 / 21, 2);
+                liqIVA10 += this.tSBMoneda.DisplayMember == GUARANIES ? decimal.Round(iva10 / 11, 0, MidpointRounding.AwayFromZero) : decimal.Round(iva10 / 11, 2);
+                liqIVA5 += this.tSBMoneda.DisplayMember == GUARANIES ? decimal.Round(iva5 / 21, 0, MidpointRounding.AwayFromZero) : decimal.Round(iva5 / 21, 2);
 
                 row.Cells[CAMPO_PRECIOUNITARIO].Value = Convert.ToDecimal((iva5 + iva10 + exentas) / (decimal)row.Cells[CAMPO_CANTIDAD].Value);
             }
 
             if (this.tSBMoneda.DisplayMember == GUARANIES)
             {
-                totalIVA = decimal.Round(totalIVA5) + decimal.Round(totalIVA10);
-                totalExentas = decimal.Round(totalExentas);
+                totalIVA = decimal.Round(totalIVA5, MidpointRounding.AwayFromZero) + decimal.Round(totalIVA10, MidpointRounding.AwayFromZero);
+                totalExentas = decimal.Round(totalExentas, MidpointRounding.AwayFromZero);
                 totalGral = totalExentas + totalIVA;
 
                 totalLiqIVA = liqIVA5 + liqIVA10;
@@ -3234,7 +3234,7 @@ namespace SPF.UserControls.UI
                     //#dPUniProSer#
                     jsonDet = jsonDet.Replace("#dPUniProSer#", fd.fd_preciounitario.ToString().Replace(",", "."));
                     //#dTotBruOpeItem#
-                    decimal totalDet = this.tSBMoneda.DisplayMember == GUARANIES ? decimal.Round(fd.fd_preciounitario * fd.fd_cantidad) : decimal.Round(fd.fd_preciounitario * fd.fd_cantidad, 2);
+                    decimal totalDet = this.tSBMoneda.DisplayMember == GUARANIES ? decimal.Round(fd.fd_preciounitario * fd.fd_cantidad, MidpointRounding.AwayFromZero) : decimal.Round(fd.fd_preciounitario * fd.fd_cantidad, 2);
                     gTotalDet += totalDet;
                     jsonDet = jsonDet.Replace("#dTotBruOpeItem#", totalDet.ToString().Replace(",", "."));
                     //#dTotOpeItem#
@@ -3258,11 +3258,11 @@ namespace SPF.UserControls.UI
                             //#dTasaIVA#
                             jsonDet = jsonDet.Replace("#dTasaIVA#", c.ToString());
                             //#dBasGravIVA#
-                            decimal dBasGravIVA = this.tSBMoneda.DisplayMember == GUARANIES ? decimal.Round(a) : decimal.Round(a, 2);
+                            decimal dBasGravIVA = this.tSBMoneda.DisplayMember == GUARANIES ? decimal.Round(a, MidpointRounding.AwayFromZero) : decimal.Round(a, 2);
                             gDBasGravIVA10 += dBasGravIVA;
                             jsonDet = jsonDet.Replace("#dBasGravIVA#", dBasGravIVA.ToString().Replace(",", "."));
                             //#dLiqIVAItem#
-                            decimal dLiqIVAItem = this.tSBMoneda.DisplayMember == GUARANIES ? decimal.Round(((fd.fd_diezporciento * fd.fd_cantidad) - a)) : decimal.Round(((fd.fd_diezporciento * fd.fd_cantidad)  - a), 2);
+                            decimal dLiqIVAItem = this.tSBMoneda.DisplayMember == GUARANIES ? decimal.Round(((fd.fd_diezporciento * fd.fd_cantidad) - a), MidpointRounding.AwayFromZero) : decimal.Round(((fd.fd_diezporciento * fd.fd_cantidad) - a), 2);
                             gDLiqIVA10Item += dLiqIVAItem;
                             jsonDet = jsonDet.Replace("#dLiqIVAItem#", dLiqIVAItem.ToString().Replace(",", "."));
                             //#dBasExe#
@@ -3286,11 +3286,11 @@ namespace SPF.UserControls.UI
                             //#dTasaIVA#
                             jsonDet = jsonDet.Replace("#dTasaIVA#", c.ToString());
                             //#dBasGravIVA#
-                            decimal dBasGravIVA = this.tSBMoneda.DisplayMember == GUARANIES ? decimal.Round(a) : decimal.Round(a, 2);//a;
+                            decimal dBasGravIVA = this.tSBMoneda.DisplayMember == GUARANIES ? decimal.Round(a, MidpointRounding.AwayFromZero) : decimal.Round(a, 2);//a;
                             gDBasGravIVA5 += dBasGravIVA;
                             jsonDet = jsonDet.Replace("#dBasGravIVA#", dBasGravIVA.ToString().Replace(",", "."));
                             //#dLiqIVAItem#
-                            decimal dLiqIVAItem = this.tSBMoneda.DisplayMember == GUARANIES ? decimal.Round(((fd.fd_cincoporciento * fd.fd_cantidad) - a)) : decimal.Round(((fd.fd_cincoporciento * fd.fd_cantidad) - a), 2);
+                            decimal dLiqIVAItem = this.tSBMoneda.DisplayMember == GUARANIES ? decimal.Round(((fd.fd_cincoporciento * fd.fd_cantidad) - a), MidpointRounding.AwayFromZero) : decimal.Round(((fd.fd_cincoporciento * fd.fd_cantidad) - a), 2);
                             gDLiqIVA5Item += dLiqIVAItem;
                             jsonDet = jsonDet.Replace("#dLiqIVAItem#", dLiqIVAItem.ToString().Replace(",", "."));
                             //#dBasExe#
@@ -3341,11 +3341,11 @@ namespace SPF.UserControls.UI
                             //jsonDet = jsonDet.Replace("#dLiqIVAItem#", dLiqIVAItem.ToString().Replace(",", "."));
                             //#dBasGravIVA#
                             decimal a = (fd.fd_diezporciento - (fd.fd_diezporciento / 11)) * fd.fd_cantidad;
-                            decimal dBasGravIVA = this.tSBMoneda.DisplayMember == GUARANIES ? decimal.Round(a) : decimal.Round(a, 2);
+                            decimal dBasGravIVA = this.tSBMoneda.DisplayMember == GUARANIES ? decimal.Round(a, MidpointRounding.AwayFromZero) : decimal.Round(a, 2);
                             gDBasGravIVA10 += dBasGravIVA;
                             jsonDet = jsonDet.Replace("#dBasGravIVA#", dBasGravIVA.ToString().Replace(",", "."));
                             //#dLiqIVAItem#
-                            decimal dLiqIVAItem = this.tSBMoneda.DisplayMember == GUARANIES ? decimal.Round(((fd.fd_diezporciento * fd.fd_cantidad) - a)) : decimal.Round(((fd.fd_diezporciento * fd.fd_cantidad) - a), 2);
+                            decimal dLiqIVAItem = this.tSBMoneda.DisplayMember == GUARANIES ? decimal.Round(((fd.fd_diezporciento * fd.fd_cantidad) - a), MidpointRounding.AwayFromZero) : decimal.Round(((fd.fd_diezporciento * fd.fd_cantidad) - a), 2);
                             gDLiqIVA10Item += dLiqIVAItem;
                             jsonDet = jsonDet.Replace("#dLiqIVAItem#", dLiqIVAItem.ToString().Replace(",", "."));
                             //#dBasExe#
@@ -3363,11 +3363,11 @@ namespace SPF.UserControls.UI
                             jsonDet = jsonDet.Replace("#dTasaIVA#", TASA_IVA_5);
                             //#dBasGravIVA#
                             decimal a = (fd.fd_cincoporciento - (fd.fd_cincoporciento / 21)) * fd.fd_cantidad;
-                            decimal dBasGravIVA = this.tSBMoneda.DisplayMember == GUARANIES ? decimal.Round(a) : decimal.Round(a, 2);
+                            decimal dBasGravIVA = this.tSBMoneda.DisplayMember == GUARANIES ? decimal.Round(a, MidpointRounding.AwayFromZero) : decimal.Round(a, 2);
                             gDBasGravIVA5 += dBasGravIVA;
                             jsonDet = jsonDet.Replace("#dBasGravIVA#", dBasGravIVA.ToString().Replace(",", "."));
                             //#dLiqIVAItem#
-                            decimal dLiqIVAItem = this.tSBMoneda.DisplayMember == GUARANIES ? decimal.Round(((fd.fd_cincoporciento * fd.fd_cantidad) - a)) : decimal.Round(((fd.fd_cincoporciento * fd.fd_cantidad) - a), 2);
+                            decimal dLiqIVAItem = this.tSBMoneda.DisplayMember == GUARANIES ? decimal.Round(((fd.fd_cincoporciento * fd.fd_cantidad) - a), MidpointRounding.AwayFromZero) : decimal.Round(((fd.fd_cincoporciento * fd.fd_cantidad) - a), 2);
                             gDLiqIVA5Item += dLiqIVAItem;
                             jsonDet = jsonDet.Replace("#dLiqIVAItem#", dLiqIVAItem.ToString().Replace(",", "."));
                             //#dBasExe#
@@ -3409,7 +3409,7 @@ namespace SPF.UserControls.UI
                 if (moneda.MonedaFE != CODIGO_GUARANIES_FE)
                 {
                     //decimal dTotalGs = decimal.Round(gTotalDet * dTiCam, 2);
-                    decimal dTotalGs = decimal.Round(gTotalDet * dTiCam, 0);
+                    decimal dTotalGs = decimal.Round(gTotalDet * dTiCam, 0, MidpointRounding.AwayFromZero);
                     //decimal dTotalGs = decimal.Round(gTotalDet * dTiCam);
                     //#dTBasGraIVA#
                     json = json.Replace("#dTotalGs#", dTotalGs.ToString().Replace(",", "."));

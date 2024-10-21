@@ -127,10 +127,12 @@ namespace SPF
                 string domain = ConfigurationManager.AppSettings[TESTMODE_DOMAIN].ToString();
 
                 VWGContext.Current.Session["WindowsUser"] = userName;
+                userName = userName.Replace(@"BERKE\", "");
 
                 using (Impersonation.LogonUser(domain, userName, password, LogonType.NewCredentials))
                 {
                     // Code to execute as the impersonated user
+                    //userName = "jbbriteza";
                     this.DoWork(userName);
                 }
             }
@@ -607,13 +609,11 @@ namespace SPF
             else
                 return;
 
-            //if (className[0] == "crudimpfacturas")
-            //{
-            //    MessageBox.Show("Funcionalidad en Desarrollo", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //    return;
-            //}
-
-            //string[] className = ((TreeNode)e).Name.Split('$');//((TreeView)sender).SelectedNode.Name.Split('$');
+            if ((!(bool)VWGContext.Current.Session["TestMode"]) && (className[0].StartsWith("_")))
+            {
+                MessageBox.Show("Funcionalidad en desarrollo.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             
             Object myObj = null;
 

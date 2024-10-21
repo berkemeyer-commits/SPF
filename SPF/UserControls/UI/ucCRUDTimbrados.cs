@@ -49,15 +49,18 @@ namespace SPF.UserControls.UI
         private const string CAMPO_TIMBRADOHOJASUELTA = "TimbradoHojaSuelta";
         private const string CAMPO_TIMBRADOTIPODOCUMENTOID = "TimbradoTipoDocumentoID";
         private const string CAMPO_TIMBRADOTIPODOCUMENTODESCRIPCION = "TimbradoTipoDocumentoDescripcion";
+        private const string CAMPO_TIMBRADOUSUARIOEXCLUSIVOID = "TimbradoUsuarioExclusivoId";
+        private const string CAMPO_TIMBRADOUSUARIOEXCLUSIVONOMBRE = "TimbradoUsuarioExclusivoNombre";
         
         private const string CAMPO_USUARIOID = "UsuarioID";
         private const string CAMPO_USUARIONOMBRE = "UsuarioNombre";
-        public const int SISTEMA_ID = 1;
+        private const int SISTEMA_ID = 1;
+        private const int RECIBO_ID = 14;
         #endregion Constantes
 
         #region Variables
         private BindingSource bS;
-        frmPickBase fPickUsuario, fPickDocumento;
+        frmPickBase fPickUsuario, fPickDocumento, fPickUsuarioExclusivo;
         #endregion Variables
 
         #region Métodos de Inicio
@@ -75,6 +78,9 @@ namespace SPF.UserControls.UI
             var timbrado = (from ti in this.DBContext.ti_timbrado
                             join td in this.DBContext.td_tipodocumento
                                 on ti.ti_tipodocumentoid equals td.td_tipodocumentoid
+                            join us in this.DBContext.Usuario
+                                on ti.ti_usuarioid equals us.ID into us_ti
+                            from us in us_ti.DefaultIfEmpty()
                              select new
                              {
                                  TimbradoID = ti.ti_timbradoid,
@@ -89,7 +95,9 @@ namespace SPF.UserControls.UI
                                  TimbradoDescripcion = ti.ti_descripcion,
                                  TimbradoHojaSuelta = ti.ti_facthojasuelta,
                                  TimbradoTipoDocumentoID = ti.ti_tipodocumentoid,
-                                 TimbradoTipoDocumentoDescripcion = td.td_descripcion
+                                 TimbradoTipoDocumentoDescripcion = td.td_descripcion,
+                                 TimbradoUsuarioExclusivoId = ti.ti_usuarioid,
+                                 TimbradoUsuarioExclusivoNombre = us.NombrePila
                              })
                               .OrderByDescending(a => a.TimbradoID)
                               .Take(50);
@@ -110,13 +118,20 @@ namespace SPF.UserControls.UI
             this.SetFilter(CAMPO_TIMBRADOSUCURSAL, "Sucursal");
             this.SetFilter(CAMPO_TIMBRADODESCRIPCION, "Descripción");
             this.SetFilter(CAMPO_TIMBRADOHOJASUELTA, "Imp. Hoja suelta (S/N)", false);
+            this.SetFilter(CAMPO_TIMBRADOUSUARIOEXCLUSIVOID, "Usu. Exc. Id", false);
+            this.SetFilter(CAMPO_TIMBRADOUSUARIOEXCLUSIVONOMBRE, "Usu. Exclusivo");
             this.TituloBuscador = "Buscar Timbrados";
             #endregion Especificar campos para filtro
 
             this.tSBDocumento.KeyMemberWidth = 30;
             this.tSBDocumento.ToolTip = "Elegir Tipo Documento";
             this.tSBDocumento.AceptarClick += tSBDocumento_AceptarClick;
+            this.tSBDocumento.KeyMemberTextChanged += tSBDocumento_KeyMemberTextChanged;
 
+            this.tSBUsuario.KeyMemberWidth = 30;
+            this.tSBUsuario.ToolTip = "Elegir Usuario Exclusivo";
+            this.tSBUsuario.AceptarClick += tsBUsuario_AceptarClick;
+            
             this.bS = new BindingSource();
 
             #region Asignación Eventos Deletados
@@ -125,6 +140,19 @@ namespace SPF.UserControls.UI
             //Asignar Evento para Guardar Registro
             this.CRUDEvent += ucCRUDTimbrados_CRUDEvent;
             #endregion Asignación Eventos Deletados
+
+            this.lblUsuario.Text = "Usuario" + Environment.NewLine + "Exclusivo";
+        }
+
+        private void tSBDocumento_KeyMemberTextChanged(object sender, EventArgs e)
+        {
+            int documentoId = -1;
+            if (int.TryParse(this.tSBDocumento.KeyMember, out documentoId))
+            {
+                bool mostrarUsuExc = documentoId == RECIBO_ID;
+                this.lblUsuario.Visible = mostrarUsuExc;
+                this.tSBUsuario.Visible = mostrarUsuExc;
+            }
         }
         #endregion Métodos de Inicio
 
@@ -169,6 +197,44 @@ namespace SPF.UserControls.UI
         }
         #endregion Tipo Documento
 
+        #region Usuario Exclusivo
+        private void tsBUsuario_AceptarClick(object sender, EventArgs e)
+        {
+            if (fPickUsuarioExclusivo == null)
+            {
+                fPickUsuarioExclusivo = new frmPickBase();
+                fPickUsuarioExclusivo.AceptarFiltrarClick += fPickUsuarioExclusivo_AceptarFiltrarClick;
+                fPickUsuarioExclusivo.FiltrarClick += fPickUsuarioExclusivo_FiltrarClick;
+                fPickUsuarioExclusivo.Titulo = "Elegir Usuario Exclusivo";
+                fPickUsuarioExclusivo.CampoIDNombre = "ID";
+                fPickUsuarioExclusivo.CampoDescripNombre = "Nombre";
+                fPickUsuarioExclusivo.LabelCampoID = "ID";
+                fPickUsuarioExclusivo.LabelCampoDescrip = "Nombre";
+                fPickUsuarioExclusivo.NombreCampo = "Usuario Exc.";
+                fPickUsuarioExclusivo.PermitirFiltroNulo = true;
+            }
+            fPickUsuarioExclusivo.MostrarFiltro();
+            this.fPickUsuarioExclusivo_FiltrarClick(sender, e);
+        }
+
+        private void fPickUsuarioExclusivo_FiltrarClick(object sender, EventArgs e)
+        {
+            if (fPickUsuarioExclusivo != null)
+            {
+                fPickUsuarioExclusivo.LoadData<Usuario>(this.DBContext.Usuario, fPickUsuarioExclusivo.GetWhereString());
+            }
+        }
+
+        private void fPickUsuarioExclusivo_AceptarFiltrarClick(object sender, EventArgs e)
+        {
+            this.tSBUsuario.DisplayMember = fPickUsuarioExclusivo.ValorDescrip;
+            this.tSBUsuario.KeyMember = fPickUsuarioExclusivo.ValorID;
+
+            fPickUsuarioExclusivo.Close();
+            fPickUsuarioExclusivo.Dispose();
+        }
+        #endregion Usuario Exclusivo
+
         #region Usuario
         private void fPickUsuario_FiltrarClick(object sender, EventArgs e)
         {
@@ -206,6 +272,9 @@ namespace SPF.UserControls.UI
                 var query = (from ti in this.DBContext.ti_timbrado
                              join td in this.DBContext.td_tipodocumento
                                  on ti.ti_tipodocumentoid equals td.td_tipodocumentoid
+                             join us in this.DBContext.Usuario
+                                on ti.ti_usuarioid equals us.ID into us_ti
+                             from us in us_ti.DefaultIfEmpty()
                              select new
                              {
                                  TimbradoID = ti.ti_timbradoid,
@@ -220,7 +289,9 @@ namespace SPF.UserControls.UI
                                  TimbradoDescripcion = ti.ti_descripcion,
                                  TimbradoHojaSuelta = ti.ti_facthojasuelta,
                                  TimbradoTipoDocumentoID = ti.ti_tipodocumentoid,
-                                 TimbradoTipoDocumentoDescripcion = td.td_descripcion
+                                 TimbradoTipoDocumentoDescripcion = td.td_descripcion,
+                                 TimbradoUsuarioExclusivoId = ti.ti_usuarioid,
+                                 TimbradoUsuarioExclusivoNombre = us.NombrePila
                              });
 
                 if (where != "")
@@ -316,6 +387,8 @@ namespace SPF.UserControls.UI
             this.dtpFechaHasta.Value = System.DateTime.Now;
             this.chkVigente.Checked = true;
             this.tSBDocumento.SetFocus();
+            this.lblUsuario.Visible = false;
+            this.tSBUsuario.Visible = false;
         }
 
         protected override void tbbEditar_Click(object sender, EventArgs e)
@@ -362,6 +435,7 @@ namespace SPF.UserControls.UI
             this.txtSucursal.Text = String.Empty;
             this.chkFactHojaSuelta.Checked = false;
             this.tSBDocumento.Clear();
+            this.tSBUsuario.Clear();
         }
         #endregion Limpiar Datos
 
@@ -383,6 +457,7 @@ namespace SPF.UserControls.UI
             this.btnEliminarPermiso.Enabled = !editar;
             this.chkFactHojaSuelta.Enabled = !editar;
             this.tSBDocumento.Editable = !editar;
+            this.tSBUsuario.Editable = !editar;
         }
         #endregion ReadOnly condicional
 
@@ -404,6 +479,17 @@ namespace SPF.UserControls.UI
             this.chkFactHojaSuelta.Checked = (bool)row.Cells[CAMPO_TIMBRADOHOJASUELTA].Value;
             this.tSBDocumento.KeyMember = row.Cells[CAMPO_TIMBRADOTIPODOCUMENTOID].Value.ToString();
             this.tSBDocumento.DisplayMember = row.Cells[CAMPO_TIMBRADOTIPODOCUMENTODESCRIPCION].Value.ToString();
+            this.tSBUsuario.KeyMember = row.Cells[CAMPO_TIMBRADOUSUARIOEXCLUSIVOID].Value != null
+                                        ? row.Cells[CAMPO_TIMBRADOUSUARIOEXCLUSIVOID].Value.ToString()
+                                        : string.Empty;
+            this.tSBUsuario.DisplayMember = row.Cells[CAMPO_TIMBRADOUSUARIOEXCLUSIVONOMBRE].Value != null
+                                            ? row.Cells[CAMPO_TIMBRADOUSUARIOEXCLUSIVONOMBRE].Value.ToString()
+                                            : string.Empty;
+
+            bool mostrarUsuExc = Convert.ToInt32(this.tSBDocumento.KeyMember) == RECIBO_ID;
+
+            this.lblUsuario.Visible = mostrarUsuExc;
+            this.tSBUsuario.Visible = mostrarUsuExc;
 
             //Cargar permisos
             this.CargarPermisos(Convert.ToInt32(this.txtTimbradoID.Text));
@@ -676,6 +762,7 @@ namespace SPF.UserControls.UI
             ti.ti_sucursal = this.txtSucursal.Text;
             ti.ti_facthojasuelta = this.chkFactHojaSuelta.Checked;
             ti.ti_tipodocumentoid = Convert.ToInt32(this.tSBDocumento.KeyMember);
+            ti.ti_usuarioid = Convert.ToInt32(this.tSBUsuario.KeyMember);
 
             bool exito = false;
 
@@ -723,6 +810,19 @@ namespace SPF.UserControls.UI
                                 MessageBoxIcon.Information);
 
                 return;
+            }
+
+            if (Convert.ToInt32(this.tSBDocumento.KeyMember) == RECIBO_ID)
+            {
+                if (this.tSBUsuario.KeyMember.Trim() == string.Empty)
+                {
+                    MessageBox.Show("Para el tipo de documento Recibo es obligatorio ingresar el usuario exclusivo del timbrado.",
+                                    "Información",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Information);
+
+                    return;
+                }
             }
 
             if (this.txtFechaDesde.Text == "")

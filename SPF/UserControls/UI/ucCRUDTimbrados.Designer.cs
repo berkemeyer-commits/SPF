@@ -66,6 +66,8 @@ namespace SPF.UserControls.UI
             this.chkFactHojaSuelta = new Gizmox.WebGUI.Forms.CheckBox();
             this.tSBDocumento = new SPF.UserControls.Base.ucTextSearchBox();
             this.label2 = new Gizmox.WebGUI.Forms.Label();
+            this.lblUsuario = new Gizmox.WebGUI.Forms.Label();
+            this.tSBUsuario = new SPF.UserControls.Base.ucTextSearchBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListadoABM)).BeginInit();
             this.pnlDetalle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tabListaABM)).BeginInit();
@@ -93,6 +95,8 @@ namespace SPF.UserControls.UI
             // 
             // pnlDetalle
             // 
+            this.pnlDetalle.Controls.Add(this.tSBUsuario);
+            this.pnlDetalle.Controls.Add(this.lblUsuario);
             this.pnlDetalle.Controls.Add(this.label2);
             this.pnlDetalle.Controls.Add(this.tSBDocumento);
             this.pnlDetalle.Controls.Add(this.chkFactHojaSuelta);
@@ -468,6 +472,32 @@ namespace SPF.UserControls.UI
             this.label2.TabIndex = 2;
             this.label2.Text = "Tipo Documento";
             // 
+            // lblUsuario
+            // 
+            this.lblUsuario.AutoSize = true;
+            this.lblUsuario.Location = new System.Drawing.Point(68, 173);
+            this.lblUsuario.Name = "lblUsuario";
+            this.lblUsuario.Size = new System.Drawing.Size(35, 13);
+            this.lblUsuario.TabIndex = 2;
+            this.lblUsuario.Text = "Usuario";
+            // 
+            // tSBUsuario
+            // 
+            this.tSBUsuario.AutoValidate = Gizmox.WebGUI.Forms.AutoValidate.EnablePreventFocusChange;
+            this.tSBUsuario.DBContext = null;
+            this.tSBUsuario.DisplayMember = "";
+            this.tSBUsuario.KeyMember = "";
+            this.tSBUsuario.LabelCampoBusqueda = "";
+            this.tSBUsuario.Location = new System.Drawing.Point(159, 175);
+            this.tSBUsuario.Name = "tSBUsuario";
+            this.tSBUsuario.NombreCampoDescrip = "";
+            this.tSBUsuario.NombreCampoID = "";
+            this.tSBUsuario.Size = new System.Drawing.Size(438, 20);
+            this.tSBUsuario.SoloLectura = false;
+            this.tSBUsuario.TabIndex = 2;
+            this.tSBUsuario.Text = "ucTextSearchBox";
+            this.tSBUsuario.TituloBuscador = "";
+            // 
             // ucCRUDTimbrados
             // 
             this.Size = new System.Drawing.Size(1124, 466);
@@ -523,6 +553,8 @@ namespace SPF.UserControls.UI
         private CheckBox chkFactHojaSuelta;
         private Label label2;
         private Base.ucTextSearchBox tSBDocumento;
+        private Base.ucTextSearchBox tSBUsuario;
+        private Label lblUsuario;
 
 
     }

@@ -1055,6 +1055,7 @@ namespace SPF.UserControls.UI
 
                 if (where != "")
                 {
+                    var x = query.Where(where, filterParams).OrderByDescending(a => a.FechaPago).ToList();
                     this.BindingSourceBase = query.Where(where, filterParams).OrderByDescending(a => a.FechaPago).ToList();
                 }
                 else

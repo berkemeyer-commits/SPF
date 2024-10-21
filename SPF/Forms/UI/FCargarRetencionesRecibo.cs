@@ -238,7 +238,7 @@ namespace SPF.Forms.UI
                 {
                     decimal ivaNC10 = row.Total / 11;
                     if (this.MonedaId == GUARANIES_MONEDA_ID)
-                        ivaNC10 = decimal.Round(ivaNC10, 0);
+                        ivaNC10 = decimal.Round(ivaNC10, 0, MidpointRounding.AwayFromZero);
                     else ivaNC10 = decimal.Round(ivaNC10, 2);
 
                     var x = listaFacturasRetencionesLocal
@@ -252,7 +252,7 @@ namespace SPF.Forms.UI
                     decimal LiqIVA10 = 0;
                     decimal iva10 = ImporteCobrado / 11;
                     if (this.MonedaId == GUARANIES_MONEDA_ID)
-                        LiqIVA10 = decimal.Round(iva10, 0);
+                        LiqIVA10 = decimal.Round(iva10, 0, MidpointRounding.AwayFromZero);
                     else LiqIVA10 = decimal.Round(iva10, 2);
 
                     listaFacturasRetencionesLocal
@@ -279,7 +279,7 @@ namespace SPF.Forms.UI
                             listaFacturasRetencionesLocal
                             .Where(a => a.FacturaCabId == row.FacturaCabIdRel)
                             .FirstOrDefault()
-                            .RetencionIVA10 = decimal.Round(retIVA10, 0);
+                            .RetencionIVA10 = decimal.Round(retIVA10, 0, MidpointRounding.AwayFromZero);
                         }
                         else
                         {
@@ -298,7 +298,7 @@ namespace SPF.Forms.UI
                             listaFacturasRetencionesLocal
                             .Where(a => a.FacturaCabId == row.FacturaCabIdRel)
                             .FirstOrDefault()
-                            .RetencionRenta = decimal.Round(retRenta, 0);
+                            .RetencionRenta = decimal.Round(retRenta, 0, MidpointRounding.AwayFromZero);
                         }
                         else
                         {
@@ -329,13 +329,13 @@ namespace SPF.Forms.UI
                 facturaRetencion.RetencionRenta = 0;
                 
                 //Actualizar LiqIVA10 (se aplicara a pagos parciales)
-                if (facturaRetencion.ImporteCobrado != facturaRetencion.ImporteCobrado)
+                if (facturaRetencion.ImporteCobrado != facturaRetencion.TotalIVA10)
                 {
                     facturaRetencion.LiqIVA5 = 0;
 
                     decimal iva10 = facturaRetencion.ImporteCobrado.Value / 11;
                     if (this.MonedaId == GUARANIES_MONEDA_ID)
-                        facturaRetencion.LiqIVA10 = decimal.Round(iva10, 0);
+                        facturaRetencion.LiqIVA10 = decimal.Round(iva10, 0, MidpointRounding.AwayFromZero);
                     else facturaRetencion.LiqIVA10 = decimal.Round(iva10, 2);
                 }
 
@@ -343,7 +343,7 @@ namespace SPF.Forms.UI
                 {
                     decimal retIVA10 = facturaRetencion.LiqIVA10 * porcentajeRetIVA10 / 100;
                     if (this.MonedaId == GUARANIES_MONEDA_ID)
-                        facturaRetencion.RetencionIVA10 = decimal.Round(retIVA10, 0);
+                        facturaRetencion.RetencionIVA10 = decimal.Round(retIVA10, 0, MidpointRounding.AwayFromZero);
                     else facturaRetencion.RetencionIVA10 = decimal.Round(retIVA10, 2);
                 }
 
@@ -351,7 +351,7 @@ namespace SPF.Forms.UI
                 {
                     decimal retRenta = facturaRetencion.ImporteCobrado.Value * porcentajeRetRenta / 100;
                     if (this.MonedaId == GUARANIES_MONEDA_ID)
-                        facturaRetencion.RetencionRenta = decimal.Round(retRenta, 0);
+                        facturaRetencion.RetencionRenta = decimal.Round(retRenta, 0, MidpointRounding.AwayFromZero);
                     else facturaRetencion.RetencionRenta = decimal.Round(retRenta, 2);
                 }
 
@@ -615,12 +615,33 @@ namespace SPF.Forms.UI
         #region Metodos sobre Controles
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            this.CargarRetenciones();
+            if (this.ValidarDatosPorcentajesRetencion() && this.ValidarPorcentajes())
+                this.CargarRetenciones();
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private bool ValidarPorcentajes()
+        {
+            using (BerkeDBEntities context = new BerkeDBEntities())
+            {
+                cr_clienteretencion cr = context.cr_clienteretencion.FirstOrDefault(a => a.cr_clienteid == this.ClienteId);
+
+                if (cr == null)
+                {
+                    MessageBox.Show("El cliente no posee  información para retenciones. Debe ingresar los datos" + Environment.NewLine +
+                                    "en los cuadros de texto de arriba y actualizar la información para que los " + Environment.NewLine +
+                                    "montos se muestren en la grilla y puedan ser usados en el recibo.",
+                                   "Atención Requerida",
+                                   MessageBoxButtons.OK,
+                                   MessageBoxIcon.Information);
+                    return false;
+                }
+            }
+            return true;
         }
 
         private void headerCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -770,7 +791,7 @@ namespace SPF.Forms.UI
                 {
                     decimal retIVA10 = (decimal)row.Cells[CAMPO_LIQIVA10].Value * porcentajeRetIVA10 / 100;
                     if (this.MonedaId == GUARANIES_MONEDA_ID)
-                        row.Cells[CAMPO_RETENCIONIVA10].Value = decimal.Round(retIVA10, 0);
+                        row.Cells[CAMPO_RETENCIONIVA10].Value = decimal.Round(retIVA10, 0, MidpointRounding.AwayFromZero);
                     else row.Cells[CAMPO_RETENCIONIVA10].Value = decimal.Round(retIVA10, 2);
                 }
                 else row.Cells[CAMPO_RETENCIONIVA10].Value = (decimal)0;
@@ -779,7 +800,7 @@ namespace SPF.Forms.UI
                 {
                     decimal retRenta = (decimal)row.Cells[CAMPO_IMPORTECOBRADO].Value * porcentajeRetRenta / 100;
                     if (this.MonedaId == GUARANIES_MONEDA_ID)
-                        row.Cells[CAMPO_RETENCIONRENTA].Value = decimal.Round(retRenta, 0);
+                        row.Cells[CAMPO_RETENCIONRENTA].Value = decimal.Round(retRenta, 0, MidpointRounding.AwayFromZero);
                     else row.Cells[CAMPO_RETENCIONRENTA].Value = decimal.Round(retRenta, 2);
                 }
                 else row.Cells[CAMPO_RETENCIONRENTA].Value = (decimal)0;
